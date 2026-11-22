@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Ménage">
+<meta name="theme-color" content="#0F6E56">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="manifest" href="manifest.json">
+<title>Ménage · HOME OS</title>
+<style>
+:root{--bg:#F6F5F1;--card:#fff;--tx:#1d1d1b;--tx2:#6b6a65;--tx3:#9a9993;--bd:#e4e2da;--ac:#0F6E56;--acbg:#E1F5EE;--warn:#854F0B;--warnbg:#FAEEDA;--bad:#A32D2D;--badbg:#FCEBEB;--ok:#3B6D11;--okbg:#EAF3DE;--info:#185FA5;--infobg:#E6F1FB;--r:12px}
+@media (prefers-color-scheme:dark){:root{--bg:#141413;--card:#1f1f1e;--tx:#f0efe9;--tx2:#a9a8a2;--tx3:#77766f;--bd:#33332f;--ac:#5DCAA5;--acbg:#0b3a2f;--warn:#FAC775;--warnbg:#3d2a08;--bad:#F09595;--badbg:#3f1414;--ok:#97C459;--okbg:#1f330b;--info:#85B7EB;--infobg:#0c2a4a}}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+button,input,select,textarea{font:inherit;color:inherit}
+.wrap{max-width:720px;margin:0 auto;padding:12px 14px calc(90px + env(safe-area-inset-bottom))}
+header.top{position:sticky;top:0;z-index:5;background:var(--bg);padding:calc(10px + env(safe-area-inset-top)) 14px 8px;border-bottom:1px solid var(--bd)}
+header.top .in{max-width:720px;margin:0 auto;display:flex;align-items:center;gap:10px}
+header.top h1{font-size:18px;margin:0;font-weight:600;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sub{color:var(--tx2);font-size:13px}
+.muted{color:var(--tx3);font-size:13px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:var(--r);padding:14px;margin-bottom:10px}
+.click{cursor:pointer}.click:active{transform:scale(.995)}
+.row{display:flex;align-items:center;gap:10px}
+.sp{flex:1;min-width:0}
+h2{font-size:15px;margin:18px 2px 8px;font-weight:600;color:var(--tx2);text-transform:capitalize}
+h3{font-size:16px;margin:0 0 4px;font-weight:600}
+.pill{display:inline-block;font-size:12px;padding:2px 9px;border-radius:20px;font-weight:500;white-space:nowrap}
+.p-a_faire{background:var(--warnbg);color:var(--warn)}.p-en_cours{background:var(--infobg);color:var(--info)}
+.p-terminee{background:var(--acbg);color:var(--ac)}.p-validee{background:var(--okbg);color:var(--ok)}
+.p-annulee{background:var(--bd);color:var(--tx2);text-decoration:line-through}
+.p-nouveau{background:var(--badbg);color:var(--bad)}.p-traite{background:var(--okbg);color:var(--ok)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:1px solid var(--bd);background:var(--card);border-radius:10px;padding:10px 14px;cursor:pointer;font-weight:500;text-decoration:none;color:var(--tx)}
+.btn.pri{background:var(--ac);border-color:var(--ac);color:#fff}
+@media (prefers-color-scheme:dark){.btn.pri{color:#04342C}}
+.btn.bad{color:var(--bad)}
+.btn.block{display:flex;width:100%;padding:14px;font-size:16px}
+.btn.sm{padding:6px 10px;font-size:14px}
+.btn:disabled{opacity:.5}
+.tabs{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--bd);display:flex;padding:6px 4px calc(6px + env(safe-area-inset-bottom));z-index:6}
+.tabs button{flex:1;border:0;background:none;padding:6px 2px;font-size:11px;color:var(--tx3);display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;position:relative}
+.tabs button.on{color:var(--ac);font-weight:600}
+.tabs svg{width:22px;height:22px}
+.badge{position:absolute;top:0;right:calc(50% - 20px);background:var(--bad);color:#fff;border-radius:10px;font-size:10px;padding:0 5px;font-weight:600}
+label.f{display:block;margin:12px 0 4px;font-size:13px;color:var(--tx2);font-weight:500}
+input[type=text],input[type=tel],input[type=date],input[type=time],input[type=month],select,textarea{width:100%;padding:10px 12px;border:1px solid var(--bd);border-radius:10px;background:var(--card)}
+textarea{min-height:90px;resize:vertical}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ck{display:flex;align-items:center;gap:12px;padding:11px 2px;border-bottom:1px solid var(--bd);cursor:pointer;user-select:none}
+.ck:last-child{border-bottom:0}
+.ck input{width:22px;height:22px;accent-color:var(--ac);flex:none}
+.photos{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:8px;margin-top:8px}
+.ph{position:relative;aspect-ratio:1;border-radius:10px;overflow:hidden;background:var(--bd)}
+.ph img{width:100%;height:100%;object-fit:cover;display:block}
+.ph .x{position:absolute;top:4px;right:4px;background:rgba(0,0,0,.55);color:#fff;border:0;border-radius:50%;width:24px;height:24px;cursor:pointer;font-size:14px;line-height:24px;padding:0}
+.addph{aspect-ratio:1;border:1.5px dashed var(--tx3);border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--tx2);font-size:12px;cursor:pointer;gap:4px}
+.addph svg{width:26px;height:26px}
+.types{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.types button{border:1px solid var(--bd);background:var(--card);border-radius:10px;padding:12px 4px;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:13px;cursor:pointer}
+.types button.on{border-color:var(--ac);background:var(--acbg);color:var(--ac);font-weight:600}
+.types svg{width:24px;height:24px}
+.toast{position:fixed;left:50%;bottom:calc(84px + env(safe-area-inset-bottom));transform:translateX(-50%);background:#1d1d1b;color:#fff;padding:10px 16px;border-radius:10px;font-size:14px;z-index:50;max-width:90%;text-align:center}
+.toast.err{background:#A32D2D}
+.empty{text-align:center;color:var(--tx2);padding:36px 12px}
+.spin{display:inline-block;width:18px;height:18px;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;animation:s .7s linear infinite;vertical-align:-3px}
+@keyframes s{to{transform:rotate(360deg)}}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:14px}
+.kv b{color:var(--tx2);font-weight:500}
+table.t{width:100%;border-collapse:collapse;font-size:14px}
+table.t th,table.t td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--bd)}
+table.t th{color:var(--tx2);font-weight:500;font-size:13px}
+.seg{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 4px}
+.seg button{border:1px solid var(--bd);background:var(--card);border-radius:20px;padding:6px 12px;font-size:13px;cursor:pointer}
+.seg button.on{background:var(--tx);color:var(--bg);border-color:var(--tx)}
+.lightbox{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:60;display:flex;align-items:center;justify-content:center}
+.lightbox img{max-width:100%;max-height:100%}
+.back{border:0;background:none;padding:4px 6px 4px 0;cursor:pointer;color:var(--ac);display:flex}
+.back svg{width:26px;height:26px}
+.prog{height:6px;background:var(--bd);border-radius:6px;overflow:hidden;margin-top:8px}
+.prog i{display:block;height:100%;background:var(--ac)}
+.code{font-family:ui-monospace,Menlo,monospace;font-size:12px;word-break:break-all;background:var(--bg);padding:8px;border-radius:8px;border:1px solid var(--bd)}
+.today{border-left:4px solid var(--ac)}
+</style>
+</head>
+<body>
+<header class="top"><div class="in" id="hdr"><h1>Ménage</h1></div></header>
+<main class="wrap" id="app"><div class="empty"><span class="spin"></span></div></main>
+<nav class="tabs" id="tabs" style="display:none"></nav>
+<input type="file" id="filein" accept="image/*" multiple style="display:none">
+<script>
+const API = "https://yrbdbhpkpqyxpwjhbhbu.supabase.co/functions/v1/menage-api";
+const I = {
+  cal:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M16 3v4M8 3v4M4 11h16"/></svg>',
+  alert:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01"/><path d="M10.4 3.9 2.6 17.4A1.8 1.8 0 0 0 4.2 20h15.6a1.8 1.8 0 0 0 1.6-2.6L13.6 3.9a1.8 1.8 0 0 0-3.2 0z"/></svg>',
+  home:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12H3l9-9 9 9h-2"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/><path d="M9 21v-6h6v6"/></svg>',
+  users:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2M16 3.1a4 4 0 0 1 0 7.8M21 21v-2a4 4 0 0 0-3-3.9"/></svg>',
+  chart:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M8 17v-5M13 17V8M18 17v-9"/></svg>',
+  cam:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7h1a2 2 0 0 0 2-2 1 1 0 0 1 1-1h6a1 1 0 0 1 1 1 2 2 0 0 0 2 2h1a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2"/><circle cx="12" cy="13" r="3"/></svg>',
+  back:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>',
+  shirt:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4l6 2v5h-3v8a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1v-8H3V6l6-2a3 3 0 0 0 6 0"/></svg>',
+  bottle:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 5h4V3h-4zM14 5v1.7a2 2 0 0 0 .7 1.5l.6.5A2 2 0 0 1 16 10.2V19a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2v-8.8a2 2 0 0 1 .7-1.5l.6-.5a2 2 0 0 0 .7-1.5V5"/><path d="M8 14h8"/></svg>',
+  hammer:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11.4 12.6 3 21M14 4l6 6-3 3-6-6zM9 7l3-3"/></svg>',
+  dots:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></svg>',
+  sync:'<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11A8.1 8.1 0 0 0 4.5 9M4 5v4h4M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"/></svg>',
+};
+const TYPES = {linge:["Linge",I.shirt],consommable:["Consommables",I.bottle],casse:["Casse",I.hammer],autre:["Autre",I.dots]};
+const LINGE = ["Draps","Housses de couette","Taies d'oreiller","Serviettes de bain","Serviettes de main","Tapis de bain","Torchons","Linge taché ou abîmé"];
+const ST = {a_faire:"À faire",en_cours:"En cours",terminee:"Terminée",validee:"Validée",annulee:"Annulée"};
+
+const qs = new URLSearchParams(location.search);
+let TOKEN = qs.get("t") || "";
+try { if (TOKEN) localStorage.setItem("menage_t", TOKEN); else TOKEN = localStorage.getItem("menage_t") || ""; } catch(e) {}
+const S = { role:null, name:"", tab:"", view:null, data:null };
+
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const $ = id => document.getElementById(id);
+const hm = t => t ? String(t).slice(0,5).replace(":", "h") : "";
+const fdate = (d, o={weekday:"long",day:"numeric",month:"long"}) => d ? new Date(d+"T12:00:00").toLocaleDateString("fr-FR", o) : "";
+const fshort = d => fdate(d,{weekday:"short",day:"numeric",month:"short"});
+const pill = s => `<span class="pill p-${s}">${ST[s]||s}</span>`;
+function toast(msg, err) { const t=document.createElement("div"); t.className="toast"+(err?" err":""); t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(), err?4500:2400); }
+
+async function api(action, body={}) {
+  const r = await fetch(API, {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({...body, action, token:TOKEN})});
+  const d = await r.json().catch(()=>({error:"Réponse invalide du serveur"}));
+  if (!r.ok || d.error) throw new Error(d.error || ("Erreur "+r.status));
+  return d;
+}
+async function run(btn, fn) {
+  const old = btn ? btn.innerHTML : null;
+  if (btn) { btn.disabled = true; btn.innerHTML = '<span class="spin"></span>'; }
+  try { return await fn(); } catch(e) { toast(e.message, true); } finally { if (btn && btn.isConnected) { btn.disabled=false; btn.innerHTML=old; } }
+}
+function header(title, backFn, right="") {
+  $("hdr").innerHTML = (backFn ? `<button class="back" id="bk" aria-label="Retour">${I.back}</button>` : "") + `<h1>${esc(title)}</h1>${right}`;
+  if (backFn) $("bk").onclick = backFn;
+}
+function tabs(list) {
+  $("tabs").style.display = "flex";
+  $("tabs").innerHTML = list.map(([k,l,ic,b]) => `<button data-k="${k}" class="${S.tab===k?"on":""}">${ic}<span>${l}</span>${b?`<span class="badge">${b}</span>`:""}</button>`).join("");
+  $("tabs").querySelectorAll("button").forEach(b => b.onclick = () => { S.tab=b.dataset.k; S.view=null; render(); window.scrollTo(0,0); });
+}
+function lightbox(url) { const d=document.createElement("div"); d.className="lightbox"; d.innerHTML=`<img src="${esc(url)}" alt="Photo">`; d.onclick=()=>d.remove(); document.body.appendChild(d); }
+
+function compress(file) {
+  return new Promise((res, rej) => {
+    const img = new Image(); const url = URL.createObjectURL(file);
+    img.onload = () => {
+      const max = 1600; let w = img.naturalWidth, h = img.naturalHeight;
+      if (w > max || h > max) { const k = max/Math.max(w,h); w = Math.round(w*k); h = Math.round(h*k); }
+      const c = document.createElement("canvas"); c.width=w; c.height=h; c.getContext("2d").drawImage(img,0,0,w,h);
+      URL.revokeObjectURL(url); res(c.toDataURL("image/jpeg", 0.72));
+    };
+    img.onerror = () => rej(new Error("Image illisible"));
+    img.src = url;
+  });
+}
+function pickPhotos(multi=true) {
+  return new Promise(res => { const f=$("filein"); f.multiple=multi; f.value=""; f.onchange=()=>res([...f.files]); f.click(); });
+}
+function photoGrid(photos, opts={}) {
+  return `<div class="photos">${photos.map(p => `<div class="ph"><img src="${esc(p.url)}" loading="lazy" alt="" data-lb="${esc(p.url)}">${opts.del?`<button class="x" data-del="${p.id}" aria-label="Supprimer">×</button>`:""}</div>`).join("")}${opts.add?`<div class="addph" data-add="${opts.add}">${I.cam}<span>Ajouter</span></div>`:""}</div>`;
+}
+function bindLb(root=document) { root.querySelectorAll("[data-lb]").forEach(i => i.onclick = () => lightbox(i.dataset.lb)); }
+
+// ================= BOOT =================
+async function boot() {
+  if (!TOKEN) { header("Ménage"); $("app").innerHTML = `<div class="empty"><h3>Lien d'accès manquant</h3><p>Ouvrez l'application avec le lien personnel qui vous a été envoyé.</p></div>`; return; }
+  try {
+    const w = await api("whoami"); S.role = w.role; S.name = w.name;
+    S.tab = S.role === "admin" ? "planning" : "planning";
+    render();
+  } catch(e) {
+    header("Ménage"); $("app").innerHTML = `<div class="empty"><h3>Accès impossible</h3><p>${esc(e.message)}</p><p class="muted">Demandez un nouveau lien à votre gestionnaire.</p></div>`;
+  }
+}
+function render() { (S.role === "admin" ? renderAdmin : renderAgent)(); }
+
+// ================= AGENT =================
+async function renderAgent() {
+  tabs([["planning","Planning",I.cal],["signaler","Signaler",I.alert]]);
+  if (S.view?.type === "mission") return agentMission(S.view.id);
+  if (S.tab === "signaler") return reportForm({});
+  header("Bonjour " + S.name.split(" ")[0], null, `<button class="btn sm" id="rf" aria-label="Actualiser">${I.sync}</button>`);
+  $("rf").onclick = () => renderAgent();
+  $("app").innerHTML = `<div class="empty"><span class="spin"></span></div>`;
+  try {
+    const d = await api("my_missions"); S.data = d;
+    const upcoming = d.missions.filter(m => m.date >= d.today || ["a_faire","en_cours"].includes(m.status));
+    const past = d.missions.filter(m => !upcoming.includes(m)).reverse();
+    if (!d.missions.length) { $("app").innerHTML = `<div class="empty"><h3>Aucune mission prévue</h3><p>Vos ménages apparaîtront ici dès qu'une réservation sera enregistrée.</p></div>`; return; }
+    let html = "", last = "";
+    for (const m of upcoming) {
+      if (m.date !== last) { last = m.date; html += `<h2>${m.date===d.today?"Aujourd'hui · ":""}${fdate(m.date)}</h2>`; }
+      html += missionCard(m, d.today);
+    }
+    if (past.length) html += `<h2>Déjà faits</h2>` + past.slice(0,10).map(m => missionCard(m, d.today)).join("");
+    $("app").innerHTML = html;
+    $("app").querySelectorAll("[data-m]").forEach(c => c.onclick = () => { S.view={type:"mission", id:c.dataset.m}; render(); window.scrollTo(0,0); });
+  } catch(e) { $("app").innerHTML = `<div class="empty">${esc(e.message)}</div>`; }
+}
+function missionCard(m, today, admin) {
+  const nc = m.next_checkin ? `Prochaine arrivée : ${m.next_checkin===m.date?"<b>le jour même</b>":fshort(m.next_checkin)}` : "Pas d'arrivée prévue";
+  return `<div class="card click ${m.date===today&&m.status!=="validee"&&m.status!=="terminee"?"today":""}" data-m="${m.id}">
+    <div class="row"><div class="sp"><h3>${esc(m.property?.name)}</h3>
+    <div class="sub">${m.start_time?hm(m.start_time)+" – "+hm(m.end_time):"Horaire libre"}${admin?" · "+esc(m.cleaner?.name||"Sans agent"):""}</div>
+    <div class="muted">${nc}${admin&&m.source==="manuel"?" · ajoutée à la main":""}</div></div>${pill(m.status)}</div></div>`;
+}
+
+async function agentMission(id) {
+  header("Mission", () => { S.view=null; render(); });
+  $("app").innerHTML = `<div class="empty"><span class="spin"></span></div>`;
+  let m;
+  try { m = (await api("mission_get", {id})).mission; } catch(e) { $("app").innerHTML = `<div class="empty">${esc(e.message)}</div>`; return; }
+  const draw = () => {
+    const p = m.property || {}; const list = p.checklist || []; const st = m.checklist_state || {};
+    const done = list.filter(x => st[x]).length;
+    const locked = ["terminee","validee"].includes(m.status);
+    const av = m.photos.filter(x=>x.kind==="avant"), ap = m.photos.filter(x=>x.kind==="apres");
+    header(p.name || "Mission", () => { S.view=null; render(); });
+    $("app").innerHTML = `
+      <div class="card"><div class="row"><div class="sp"><h3>${esc(p.name)}</h3><div class="sub">${fdate(m.date)} · ${m.start_time?hm(m.start_time)+" – "+hm(m.end_time):"horaire libre"}</div></div>${pill(m.status)}</div>
+      ${p.address?`<div class="muted" style="margin-top:6px">${esc(p.address)}</div>`:""}
+      <div style="margin-top:6px" class="sub">${m.next_checkin?(m.next_checkin===m.date?"<b>Arrivée de voyageurs le jour même</b>":"Prochaine arrivée : "+fdate(m.next_checkin)):"Pas d'arrivée prévue derrière"}</div>
+      ${p.notes?`<div class="card" style="background:var(--warnbg);color:var(--warn);border:0;margin:10px 0 0;font-size:14px;white-space:pre-wrap">${esc(p.notes)}</div>`:""}</div>
+      ${m.status==="a_faire"?`<button class="btn pri block" id="start" style="margin-bottom:10px">Commencer le ménage</button>`:""}
+      <h2>1 · Photos avant</h2><div class="card">${av.length?"":`<div class="muted">Photographiez l'état du logement en arrivant.</div>`}${photoGrid(av,{add:locked?"":"avant",del:!locked})}</div>
+      <h2>2 · Checklist <span class="muted">${done}/${list.length}</span></h2>
+      <div class="card">${list.length?list.map((x,i)=>`<label class="ck"><input type="checkbox" data-ck="${i}" ${st[x]?"checked":""} ${locked?"disabled":""}><span>${esc(x)}</span></label>`).join(""):`<div class="muted">Pas de checklist pour ce logement.</div>`}
+      <div class="prog"><i style="width:${list.length?Math.round(done/list.length*100):0}%"></i></div></div>
+      <h2>3 · Photos après</h2><div class="card">${ap.length?"":`<div class="muted">Au moins une photo obligatoire pour terminer.</div>`}${photoGrid(ap,{add:locked?"":"apres",del:!locked})}</div>
+      <button class="btn block" id="rep" style="margin:10px 0">${I.alert} Signaler linge, consommable ou casse</button>
+      ${m.reports.length?`<div class="muted" style="margin:-4px 2px 10px">${m.reports.length} signalement(s) envoyé(s) pour cette mission</div>`:""}
+      ${locked?`<div class="card" style="text-align:center"><b>${m.status==="validee"?"Mission validée par le gestionnaire":"Mission terminée"}</b>${m.finished_at?`<div class="muted">le ${new Date(m.finished_at).toLocaleString("fr-FR",{dateStyle:"short",timeStyle:"short"})}</div>`:""}${m.comment?`<div class="sub" style="margin-top:6px">${esc(m.comment)}</div>`:""}</div>`:
+      `<label class="f">Commentaire (facultatif)</label><textarea id="cmt" placeholder="Tout s'est bien passé, clé laissée dans la boîte…">${esc(m.comment||"")}</textarea>
+      <button class="btn pri block" id="fin" style="margin-top:12px">Terminer la mission</button>`}`;
+    bindLb();
+    if ($("start")) $("start").onclick = e => run(e.currentTarget, async () => { m = (await api("mission_start",{id})).mission; draw(); });
+    $("app").querySelectorAll("[data-ck]").forEach(c => c.onchange = async () => {
+      st[list[+c.dataset.ck]] = c.checked; m.checklist_state = st;
+      try { await api("checklist_update",{id, state:st}); if (m.status==="a_faire") m.status="en_cours"; draw(); } catch(e) { toast(e.message,true); }
+    });
+    $("app").querySelectorAll("[data-add]").forEach(a => a.onclick = async () => {
+      const files = await pickPhotos(true); if (!files.length) return;
+      const kind = a.dataset.add; a.innerHTML = `<span class="spin"></span><span>0/${files.length}</span>`;
+      let n = 0;
+      for (const f of files) {
+        try { const data = await compress(f); m = (await api("photo_add",{id, kind, data})).mission; n++; a.querySelector("span:last-child") && (a.querySelector("span:last-child").textContent = `${n}/${files.length}`); }
+        catch(e) { toast(e.message, true); }
+      }
+      draw(); if (n) toast(n > 1 ? `${n} photos ajoutées` : "Photo ajoutée");
+    });
+    $("app").querySelectorAll("[data-del]").forEach(b => b.onclick = async ev => {
+      ev.stopPropagation(); if (!confirm("Supprimer cette photo ?")) return;
+      try { m = (await api("photo_delete",{mission_id:id, id:b.dataset.del})).mission; draw(); } catch(e) { toast(e.message,true); }
+    });
+    $("rep").onclick = () => { S.view = {type:"report", mission:m, back:{type:"mission", id}}; reportForm({mission:m}); window.scrollTo(0,0); };
+    if ($("fin")) $("fin").onclick = e => {
+      if (!ap.length) return toast("Ajoutez au moins une photo « après »", true);
+      const left = list.length - done;
+      if (left && !confirm(`${left} point(s) de la checklist non cochés. Terminer quand même ?`)) return;
+      run(e.currentTarget, async () => { m = (await api("mission_finish",{id, comment:$("cmt").value})).mission; toast("Mission terminée, merci !"); draw(); window.scrollTo(0,0); });
+    };
+  };
+  draw();
+}
+
+async function reportForm({mission}) {
+  const backFn = S.view?.back ? () => { S.view = S.view.back; render(); } : null;
+  header("Signaler", backFn);
+  let props = [];
+  if (!mission) {
+    if (!S.data) { try { S.data = await api("my_missions"); } catch(e) {} }
+    const seen = new Map(); (S.data?.missions||[]).forEach(m => m.property && seen.set(m.property.id, m.property));
+    props = [...seen.values()];
+    if (!props.length) { $("app").innerHTML = `<div class="empty">Aucun logement ne vous est encore attribué.</div>`; return; }
+  }
+  const F = { type:"consommable", items:[], prop: mission ? mission.property : props[0], photo:null };
+  const draw = () => {
+    const opts = F.type==="linge" ? LINGE : F.type==="consommable" ? (F.prop?.consumables||[]) : [];
+    $("app").innerHTML = `
+      ${mission ? `<div class="card"><h3>${esc(mission.property?.name)}</h3><div class="sub">Mission du ${fdate(mission.date)}</div></div>` :
+        `<label class="f">Logement</label><select id="pp">${props.map(p=>`<option value="${p.id}" ${p.id===F.prop?.id?"selected":""}>${esc(p.name)}</option>`).join("")}</select>`}
+      <label class="f">Type de signalement</label>
+      <div class="types">${Object.entries(TYPES).map(([k,[l,ic]])=>`<button data-t="${k}" class="${F.type===k?"on":""}">${ic}<span>${l}</span></button>`).join("")}</div>
+      ${opts.length ? `<label class="f">${F.type==="linge"?"Linge concerné (manquant, taché, à changer)":"Qu'est-ce qui manque ou est presque fini ?"}</label>
+      <div class="card" style="padding:4px 12px">${opts.map((x,i)=>`<label class="ck"><input type="checkbox" data-i="${i}" ${F.items.includes(x)?"checked":""}><span>${esc(x)}</span></label>`).join("")}</div>`:""}
+      <label class="f">${F.type==="casse"?"Qu'est-ce qui est cassé ou abîmé ?":"Commentaire"}</label>
+      <textarea id="rc" placeholder="${F.type==="casse"?"Verre cassé dans la cuisine, tache sur le canapé…":"Précisions, quantités…"}">${esc(F.comment||"")}</textarea>
+      <label class="f">Photo ${F.type==="casse"?"(conseillée)":"(facultative)"}</label>
+      <div class="photos">${F.photo?`<div class="ph"><img src="${F.photo}" alt=""><button class="x" id="phx" aria-label="Retirer">×</button></div>`:`<div class="addph" id="pha">${I.cam}<span>Photo</span></div>`}</div>
+      <button class="btn pri block" id="send" style="margin-top:16px">Envoyer le signalement</button>`;
+    if ($("pp")) $("pp").onchange = e => { F.prop = props.find(p => p.id === e.target.value); F.items = []; draw(); };
+    $("app").querySelectorAll("[data-t]").forEach(b => b.onclick = () => { F.comment=$("rc").value; F.type=b.dataset.t; F.items=[]; draw(); });
+    $("app").querySelectorAll("[data-i]").forEach(c => c.onchange = () => { const x = opts[+c.dataset.i]; F.items = c.checked ? [...F.items, x] : F.items.filter(y => y!==x); });
+    if ($("pha")) $("pha").onclick = async () => { const [f] = await pickPhotos(false); if (!f) return; F.comment=$("rc").value; try { F.photo = await compress(f); draw(); } catch(e) { toast(e.message,true); } };
+    if ($("phx")) $("phx").onclick = () => { F.comment=$("rc").value; F.photo=null; draw(); };
+    $("send").onclick = e => {
+      const comment = $("rc").value.trim();
+      if (!F.items.length && !comment && !F.photo) return toast("Cochez un élément ou écrivez un commentaire", true);
+      run(e.currentTarget, async () => {
+        await api("report_create", {mission_id: mission?.id, property_id: F.prop?.id, type:F.type, items:F.items, comment, photo:F.photo});
+        toast("Signalement envoyé");
+        if (backFn) backFn(); else { F.items=[]; F.comment=""; F.photo=null; draw(); }
+      });
+    };
+  };
+  draw();
+}
+
+// ================= ADMIN =================
+async function loadAdmin(force) {
+  if (!S.data || force) S.data = await api("dashboard");
+  return S.data;
+}
+async function renderAdmin() {
+  let d;
+  try { d = await loadAdmin(false); } catch(e) { $("app").innerHTML = `<div class="empty">${esc(e.message)}</div>`; return; }
+  const nNew = d.reports.filter(r => r.status==="nouveau").length;
+  tabs([["planning","Planning",I.cal],["reports","Signalements",I.alert,nNew],["props","Logements",I.home],["agents","Agents",I.users],["recap","Récap",I.chart]]);
+  const v = S.view;
+  if (v?.type==="mission") return adminMission(v.id);
+  if (v?.type==="prop") return propForm(v.id);
+  if (v?.type==="newmission") return missionForm(v);
+  ({planning:adminPlanning, reports:adminReports, props:adminProps, agents:adminAgents, recap:adminRecap}[S.tab] || adminPlanning)(d);
+}
+function go(view) { S.view = view; renderAdmin(); window.scrollTo(0,0); }
+async function refresh() { S.data = null; await loadAdmin(true); renderAdmin(); }
+
+let planFilter = "avenir";
+function adminPlanning(d) {
+  header("Planning ménage", null, `<button class="btn sm" id="sy" title="Synchroniser les calendriers">${I.sync}</button><button class="btn sm pri" id="nm">+ Mission</button>`);
+  $("sy").onclick = e => run(e.currentTarget, async () => {
+    const r = await api("sync_now"); const errs = r.results.filter(x => x.error);
+    toast(errs.length ? "Erreur : " + errs.map(x=>x.property+" ("+x.error+")").join(", ") : `Calendriers synchronisés (${r.results.reduce((a,x)=>a+(x.created||0),0)} nouvelle(s) mission(s))`, !!errs.length);
+    await refresh();
+  });
+  $("nm").onclick = () => go({type:"newmission"});
+  if (!d.properties.length) {
+    $("app").innerHTML = `<div class="empty"><h3>Commencez par ajouter un logement</h3><p>Collez son lien de calendrier Airbnb : les missions de ménage se créeront toutes seules à chaque départ.</p><button class="btn pri" id="gp">Ajouter un logement</button></div>`;
+    $("gp").onclick = () => { S.tab="props"; go({type:"prop"}); }; return;
+  }
+  const t = d.today;
+  const counts = {
+    today: d.missions.filter(m=>m.date===t && m.status!=="annulee").length,
+    todo: d.missions.filter(m=>m.date>=t && m.status==="a_faire").length,
+    check: d.missions.filter(m=>m.status==="terminee").length,
+    noag: d.missions.filter(m=>m.date>=t && !m.cleaner_id && m.status==="a_faire").length,
+  };
+  let list = d.missions;
+  if (planFilter==="avenir") list = list.filter(m => (m.date>=t && m.status!=="annulee") || m.status==="en_cours");
+  if (planFilter==="valider") list = list.filter(m => m.status==="terminee");
+  if (planFilter==="passe") list = list.filter(m => m.date<t).reverse();
+  if (planFilter==="annulee") list = list.filter(m => m.status==="annulee");
+  let html = `<div class="grid2" style="grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:6px">
+    ${[["Aujourd'hui",counts.today],["À faire",counts.todo],["À valider",counts.check],["Sans agent",counts.noag]].map(([l,n])=>`<div class="card" style="padding:10px;text-align:center;margin:0"><div style="font-size:22px;font-weight:600">${n}</div><div class="muted" style="font-size:12px">${l}</div></div>`).join("")}</div>
+    <div class="seg">${[["avenir","À venir"],["valider","À valider"],["passe","Passées"],["annulee","Annulées"]].map(([k,l])=>`<button data-f="${k}" class="${planFilter===k?"on":""}">${l}</button>`).join("")}</div>`;
+  if (!list.length) html += `<div class="empty">Rien à afficher ici.</div>`;
+  let last = "";
+  for (const m of list) {
+    if (m.date !== last) { last = m.date; html += `<h2>${m.date===t?"Aujourd'hui · ":""}${fdate(m.date)}</h2>`; }
+    html += missionCard(m, t, true);
+  }
+  const errs = d.properties.filter(p => p.last_sync_error);
+  if (errs.length) html = `<div class="card" style="background:var(--badbg);color:var(--bad);border:0;font-size:14px">Calendrier en erreur : ${errs.map(p=>esc(p.name)).join(", ")}. Vérifiez le lien iCal dans Logements.</div>` + html;
+  $("app").innerHTML = html;
+  $("app").querySelectorAll("[data-f]").forEach(b => b.onclick = () => { planFilter = b.dataset.f; adminPlanning(d); });
+  $("app").querySelectorAll("[data-m]").forEach(c => c.onclick = () => go({type:"mission", id:c.dataset.m}));
+}
+
+async function adminMission(id) {
+  header("Mission", () => go(null));
+  $("app").innerHTML = `<div class="empty"><span class="spin"></span></div>`;
+  let m; try { m = (await api("mission_get",{id})).mission; } catch(e) { $("app").innerHTML = `<div class="empty">${esc(e.message)}</div>`; return; }
+  const p = m.property||{}; const list = p.checklist||[]; const st = m.checklist_state||{};
+  const av = m.photos.filter(x=>x.kind==="avant"), ap = m.photos.filter(x=>x.kind==="apres");
+  const dur = m.started_at && m.finished_at ? Math.round((new Date(m.finished_at)-new Date(m.started_at))/60000) : null;
+  header(p.name||"Mission", () => go(null));
+  $("app").innerHTML = `
+    <div class="card"><div class="row"><div class="sp"><h3>${esc(p.name)}</h3><div class="sub">${fdate(m.date)}</div></div>${pill(m.status)}</div>
+    <div class="kv" style="margin-top:10px"><b>Agent</b><span>${esc(m.cleaner?.name||"Aucun")}</span>
+    <b>Créneau</b><span>${m.start_time?hm(m.start_time)+" – "+hm(m.end_time):"libre"}</span>
+    <b>Arrivée suivante</b><span>${m.next_checkin?fdate(m.next_checkin):"—"}</span>
+    <b>Origine</b><span>${m.source==="ical"?"Calendrier"+(m.guest_label?" ("+esc(m.guest_label)+")":""):"Ajoutée à la main"}</span>
+    ${m.started_at?`<b>Commencée</b><span>${new Date(m.started_at).toLocaleString("fr-FR",{dateStyle:"short",timeStyle:"short"})}</span>`:""}
+    ${m.finished_at?`<b>Terminée</b><span>${new Date(m.finished_at).toLocaleString("fr-FR",{dateStyle:"short",timeStyle:"short"})}${dur!==null?` · ${Math.floor(dur/60)}h${String(dur%60).padStart(2,"0")}`:""}</span>`:""}</div>
+    ${m.comment?`<div class="card" style="margin:10px 0 0;background:var(--bg)"><div class="muted">Commentaire de l'agent</div>${esc(m.comment)}</div>`:""}</div>
+    <div class="row" style="gap:8px;margin-bottom:6px;flex-wrap:wrap">
+      ${m.status==="terminee"?`<button class="btn pri" id="val">Valider le ménage</button>`:""}
+      ${["terminee","validee"].includes(m.status)?`<button class="btn" id="reo">Rouvrir</button>`:""}
+      <button class="btn" id="edt">Modifier</button>
+      ${m.source==="manuel"?`<button class="btn bad" id="del">Supprimer</button>`:""}
+    </div>
+    <h2>Photos avant (${av.length})</h2><div class="card">${av.length?photoGrid(av):`<div class="muted">Aucune</div>`}</div>
+    <h2>Checklist ${list.filter(x=>st[x]).length}/${list.length}</h2><div class="card" style="padding:4px 14px">${list.map(x=>`<div class="ck" style="cursor:default"><span style="width:22px;text-align:center;color:${st[x]?"var(--ac)":"var(--tx3)"}">${st[x]?"✓":"○"}</span><span>${esc(x)}</span></div>`).join("")||`<div class="muted" style="padding:10px 0">Pas de checklist</div>`}</div>
+    <h2>Photos après (${ap.length})</h2><div class="card">${ap.length?photoGrid(ap):`<div class="muted">Aucune</div>`}</div>
+    ${m.reports.length?`<h2>Signalements</h2>${m.reports.map(reportCard).join("")}`:""}`;
+  bindLb();
+  const act = (a) => e => run(e.currentTarget, async () => { await api(a,{id}); S.data=null; await loadAdmin(true); adminMission(id); });
+  if ($("val")) $("val").onclick = act("mission_validate");
+  if ($("reo")) $("reo").onclick = act("mission_reopen");
+  $("edt").onclick = () => go({type:"newmission", mission:m});
+  if ($("del")) $("del").onclick = e => { if (confirm("Supprimer cette mission ?")) run(e.currentTarget, async () => { await api("mission_delete",{id}); await refresh(); go(null); }); };
+}
+
+function missionForm(v) {
+  const d = S.data, m = v.mission;
+  header(m ? "Modifier la mission" : "Nouvelle mission", () => go(m ? {type:"mission", id:m.id} : null));
+  const p0 = m ? d.properties.find(p=>p.id===m.property_id) : d.properties[0];
+  $("app").innerHTML = `<div class="card">
+    <label class="f" style="margin-top:0">Logement</label><select id="mp" ${m?"disabled":""}>${d.properties.map(p=>`<option value="${p.id}" ${p.id===p0?.id?"selected":""}>${esc(p.name)}</option>`).join("")}</select>
+    <label class="f">Date</label><input type="date" id="md" value="${m?.date||d.today}">
+    <div class="grid2"><div><label class="f">Début</label><input type="time" id="ms" value="${(m?.start_time||p0?.default_start||"11:00").slice(0,5)}"></div>
+    <div><label class="f">Fin</label><input type="time" id="me" value="${(m?.end_time||p0?.default_end||"13:00").slice(0,5)}"></div></div>
+    <label class="f">Agent</label><select id="mc"><option value="">— Aucun —</option>${d.cleaners.map(c=>`<option value="${c.id}" ${(m?m.cleaner_id:p0?.cleaner_id)===c.id?"selected":""}>${esc(c.name)}</option>`).join("")}</select>
+    ${m?`<label class="f">Statut</label><select id="mst">${Object.entries(ST).map(([k,l])=>`<option value="${k}" ${m.status===k?"selected":""}>${l}</option>`).join("")}</select>`:""}
+    <button class="btn pri block" id="ms_save" style="margin-top:16px">Enregistrer</button></div>
+    ${!m?`<p class="muted">Pour un ménage ponctuel (grand nettoyage, réservation directe…). Les ménages liés aux réservations Airbnb sont créés automatiquement.</p>`:""}`;
+  if (!m) $("mp").onchange = e => { const p = d.properties.find(x=>x.id===e.target.value); $("ms").value=p.default_start.slice(0,5); $("me").value=p.default_end.slice(0,5); $("mc").value=p.cleaner_id||""; };
+  $("ms_save").onclick = e => run(e.currentTarget, async () => {
+    await api("mission_save", {id:m?.id, property_id:$("mp").value, date:$("md").value, start_time:$("ms").value, end_time:$("me").value, cleaner_id:$("mc").value, status:m?$("mst").value:undefined});
+    toast("Mission enregistrée"); await refresh(); go(m ? {type:"mission", id:m.id} : null);
+  });
+}
+
+function reportCard(r) {
+  const [l, ic] = TYPES[r.type] || [r.type, ""];
+  return `<div class="card"><div class="row"><span style="width:24px;color:var(--tx2)">${ic}</span><div class="sp"><h3 style="font-size:15px">${l}${r.property?" · "+esc(r.property.name):""}</h3>
+    <div class="muted">${new Date(r.created_at).toLocaleString("fr-FR",{dateStyle:"short",timeStyle:"short"})}${r.cleaner?" · "+esc(r.cleaner.name):""}</div></div>${pill(r.status)}</div>
+    ${r.items?.length?`<div style="margin-top:8px;font-size:14px">${r.items.map(esc).join(" · ")}</div>`:""}
+    ${r.comment?`<div class="sub" style="margin-top:6px;white-space:pre-wrap">${esc(r.comment)}</div>`:""}
+    ${r.photos?.length?photoGrid(r.photos):""}
+    ${S.role==="admin"&&r.property?`<div style="margin-top:10px"><button class="btn sm" data-rs="${r.id}" data-to="${r.status==="nouveau"?"traite":"nouveau"}">${r.status==="nouveau"?"Marquer comme traité":"Remettre à traiter"}</button></div>`:""}</div>`;
+}
+let repFilter = "nouveau";
+function adminReports(d) {
+  header("Signalements");
+  const list = d.reports.filter(r => repFilter==="all" || r.status===repFilter);
+  const shop = {};
+  d.reports.filter(r=>r.status==="nouveau" && ["linge","consommable"].includes(r.type)).forEach(r => r.items.forEach(x => { const k = x+" · "+(r.property?.name||""); shop[k]=(shop[k]||0)+1; }));
+  $("app").innerHTML = `<div class="seg">${[["nouveau","À traiter"],["traite","Traités"],["all","Tous"]].map(([k,l])=>`<button data-f="${k}" class="${repFilter===k?"on":""}">${l}</button>`).join("")}</div>
+    ${repFilter==="nouveau"&&Object.keys(shop).length?`<div class="card"><h3 style="font-size:15px">Liste de courses / réassort</h3>${Object.keys(shop).sort().map(k=>`<div class="sub">• ${esc(k)}</div>`).join("")}</div>`:""}
+    ${list.length?list.map(reportCard).join(""):`<div class="empty">Aucun signalement ${repFilter==="nouveau"?"à traiter":""}.</div>`}`;
+  bindLb();
+  $("app").querySelectorAll("[data-f]").forEach(b => b.onclick = () => { repFilter=b.dataset.f; adminReports(d); });
+  $("app").querySelectorAll("[data-rs]").forEach(b => b.onclick = e => run(e.currentTarget, async () => { await api("report_update",{id:b.dataset.rs, status:b.dataset.to}); await refresh(); }));
+}
+
+function adminProps(d) {
+  header("Logements", null, `<button class="btn sm pri" id="np">+ Logement</button>`);
+  $("np").onclick = () => go({type:"prop"});
+  $("app").innerHTML = d.properties.length ? d.properties.map(p => `<div class="card click" data-p="${p.id}"><div class="row"><div class="sp"><h3>${esc(p.name)}</h3>
+    <div class="sub">${hm(p.default_start)} – ${hm(p.default_end)} · ${esc(d.cleaners.find(c=>c.id===p.cleaner_id)?.name||"Pas d'agent attitré")}</div>
+    <div class="muted">${p.ical_urls.length?`${p.ical_urls.length} calendrier(s) · ${p.last_sync_at?"synchro "+new Date(p.last_sync_at).toLocaleString("fr-FR",{dateStyle:"short",timeStyle:"short"}):"jamais synchronisé"}`:"Aucun calendrier : missions manuelles uniquement"}</div>
+    ${p.last_sync_error?`<div style="color:var(--bad);font-size:13px">${esc(p.last_sync_error)}</div>`:""}</div></div></div>`).join("")
+    : `<div class="empty"><h3>Aucun logement</h3><p>Ajoutez votre premier logement avec son lien de calendrier.</p></div>`;
+  $("app").querySelectorAll("[data-p]").forEach(c => c.onclick = () => go({type:"prop", id:c.dataset.p}));
+}
+function propForm(id) {
+  const d = S.data, p = d.properties.find(x=>x.id===id) || {name:"",address:"",ical_urls:[],default_start:"11:00",default_end:"13:00",cleaner_id:d.cleaners[0]?.id||null,
+    checklist:["Draps et serviettes changés","Salle de bain","Cuisine et vaisselle","Poubelles vidées","Sols aspirés et lavés","Vérifier qu'il ne reste rien des voyageurs"],
+    consumables:["Papier toilette","Savon / gel douche","Liquide vaisselle","Éponges","Sacs poubelle","Café / thé","Sel / poivre / huile"], notes:""};
+  header(id ? "Modifier le logement" : "Nouveau logement", () => go(null));
+  $("app").innerHTML = `<div class="card">
+    <label class="f" style="margin-top:0">Nom du logement</label><input type="text" id="pn" value="${esc(p.name)}" placeholder="Elbeuf · T2 rue du 1er Mai">
+    <label class="f">Adresse (visible par l'agent)</label><input type="text" id="pa" value="${esc(p.address||"")}" placeholder="12 rue du 1er Mai, 76500 Elbeuf">
+    <label class="f">Liens de calendrier iCal (un par ligne)</label><textarea id="pi" placeholder="https://www.airbnb.fr/calendar/ical/123456.ics?s=…">${esc(p.ical_urls.join("\n"))}</textarea>
+    <div class="muted">Airbnb : Annonces › votre logement › Disponibilités › Connecter des calendriers › Exporter le calendrier. Booking : Tarifs et disponibilités › Synchroniser les calendriers.</div>
+    <div class="grid2"><div><label class="f">Ménage de</label><input type="time" id="ps" value="${p.default_start.slice(0,5)}"></div><div><label class="f">à</label><input type="time" id="pe" value="${p.default_end.slice(0,5)}"></div></div>
+    <label class="f">Agent attitré</label><select id="pc"><option value="">— Aucun —</option>${d.cleaners.map(c=>`<option value="${c.id}" ${p.cleaner_id===c.id?"selected":""}>${esc(c.name)}</option>`).join("")}</select>
+    ${id?`<label class="ck" style="border:0"><input type="checkbox" id="pac" checked><span class="sub">Appliquer aussi aux missions à venir déjà créées</span></label>`:""}
+    <label class="f">Checklist ménage (une tâche par ligne)</label><textarea id="pk" style="min-height:150px">${esc(p.checklist.join("\n"))}</textarea>
+    <label class="f">Consommables à surveiller (un par ligne)</label><textarea id="pco" style="min-height:130px">${esc(p.consumables.join("\n"))}</textarea>
+    <label class="f">Consignes pour l'agent</label><textarea id="pno" placeholder="Code boîte à clés, local poubelles, où ranger le linge sale…">${esc(p.notes||"")}</textarea>
+    <button class="btn pri block" id="psave" style="margin-top:16px">Enregistrer${p.ical_urls.length||!id?" et synchroniser":""}</button>
+    ${id?`<button class="btn bad block" id="pdel" style="margin-top:8px">Retirer ce logement</button>`:""}</div>`;
+  const lines = v => v.split("\n").map(x=>x.trim()).filter(Boolean);
+  $("psave").onclick = e => run(e.currentTarget, async () => {
+    const r = await api("property_save", {id, name:$("pn").value.trim(), address:$("pa").value.trim(), ical_urls:lines($("pi").value), default_start:$("ps").value, default_end:$("pe").value,
+      cleaner_id:$("pc").value, apply_cleaner: $("pac")?.checked, checklist:lines($("pk").value), consumables:lines($("pco").value), notes:$("pno").value.trim()});
+    if (r.sync?.error) toast("Logement enregistré, mais le calendrier n'a pas pu être lu : " + r.sync.error, true);
+    else toast(r.sync ? `Enregistré · ${r.sync.created} mission(s) créée(s)` : "Logement enregistré");
+    await refresh(); go(null);
+  });
+  if ($("pdel")) $("pdel").onclick = e => { if (confirm("Retirer ce logement ? Ses missions passées restent dans le récap.")) run(e.currentTarget, async () => { await api("property_delete",{id}); await refresh(); go(null); }); };
+}
+
+function agentLink(c) { return location.origin + location.pathname + "?t=" + c.token; }
+function adminAgents(d) {
+  header("Agents de ménage", null, `<button class="btn sm pri" id="na">+ Agent</button>`);
+  $("na").onclick = () => editAgent(null);
+  $("app").innerHTML = (d.cleaners.length ? d.cleaners.map(c => {
+    const link = agentLink(c);
+    const msg = encodeURIComponent(`Bonjour ${c.name.split(" ")[0]}, voici ton accès à l'appli ménage : ${link}\nOuvre-le sur ton téléphone puis « Ajouter à l'écran d'accueil ».`);
+    const nb = d.missions.filter(m=>m.cleaner_id===c.id && m.date>=d.today && m.status==="a_faire").length;
+    return `<div class="card"><div class="row"><div class="sp"><h3>${esc(c.name)}</h3><div class="sub">${esc(c.phone||"")}${c.phone?" · ":""}${nb} mission(s) à venir</div></div>
+      <button class="btn sm" data-e="${c.id}">Modifier</button></div>
+      <label class="f">Lien personnel</label><div class="code">${esc(link)}</div>
+      <div class="row" style="gap:6px;margin-top:8px;flex-wrap:wrap">
+        <button class="btn sm" data-cp="${esc(link)}">Copier</button>
+        <a class="btn sm" href="https://wa.me/${(c.phone||"").replace(/[^\d]/g,"").replace(/^0/,"33")}?text=${msg}" target="_blank" rel="noopener">WhatsApp</a>
+        <a class="btn sm" href="sms:${esc(c.phone||"")}?&body=${msg}">SMS</a>
+        <button class="btn sm" data-nl="${c.id}">Nouveau lien</button></div></div>`;
+  }).join("") : `<div class="empty"><h3>Aucun agent</h3><p>Ajoutez votre agent de ménage pour lui envoyer son lien d'accès.</p></div>`) +
+  `<div class="card" style="background:var(--bg)"><h3 style="font-size:15px">Votre accès gestionnaire</h3><div class="muted">Gardez ce lien pour vous : il donne accès à tout.</div><div class="code" style="margin-top:6px">${esc(location.origin+location.pathname+"?t="+TOKEN)}</div></div>`;
+  $("app").querySelectorAll("[data-e]").forEach(b => b.onclick = () => editAgent(d.cleaners.find(c=>c.id===b.dataset.e)));
+  $("app").querySelectorAll("[data-cp]").forEach(b => b.onclick = async () => { try { await navigator.clipboard.writeText(b.dataset.cp); toast("Lien copié"); } catch(e) { prompt("Copiez le lien :", b.dataset.cp); } });
+  $("app").querySelectorAll("[data-nl]").forEach(b => b.onclick = e => { if (confirm("Créer un nouveau lien ? L'ancien ne fonctionnera plus.")) run(e.currentTarget, async () => { await api("cleaner_new_link",{id:b.dataset.nl}); await refresh(); toast("Nouveau lien créé"); }); });
+}
+function editAgent(c) {
+  header(c ? "Modifier l'agent" : "Nouvel agent", () => go(null));
+  $("app").innerHTML = `<div class="card"><label class="f" style="margin-top:0">Prénom et nom</label><input type="text" id="an" value="${esc(c?.name||"")}" placeholder="Sophie Martin">
+    <label class="f">Téléphone</label><input type="tel" id="at" value="${esc(c?.phone||"")}" placeholder="06 12 34 56 78">
+    <button class="btn pri block" id="asave" style="margin-top:16px">Enregistrer</button>
+    ${c?`<button class="btn bad block" id="adel" style="margin-top:8px">Désactiver cet agent</button>`:""}</div>`;
+  $("asave").onclick = e => run(e.currentTarget, async () => { await api("cleaner_save",{id:c?.id, name:$("an").value.trim(), phone:$("at").value.trim()}); await refresh(); S.tab="agents"; go(null); });
+  if ($("adel")) $("adel").onclick = e => { if (confirm("Désactiver cet agent ? Son lien ne fonctionnera plus.")) run(e.currentTarget, async () => { await api("cleaner_delete",{id:c.id}); await refresh(); go(null); }); };
+}
+
+let recapMonth = null;
+async function adminRecap(d) {
+  header("Récapitulatif mensuel");
+  recapMonth = recapMonth || d.today.slice(0,7);
+  $("app").innerHTML = `<label class="f" style="margin-top:0">Mois</label><input type="month" id="rm" value="${recapMonth}"><div id="rr"><div class="empty"><span class="spin"></span></div></div>`;
+  $("rm").onchange = e => { recapMonth = e.target.value; adminRecap(d); };
+  try {
+    const r = await api("recap",{month:recapMonth});
+    const mins = (a,b) => { if(!a||!b) return 0; const [h1,m1]=a.split(":").map(Number),[h2,m2]=b.split(":").map(Number); return Math.max(0,(h2*60+m2)-(h1*60+m1)); };
+    const real = m => m.started_at&&m.finished_at ? Math.round((new Date(m.finished_at)-new Date(m.started_at))/60000) : 0;
+    const fmt = n => `${Math.floor(n/60)}h${String(n%60).padStart(2,"0")}`;
+    const by = {};
+    r.missions.forEach(m => { const k = m.cleaner?.name||"Sans agent"; by[k] = by[k]||{n:0,plan:0,real:0}; by[k].n++; by[k].plan+=mins(m.start_time,m.end_time); by[k].real+=real(m); });
+    $("rr").innerHTML = r.missions.length ? `<div class="card" style="margin-top:12px"><table class="t"><tr><th>Agent</th><th>Ménages</th><th>Prévu</th><th>Réel</th></tr>
+      ${Object.entries(by).map(([k,v])=>`<tr><td>${esc(k)}</td><td>${v.n}</td><td>${fmt(v.plan)}</td><td>${fmt(v.real)}</td></tr>`).join("")}</table></div>
+      <div class="card" style="overflow-x:auto"><table class="t"><tr><th>Date</th><th>Logement</th><th>Agent</th><th>Réel</th></tr>
+      ${r.missions.map(m=>`<tr><td>${fshort(m.date)}</td><td>${esc(m.property?.name)}</td><td>${esc(m.cleaner?.name||"—")}</td><td>${real(m)?fmt(real(m)):"—"}</td></tr>`).join("")}</table></div>
+      <button class="btn block" id="csv">Exporter en CSV (Excel)</button>
+      <p class="muted">Seuls les ménages terminés ou validés sont comptés. « Réel » = temps entre le début et la fin pointés dans l'appli.</p>` : `<div class="empty">Aucun ménage terminé ce mois-ci.</div>`;
+    if ($("csv")) $("csv").onclick = () => {
+      const rows = [["Date","Logement","Agent","Statut","Prévu (min)","Réel (min)"], ...r.missions.map(m=>[m.date,m.property?.name||"",m.cleaner?.name||"",ST[m.status],mins(m.start_time,m.end_time),real(m)])];
+      const csv = "﻿" + rows.map(x=>x.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(";")).join("\n");
+      const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([csv],{type:"text/csv"})); a.download = `menage-${recapMonth}.csv`; a.click();
+    };
+  } catch(e) { $("rr").innerHTML = `<div class="empty">${esc(e.message)}</div>`; }
+}
+
+document.addEventListener("visibilitychange", () => { if (document.visibilityState==="visible" && S.role && !S.view) { if (S.role==="admin") refresh(); else renderAgent(); } });
+boot();
+</script>
+</body>
+</html>
