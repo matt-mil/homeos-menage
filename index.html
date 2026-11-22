@@ -221,7 +221,7 @@ body.agent .tabs button.on{color:var(--hero)}[data-theme=dark] body.agent .tabs 
 <input type="file" id="filein" accept="image/*" multiple style="display:none">
 <script>
 const API = "https://yrbdbhpkpqyxpwjhbhbu.supabase.co/functions/v1/menage-api";
-const APP_V = "2026-11-22-2155";
+const APP_V = "2026-11-22-2200";
 async function checkUpdate() {
   try {
     const r = await fetch("version.json?" + Date.now(), { cache: "no-store" });
@@ -275,6 +275,7 @@ const I = {
   sparkle:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg>',
   phone:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>',
   archive:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="4" rx="1"/><path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8M10 12h4"/></svg>',
+  share:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M8 7l4-4 4 4"/><path d="M6 11H5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-8a1 1 0 0 0-1-1h-1"/></svg>',
   sync:'<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11A8.1 8.1 0 0 0 4.5 9M4 5v4h4M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"/></svg>',
 };
 const TYPES = {linge:["Linge",I.shirt],consommable:["Consommables",I.bottle],casse:["Casse",I.hammer],autre:["Autre",I.dots],equipement:["Équipement",I.wrench],proprete:["Propreté",I.broom],degradation:["Dégradation",I.alert]};
@@ -386,12 +387,12 @@ async function disablePush() {
 const feedUrl = () => API.replace(/^https:/, "") + "?ical=" + TOKEN;
 async function settingsCard(el) {
   const st = await pushState().catch(() => "unsupported");
-  const label = {on:"Activées sur ce téléphone", off:"Désactivées", denied:"Bloquées dans les réglages du téléphone", install:"Disponibles une fois l'appli ajoutée à l'écran d'accueil", unsupported:"Non disponibles sur ce navigateur"}[st];
+  const label = {on:"Activées sur ce téléphone", off:"Désactivées", denied:"Bloquées dans les réglages du téléphone", install:"Désactivées", unsupported:"Non disponibles sur ce navigateur"}[st];
   el.innerHTML = `
     <div class="card"><div class="row"><span style="color:var(--ac)">${I.bell}</span><div class="sp"><h3 style="font-size:15px">Notifications</h3><div class="sub">${label}</div></div></div>
     <div class="muted" style="margin-top:8px">${S.role==="admin"?"Nouvelle réservation, modification, annulation, ménage terminé, signalement.":"Nouvelle réservation, modification ou annulation d'un ménage."}</div>
-    ${st==="install"?`<div class="muted" style="margin-top:8px">Sur iPhone : bouton Partager <b>⬆︎</b> › <b>Sur l'écran d'accueil</b>, puis ouvre My Laeti depuis l'icône.</div>`:""}
-    ${st==="off"?`<button class="btn pri block" id="pon" style="margin-top:12px">Activer les notifications</button>`:""}
+    ${st==="off"||st==="install"||st==="unsupported"?`<button class="btn pri block" id="pon" style="margin-top:12px">Activer les notifications</button>`:""}
+    ${st==="denied"?`<button class="btn block" id="pden" style="margin-top:12px">Comment les débloquer ?</button>`:""}
     ${st==="on"?`<div class="row" style="gap:8px;margin-top:12px"><button class="btn sm" id="ptest">Tester</button><button class="btn sm bad" id="poff">Désactiver</button></div>`:""}</div>
     <div class="card"><div class="row"><span style="color:var(--ac)">${I.cal}</span><div class="sp"><h3 style="font-size:15px">Synchroniser avec mon agenda</h3><div class="sub">${S.role==="admin"?"Tous les ménages":"Tes ménages"} apparaissent dans ton agenda et se mettent à jour tout seuls.</div></div></div>
     <div style="display:grid;gap:8px;margin-top:12px">
@@ -400,7 +401,18 @@ async function settingsCard(el) {
       <button class="btn sm" id="cpf" style="justify-self:start">Copier le lien d'abonnement</button></div></div>
     <div class="card click" id="thm2"><div class="row"><span style="color:var(--ac)">${I[themeMode()==="dark"?"moon":themeMode()==="light"?"sun":"auto"]}</span><div class="sp"><h3 style="font-size:15px">Apparence</h3><div class="sub">${{auto:"Automatique (suit le téléphone)",light:"Mode clair",dark:"Mode sombre"}[themeMode()]}</div></div><span class="muted">Changer</span></div></div>`;
   const again = () => settingsCard(el);
-  if ($("pon")) $("pon").onclick = e => run(e.currentTarget, async () => { await enablePush(); toast("Notifications activées"); again(); });
+  if ($("pon")) $("pon").onclick = e => {
+    if (st === "install") return sheet("Activer les notifications", `<div style="font-size:16px;line-height:1.6">Sur iPhone, Apple n'autorise les notifications que pour une appli posée sur l'écran d'accueil. C'est rapide :
+      <ol style="padding-left:20px;margin:12px 0">
+        <li>Touche le bouton <b>Partager</b> <span style="display:inline-block;width:18px;vertical-align:-3px">${I.share}</span> en bas de Safari.</li>
+        <li>Choisis <b>Sur l'écran d'accueil</b>, puis <b>Ajouter</b>.</li>
+        <li>Ouvre <b>My Laeti</b> depuis la nouvelle icône.</li>
+        <li>Va dans <b>${S.role==="admin"?"Réglages":"Profil"}</b> et touche <b>Activer les notifications</b>.</li></ol>
+      <div class="muted">Ton lien personnel est gardé : tu arriveras directement sur ton compte.</div></div>`);
+    if (st === "unsupported") return toast("Ce navigateur ne gère pas les notifications. Ouvre le lien dans Chrome ou Safari.", true);
+    run(e.currentTarget, async () => { await enablePush(); toast("Notifications activées"); again(); });
+  };
+  if ($("pden")) $("pden").onclick = () => sheet("Notifications bloquées", `<div style="font-size:16px;line-height:1.6">${isIOS ? "Réglages de l'iPhone › <b>Notifications</b> › <b>My Laeti</b> › active <b>Autoriser les notifications</b>." : "Dans Chrome : touche le cadenas à gauche de l'adresse (ou ⋮ › Infos sur l'appli) › <b>Autorisations</b> › <b>Notifications</b> › Autoriser."} Puis reviens ici et touche Activer.</div>`);
   if ($("ptest")) $("ptest").onclick = e => run(e.currentTarget, async () => { await api("push_test"); toast("Notification de test envoyée"); });
   if ($("poff")) $("poff").onclick = e => run(e.currentTarget, async () => { await disablePush(); toast("Notifications désactivées"); again(); });
   $("cpf").onclick = async () => { const u = "https:" + feedUrl(); try { await navigator.clipboard.writeText(u); toast("Lien copié"); } catch(e) { prompt("Lien d'abonnement :", u); } };
@@ -862,7 +874,7 @@ async function aReports() {
 async function aProfil() {
   $("app").innerHTML = `<div class="a-hero" style="text-align:center;padding-bottom:40px"><div class="a-hrow"><span class="sp"></span><button class="a-ib" data-thm aria-label="Changer de thème">${I[themeMode()==="dark"?"moon":themeMode()==="light"?"sun":"auto"]}</button></div>
       <div id="avc" class="click" style="display:inline-block;position:relative">${avatarHtml(88)}<span class="a-avedit">${I.cam}</span></div>
-      <div class="a-hi" style="margin-top:10px">${esc(S.name)}</div><div class="a-hs">Agente d'entretien · My Laeti</div></div>
+      <div class="a-hi" style="margin-top:10px">${esc(S.name)}</div></div>
     <div class="a-sheet"><div id="set"></div>
       <div class="muted" style="text-align:center;margin:16px 0 4px;font-size:12px">My Laeti · version du ${APP_V.slice(8,10)}/${APP_V.slice(5,7)} à ${APP_V.slice(11,13)}h${APP_V.slice(13,15)}</div></div>`;
   bindHero(); settingsCard($("set"));
