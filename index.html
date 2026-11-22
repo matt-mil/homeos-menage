@@ -95,16 +95,21 @@ table.t th{color:var(--tx2);font-weight:500;font-size:13px}
 .today{border-left:4px solid var(--ac)}
 .icb{border:1px solid var(--bd);background:var(--card);border-radius:10px;width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;color:var(--tx2);flex:none}
 .icb svg{width:20px;height:20px}
-#splash{position:fixed;inset:0;z-index:100;background:var(--ac);color:#fff;display:flex;flex-direction:column;justify-content:center;padding:32px 28px calc(32px + env(safe-area-inset-bottom));transition:opacity .45s ease,transform .45s ease;cursor:pointer}
-[data-theme=dark] #splash{background:#0b3a2f;color:#E1F5EE}
+#splash{position:fixed;inset:0;z-index:100;background:radial-gradient(120% 80% at 50% 30%,#1d6b52 0%,#0d3a2c 55%,#071f17 100%);color:#fff;display:flex;align-items:center;justify-content:center;padding:calc(28px + env(safe-area-inset-top)) 26px calc(28px + env(safe-area-inset-bottom));transition:opacity .45s ease,transform .45s ease;overflow:auto}
 #splash.out{opacity:0;transform:scale(1.03);pointer-events:none}
-#splash .logo{width:64px;height:64px;border-radius:18px;background:rgba(255,255,255,.16);display:flex;align-items:center;justify-content:center;margin-bottom:28px}
-#splash .logo svg{width:36px;height:36px}
-#splash .hi{font-size:34px;line-height:1.15;font-weight:700;margin:0 0 10px;letter-spacing:-.01em}
-#splash .q{font-size:21px;line-height:1.35;opacity:.92;margin:0 0 28px}
-#splash .sum{font-size:15px;opacity:.85;min-height:22px}
-#splash .go{margin-top:34px;align-self:flex-start;background:#fff;color:#0F6E56;border:0;border-radius:14px;padding:14px 22px;font-weight:600;font-size:16px;cursor:pointer}
-[data-theme=dark] #splash .go{background:#E1F5EE;color:#04342C}
+.sp-in{width:100%;max-width:380px;display:flex;flex-direction:column;align-items:center;text-align:center}
+.sp-logo{position:relative;width:96px;height:96px;color:#fff}.sp-logo svg{width:96px;height:96px;stroke-width:1.4}
+.sp-spark{position:absolute;right:-6px;top:-4px;width:26px;height:26px}.sp-spark svg{width:26px;height:26px;fill:#fff}
+.sp-name{font-size:44px;font-weight:700;letter-spacing:-.02em;margin-top:6px;line-height:1}
+.sp-tag{font-size:16px;opacity:.85;margin:10px 0 30px}
+.sp-feat{display:grid;gap:12px;width:100%;text-align:left}
+.sp-feat div{display:flex;align-items:center;gap:14px;font-size:15px}
+.sp-feat span{width:46px;height:46px;border-radius:14px;background:rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;flex:none}
+.sp-feat svg{width:24px;height:24px}
+.sp-hi{margin:30px 0 6px;font-size:20px;font-weight:600;line-height:1.3}.sp-hi small{font-size:15px;font-weight:400;opacity:.88}
+#splash .sum{font-size:14px;opacity:.75;min-height:20px}
+.sp-go{margin-top:24px;width:100%;background:#1E7A5C;color:#fff;border:0;border-radius:16px;padding:16px;font-weight:600;font-size:17px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px}
+.sp-go svg{width:20px;height:20px}
 @media (prefers-reduced-motion:reduce){#splash{transition:none}}
 .cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center}
 .cal .dow{font-size:11px;color:var(--tx3);padding:4px 0;text-transform:uppercase}
@@ -117,6 +122,89 @@ table.t th{color:var(--tx2);font-weight:500;font-size:13px}
 .new{background:var(--infobg);color:var(--info)}
 .banner{display:flex;gap:12px;align-items:center;background:var(--acbg);color:var(--ac);border-radius:var(--r);padding:12px 14px;margin-bottom:10px;font-size:14px}
 .banner svg{width:22px;height:22px;flex:none}
+.card .row>span>svg{width:22px;height:22px}
+.btn svg{width:18px;height:18px;flex:none}
+:root{--hero:#0F4D3A;--hero2:#1E7A5C}[data-theme=dark]{--hero:#0a2c22;--hero2:#1d6b52}
+body.agent header.top{display:none}
+body.agent .wrap{padding:0 0 calc(86px + env(safe-area-inset-bottom));max-width:560px}
+body.agent .tabs{max-width:none}
+.a-hero{background:var(--hero);color:#fff;padding:calc(12px + env(safe-area-inset-top)) 18px 38px}
+.a-hrow{display:flex;align-items:center;gap:12px;max-width:560px;margin:0 auto}
+.a-ht{flex:1;min-width:0;font-size:21px;font-weight:700}
+.a-hs{font-size:14px;font-weight:400;opacity:.85;display:flex;align-items:center;gap:4px}.a-hs svg{width:15px;height:15px}
+.a-hi{font-size:20px;font-weight:700;line-height:1.2}
+.a-ib{width:40px;height:40px;border-radius:12px;border:0;background:rgba(255,255,255,.12);color:#fff;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;flex:none;font-size:20px}
+.a-ib svg{width:22px;height:22px}.a-ib.sm{width:34px;height:34px;background:var(--acbg);color:var(--ac)}.a-ib.dark{background:var(--bg);color:var(--tx)}
+.a-ib.glass{background:rgba(0,0,0,.35);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.flip svg{transform:scaleX(-1)}
+.a-av{border-radius:50%;background-size:cover;background-position:center;border:2px solid rgba(255,255,255,.7);flex:none}
+.a-av.ini{background:var(--hero2);display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff}
+.a-avedit{position:absolute;right:-2px;bottom:-2px;width:30px;height:30px;border-radius:50%;background:#fff;color:var(--hero);display:flex;align-items:center;justify-content:center}.a-avedit svg{width:17px;height:17px}
+.a-day{display:flex;align-items:center;gap:10px;background:var(--card);color:var(--tx);border-radius:18px;padding:10px 12px;margin:16px auto -64px;max-width:560px;position:relative;z-index:2;box-shadow:0 6px 20px rgba(0,0,0,.12)}
+.a-day .a-hs{color:var(--tx2);justify-content:center}
+.a-home{padding-bottom:42px}
+.a-home + .a-sheet{padding-top:44px}
+.a-sheet{background:var(--bg);border-radius:26px 26px 0 0;margin-top:-24px;padding:18px 16px 24px;position:relative;min-height:60vh}
+.a-box{background:var(--card);border:1px solid var(--bd);border-radius:18px;padding:14px;margin-bottom:12px}
+.a-box .row>svg{width:24px;height:24px;color:var(--ac);flex:none}
+.a-bt{font-size:17px;font-weight:700;margin-bottom:8px}
+.a-today{display:flex;gap:12px;align-items:center;padding:6px 0}.a-today+.a-today{border-top:1px solid var(--bd);padding-top:12px;margin-top:6px}
+.a-btn{margin-top:10px;background:var(--hero);color:#fff;border:0;border-radius:12px;padding:10px 18px;font-weight:600;cursor:pointer;width:100%;max-width:220px}
+[data-theme=dark] .a-btn{background:var(--hero2)}
+.a-th{width:58px;height:58px;border-radius:12px;background-size:cover;background-position:center;flex:none}
+.a-th.sm{width:46px;height:46px}.a-thl{width:96px;height:96px;border-radius:14px;background-size:cover;background-position:center;flex:none}
+.ph0{background:linear-gradient(135deg,var(--hero2),var(--hero));display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.85)}.ph0 svg{width:46%;height:46%}
+.a-mt{font-weight:700;font-size:16px;line-height:1.25}
+.a-ms{display:flex;align-items:center;gap:6px;font-size:14px;color:var(--tx2);margin-top:3px}.a-ms svg{width:16px;height:16px;flex:none}
+.a-mc{display:flex;gap:12px;align-items:center;background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:10px;margin-bottom:10px;flex:1;min-width:0}
+.a-pills{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
+.a-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:4px 0 6px}
+.a-stat{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:12px 6px;text-align:center}
+.a-stat b{display:block;font-size:26px;color:var(--ac);line-height:1.1}.a-stat b.red{color:var(--bad)}.a-stat span{font-size:12px;color:var(--tx2)}
+.a-sec{font-size:16px;font-weight:700;margin:18px 2px 10px}
+.a-quick{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.a-quick button,.a-info button,.a-types button{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:14px 4px;display:flex;flex-direction:column;align-items:center;gap:6px;font-size:12px;color:var(--tx);cursor:pointer;text-align:center}
+.a-quick svg,.a-info svg,.a-types svg{width:28px;height:28px;color:var(--ac)}
+.a-info{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.a-types{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:6px}
+.a-types button.on{background:var(--hero);border-color:var(--hero);color:#fff}.a-types button.on svg{color:#fff}
+.a-seg{display:flex;background:rgba(255,255,255,.14);border-radius:14px;padding:4px;margin:16px auto 0;max-width:560px}
+.a-seg button{flex:1;border:0;background:none;color:#fff;padding:9px;border-radius:11px;font-weight:600;cursor:pointer;font-size:15px}
+.a-seg button.on{background:#fff;color:var(--hero)}
+.a-seg.light{background:var(--card);border:1px solid var(--bd);margin:0 0 14px}
+.a-seg.light button{color:var(--tx2)}.a-seg.light button.on{background:var(--hero);color:#fff}
+.a-wk{display:flex;align-items:center;justify-content:space-between;margin:2px 0 14px}.a-wk b{font-size:17px}
+.a-nb{border:0;background:none;color:var(--tx);cursor:pointer;padding:6px;display:flex}.a-nb svg{width:24px;height:24px}
+.a-wrow{display:flex;gap:10px;align-items:center}
+.a-wd{width:44px;flex:none;text-align:center;color:var(--tx2);font-size:13px;text-transform:capitalize}.a-wd b{display:block;font-size:20px;color:var(--tx)}.a-wd.t b,.a-wd.t span{color:var(--ac)}
+.a-cover{height:240px;background:var(--hero) center/cover no-repeat;position:relative}
+.a-cov0{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.35);background:linear-gradient(135deg,var(--hero2),var(--hero))}.a-cov0 svg{width:110px;height:110px}
+.a-covbar{position:absolute;left:0;right:0;top:0;display:flex;gap:10px;padding:calc(12px + env(safe-area-inset-top)) 14px}
+.a-big{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;background:var(--hero);color:#fff;border:0;border-radius:16px;padding:16px;font-size:17px;font-weight:600;cursor:pointer;margin:6px 0 4px}
+.a-big svg{width:20px;height:20px}
+[data-theme=dark] .a-big{background:var(--hero2)}
+.a-big.soft{background:var(--acbg);color:var(--ac)}
+.a-done{display:flex;gap:12px;align-items:center;background:var(--okbg);color:var(--ok);border-radius:16px;padding:14px;margin:8px 0}.a-done svg{width:26px;height:26px;flex:none}
+.a-grp{background:var(--card);border:1px solid var(--bd);border-radius:16px;margin-bottom:10px;overflow:hidden}
+.a-gh{width:100%;display:flex;align-items:center;gap:12px;padding:14px;border:0;background:none;cursor:pointer;text-align:left;font-size:16px;color:var(--tx)}
+.a-gh>svg{width:24px;height:24px;color:var(--ac);flex:none}.a-gh .chev{color:var(--tx3);transition:transform .2s}.a-grp.op .chev{transform:rotate(180deg)}
+.a-gb{padding:0 14px 6px}
+.a-rooms{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.a-rimg{aspect-ratio:1.15;border-radius:16px;background:var(--bd) center/cover;position:relative;display:flex;align-items:center;justify-content:center;cursor:pointer;overflow:hidden}
+.a-rimg.e{background:var(--card);border:1.5px dashed var(--tx3)}
+.a-cam{width:52px;height:52px;border-radius:50%;background:rgba(0,0,0,.45);color:#fff;display:flex;align-items:center;justify-content:center}.a-rimg.e .a-cam{background:var(--acbg);color:var(--ac)}.a-cam svg{width:26px;height:26px}
+.a-cnt{position:absolute;right:8px;top:8px;background:rgba(0,0,0,.6);color:#fff;border-radius:10px;font-size:12px;padding:1px 8px}
+.a-rl{text-align:center;font-weight:600;margin-top:6px}
+.a-stk{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:12px;margin-bottom:10px}
+.a-stk>svg{width:30px;height:30px;color:var(--tx2);flex:none}
+.a-bar{height:6px;background:var(--bd);border-radius:6px;margin-top:6px;overflow:hidden}.a-bar i{display:block;height:100%;border-radius:6px}
+.a-bar.g i{background:#2e9d6a}.a-bar.o i{background:#E8902A}.a-bar.r i{background:#D94848}
+.a-pm{width:36px;height:36px;border-radius:10px;border:1.5px solid var(--ac);background:none;color:var(--ac);font-size:20px;line-height:1;cursor:pointer;flex:none}
+.a-chip{border:1px solid var(--bd);background:var(--card);border-radius:20px;padding:8px 12px;display:flex;align-items:center;gap:6px;cursor:pointer;font-size:14px;color:var(--tx)}.a-chip svg{width:18px;height:18px;color:var(--ac)}
+.a-ric{width:40px;height:40px;border-radius:12px;background:var(--acbg);color:var(--ac);display:flex;align-items:center;justify-content:center;flex:none}.a-ric svg{width:22px;height:22px}
+.a-modal{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:70;display:flex;align-items:flex-end;justify-content:center}
+.a-mbox{background:var(--card);width:100%;max-width:560px;border-radius:24px 24px 0 0;padding:20px 18px calc(24px + env(safe-area-inset-bottom));max-height:80vh;overflow:auto}
+body.agent .tabs button.on{color:var(--hero)}[data-theme=dark] body.agent .tabs button.on{color:var(--ac)}
 </style>
 </head>
 <body>
@@ -144,9 +232,31 @@ const I = {
   auto:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 3v18"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/></svg>',
   gear:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 4.3c.4-1.8 3-1.8 3.4 0a1.7 1.7 0 0 0 2.6 1.1c1.5-.9 3.3.8 2.4 2.4a1.7 1.7 0 0 0 1 2.5c1.8.4 1.8 3 0 3.4a1.7 1.7 0 0 0-1 2.6c.9 1.5-.9 3.3-2.4 2.4a1.7 1.7 0 0 0-2.6 1c-.4 1.8-3 1.8-3.4 0a1.7 1.7 0 0 0-2.5-1c-1.6.9-3.3-.9-2.4-2.4a1.7 1.7 0 0 0-1.1-2.6c-1.8-.4-1.8-3 0-3.4a1.7 1.7 0 0 0 1.1-2.5c-.9-1.6.8-3.3 2.4-2.4 1 .6 2.3.1 2.5-1.1z"/><circle cx="12" cy="12" r="3"/></svg>',
   list:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M9 6h11M9 12h11M9 18h11M5 6h.01M5 12h.01M5 18h.01"/></svg>',
+  check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M9 12l2 2 4-4"/></svg>',
+  user:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M6 21v-1a6 6 0 0 1 12 0v1"/></svg>',
+  photo:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-8 8"/></svg>',
+  clock:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
+  pin:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>',
+  play:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4v16l13-8z" fill="currentColor"/></svg>',
+  note:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg>',
+  lock:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/><circle cx="12" cy="16" r="1"/></svg>',
+  box:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l9-5 9 5v8l-9 5-9-5z"/><path d="M3 8l9 5 9-5M12 13v8"/></svg>',
+  send:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 3L10 14"/><path d="M21 3l-7 18-4-7-7-4z"/></svg>',
+  chef:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 14a4 4 0 1 1 1.5-7.7A4 4 0 0 1 16 6.3 4 4 0 1 1 17 14v6H7z"/><path d="M7 17h10"/></svg>',
+  bath:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16v3a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5z"/><path d="M6 12V5a2 2 0 0 1 4 0"/><path d="M7 20l-1 2M17 20l1 2"/></svg>',
+  bed:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18V7M3 14h18v4M21 14v-3a3 3 0 0 0-3-3h-7v6"/><circle cx="7" cy="11" r="2"/></svg>',
+  sofa:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11V8a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v3"/><path d="M3 13a2 2 0 0 1 4 0v2h10v-2a2 2 0 0 1 4 0v4H3z"/><path d="M5 17v2M19 17v2"/></svg>',
+  roll:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="9" cy="8" rx="5" ry="4"/><path d="M4 8v8c0 2.2 2.2 4 5 4h10V8"/><circle cx="9" cy="8" r="1"/></svg>',
+  bag:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8h12l-1 12H7z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>',
+  sponge:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15l9-9 7 4-9 9z"/><path d="M4 15v3l7 3v-3"/></svg>',
+  cup:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h12v6a5 5 0 0 1-5 5h-2a5 5 0 0 1-5-5z"/><path d="M17 10h1a3 3 0 0 1 0 6h-1M9 3v2M13 3v2"/></svg>',
+  cart:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.5"/><circle cx="17" cy="20" r="1.5"/><path d="M3 4h2l2.5 11h11L21 7H6"/></svg>',
+  wrench:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0 5 5L21 13l-8 8-3-3 8-8-1.3-1.3a4 4 0 0 0-5-5L13 5z"/><path d="M3 21l6-6"/></svg>',
+  broom:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 3l-7 7"/><path d="M12 10c-3 0-6 2-7 6l-1 5h9l1-5c1-3 0-5-2-6z"/><path d="M8 21l1-4M12 21v-4"/></svg>',
+  sparkle:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg>',
   sync:'<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11A8.1 8.1 0 0 0 4.5 9M4 5v4h4M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"/></svg>',
 };
-const TYPES = {linge:["Linge",I.shirt],consommable:["Consommables",I.bottle],casse:["Casse",I.hammer],autre:["Autre",I.dots]};
+const TYPES = {linge:["Linge",I.shirt],consommable:["Consommables",I.bottle],casse:["Casse",I.hammer],autre:["Autre",I.dots],equipement:["Équipement",I.wrench],proprete:["Propreté",I.broom],degradation:["Dégradation",I.alert]};
 const LINGE = ["Draps","Housses de couette","Taies d'oreiller","Serviettes de bain","Serviettes de main","Tapis de bain","Torchons","Linge taché ou abîmé"];
 const ST = {a_faire:"À faire",en_cours:"En cours",terminee:"Terminée",validee:"Validée",annulee:"Annulée"};
 
@@ -231,7 +341,8 @@ function b64u(s) { const p = "=".repeat((4 - s.length % 4) % 4); const r = atob(
 async function pushState() {
   if (!pushSupported) return isIOS && !isStandalone ? "install" : "unsupported";
   if (Notification.permission === "denied") return "denied";
-  const reg = swReg || await navigator.serviceWorker.ready;
+  const reg = swReg || await Promise.race([navigator.serviceWorker.ready, new Promise(r => setTimeout(() => r(null), 2500))]);
+  if (!reg) return "unsupported";
   const sub = await reg.pushManager.getSubscription();
   return sub && Notification.permission === "granted" ? "on" : "off";
 }
@@ -277,7 +388,7 @@ async function pushNudge(el) {
   if (!el) return; const st = await pushState().catch(() => "unsupported");
   if (st !== "off" && st !== "install") return;
   el.innerHTML = `<div class="banner click" id="nudge">${I.bell}<div class="sp">${st==="install"?"Ajoute My Laeti à ton écran d'accueil pour recevoir les notifications.":"Active les notifications pour être prévenue des nouvelles réservations."}</div><b>›</b></div>`;
-  $("nudge").onclick = () => { S.tab = "reglages"; S.view = null; render(); };
+  $("nudge").onclick = () => { S.tab = S.role==="admin" ? "reglages" : "profil"; S.view = null; render(); };
 }
 
 // ================= SPLASH =================
@@ -287,22 +398,24 @@ function splash() {
   if (shown) return;
   const el = document.createElement("div"); el.id = "splash";
   const admin = S.role === "admin";
-  el.innerHTML = `<div class="logo">${I.home}</div>
-    <p class="hi">Bonjour ${esc(first(S.name))},</p>
-    <p class="q">${admin ? "prêt à piloter tes ménages ?" : "prête pour relever de nouveaux défis ?"}</p>
+  el.innerHTML = `<div class="sp-in">
+    <div class="sp-logo">${I.home}<span class="sp-spark">${I.sparkle}</span></div>
+    <div class="sp-name">My Laeti</div><div class="sp-tag">Gestion de missions & entretien</div>
+    <div class="sp-feat"><div><span>${I.cal}</span>Planning des interventions</div><div><span>${I.check}</span>Checklists de ménage</div><div><span>${I.photo}</span>Photos avant / après</div></div>
+    <div class="sp-hi">Bonjour ${esc(first(S.name))} 👋<br><small>${admin ? "Prêt à piloter tes ménages ?" : "Prête pour relever de nouveaux défis ?"}</small></div>
     <div class="sum" id="ssum"></div>
-    <button class="go">${admin ? "Ouvrir le tableau de bord" : "C'est parti"}</button>`;
+    <button class="sp-go">${admin ? "Ouvrir le tableau de bord" : "Se connecter"} <span style="display:inline-block;transform:scaleX(-1)">${I.back}</span></button></div>`;
   document.body.appendChild(el);
   const close = () => { el.classList.add("out"); setTimeout(() => el.remove(), 500); };
-  el.onclick = close; setTimeout(close, 4200);
+  el.querySelector(".sp-go").onclick = close;
   const sumFill = () => {
     const d = S.data; if (!d || !d.missions || !$("ssum")) return false;
     const t = d.today, today = d.missions.filter(m => m.date===t && !["annulee","terminee","validee"].includes(m.status)).length;
-    const next = d.missions.filter(m => m.date>t && m.status==="a_faire" && (!admin || true)).length;
-    $("ssum").textContent = today ? `${today} ménage${today>1?"s":""} aujourd'hui${next?` · ${next} à venir`:""}` : next ? `Rien aujourd'hui · ${next} ménage${next>1?"s":""} à venir` : "Aucun ménage prévu pour le moment";
+    const next = d.missions.filter(m => m.date>t && m.status==="a_faire").length;
+    $("ssum").textContent = today ? `${today} mission${today>1?"s":""} aujourd'hui${next?` · ${next} à venir`:""}` : next ? `Rien aujourd'hui · ${next} mission${next>1?"s":""} à venir` : "Aucune mission prévue pour le moment";
     return true;
   };
-  let tries = 0; const iv = setInterval(() => { if (sumFill() || ++tries > 20) clearInterval(iv); }, 200);
+  let tries = 0; const iv = setInterval(() => { if (sumFill() || ++tries > 25) clearInterval(iv); }, 200);
 }
 
 // ================= BOOT =================
@@ -310,7 +423,7 @@ async function boot() {
   if (!TOKEN) { header("My Laeti"); $("app").innerHTML = `<div class="empty"><h3>Lien d'accès manquant</h3><p>Ouvrez l'application avec le lien personnel qui vous a été envoyé.</p></div>`; return; }
   try {
     const w = await api("whoami"); S.role = w.role; S.name = w.name;
-    S.tab = "planning";
+    S.tab = S.role === "admin" ? "planning" : "home";
     splash();
     render();
   } catch(e) {
@@ -320,169 +433,419 @@ async function boot() {
 function render() { (S.role === "admin" ? renderAdmin : renderAgent)(); }
 
 // ================= AGENT =================
-async function renderAgent() {
-  tabs([["planning","Planning",I.cal],["signaler","Signaler",I.alert],["reglages","Réglages",I.gear]]);
-  if (S.view?.type === "mission") return agentMission(S.view.id);
-  if (S.tab === "signaler") return reportForm({});
-  if (S.tab === "reglages") { header("Réglages"); $("app").innerHTML = `<div class="empty"><span class="spin"></span></div>`; return settingsCard($("app")); }
-  header("Bonjour " + first(S.name), null, `<button class="icb" id="vw" aria-label="Changer de vue">${agentView==="cal"?I.list:I.cal}</button><button class="icb" id="rf" aria-label="Actualiser">${I.sync}</button>`);
-  $("rf").onclick = () => renderAgent();
-  $("vw").onclick = () => { agentView = agentView==="cal" ? "list" : "cal"; try { localStorage.setItem("ml_view", agentView); } catch(e) {} renderAgent(); };
-  if (!S.data) $("app").innerHTML = `<div class="empty"><span class="spin"></span></div>`;
-  try {
-    const d = await api("my_missions"); S.data = d;
-    if (agentView === "cal") return agentCalendar(d);
-    const upcoming = d.missions.filter(m => m.date >= d.today || ["a_faire","en_cours"].includes(m.status));
-    const past = d.missions.filter(m => !upcoming.includes(m)).reverse();
-    if (!d.missions.length) { $("app").innerHTML = `<div id="nud"></div><div class="empty"><h3>Aucun ménage prévu</h3><p>Tes ménages apparaîtront ici dès qu'une réservation sera enregistrée.</p></div>`; pushNudge($("nud")); return; }
-    let html = "", last = "";
-    for (const m of upcoming) {
-      if (m.date !== last) { last = m.date; html += `<h2>${m.date===d.today?"Aujourd'hui · ":""}${fdate(m.date)}</h2>`; }
-      html += missionCard(m, d.today);
-    }
-    if (past.length) html += `<h2>Déjà faits</h2>` + past.slice(0,10).map(m => missionCard(m, d.today)).join("");
-    $("app").innerHTML = `<div id="nud"></div>` + html; pushNudge($("nud")); markSeen(d.missions);
-    $("app").querySelectorAll("[data-m]").forEach(c => c.onclick = () => { S.view={type:"mission", id:c.dataset.m}; render(); window.scrollTo(0,0); });
-  } catch(e) { $("app").innerHTML = `<div class="empty">${esc(e.message)}</div>`; }
-}
-let agentView = (() => { try { return localStorage.getItem("ml_view") || "list"; } catch(e) { return "list"; } })();
+const DEFAULT_ROOMS = ["Chambre","Salon","Cuisine","Salle de bain"];
+const RTYPES = {equipement:["Équipement",I.wrench],proprete:["Propreté",I.broom],degradation:["Dégradation",I.alert],autre:["Autre",I.dots]};
+let agentView = (() => { try { return localStorage.getItem("ml_view") || "week"; } catch(e) { return "week"; } })();
 let seenSet = null;
 function seenKey(m) { return m.id + "|" + m.date + "|" + (m.start_time||"") + "|" + (m.end_time||""); }
 function loadSeen() { if (!seenSet) { try { seenSet = new Set(JSON.parse(localStorage.getItem("ml_seen_"+S.role) || "null") || []); seenSet.init = !localStorage.getItem("ml_seen_"+S.role); } catch(e) { seenSet = new Set(); seenSet.init = true; } } return seenSet; }
 function isNew(m) { const s = loadSeen(); return !s.init && !s.has(seenKey(m)) && ["a_faire","en_cours"].includes(m.status); }
 function markSeen(list) { const s = loadSeen(); const keys = list.map(seenKey); setTimeout(() => { try { localStorage.setItem("ml_seen_"+S.role, JSON.stringify([...new Set([...keys, ...[...s].slice(-300)])])); } catch(e) {} }, 4000); }
-function agentCalendar(d) {
-  const t = d.today; S.calMonth = S.calMonth || t.slice(0,7); S.calDay = S.calDay || t;
-  const [y, mo] = S.calMonth.split("-").map(Number);
-  const firstDow = (new Date(y, mo-1, 1).getDay() + 6) % 7, days = new Date(y, mo, 0).getDate();
-  const byDay = {}; d.missions.forEach(m => (byDay[m.date] = byDay[m.date] || []).push(m));
-  const iso = (yy, mm, dd) => `${yy}-${String(mm).padStart(2,"0")}-${String(dd).padStart(2,"0")}`;
-  let cells = "";
-  for (let i = 0; i < firstDow; i++) cells += `<div></div>`;
-  for (let dd = 1; dd <= days; dd++) {
-    const k = iso(y, mo, dd), ms = byDay[k] || [];
-    cells += `<div class="d ${k===t?"t":""} ${k===S.calDay?"s":""}" data-day="${k}"><span>${dd}</span><span class="dots">${ms.slice(0,3).map(m=>`<i class="${m.status}"></i>`).join("")}</span></div>`;
-  }
-  const sel = byDay[S.calDay] || [];
-  const monthLabel = new Date(y, mo-1, 15).toLocaleDateString("fr-FR", {month:"long", year:"numeric"});
-  $("app").innerHTML = `<div id="nud"></div><div class="card"><div class="row" style="margin-bottom:8px"><button class="icb" id="pm" aria-label="Mois précédent">${I.back}</button>
-    <div class="sp" style="text-align:center;font-weight:600;text-transform:capitalize">${monthLabel}</div>
-    <button class="icb" id="nm" aria-label="Mois suivant" style="transform:scaleX(-1)">${I.back}</button></div>
-    <div class="cal">${["L","M","M","J","V","S","D"].map(x=>`<div class="dow">${x}</div>`).join("")}${cells}</div></div>
-    <h2>${fdate(S.calDay)}</h2>${sel.length ? sel.map(m => missionCard(m, t)).join("") : `<div class="muted" style="padding:4px 2px 12px">Pas de ménage ce jour-là.</div>`}`;
-  pushNudge($("nud")); markSeen(d.missions);
-  const shift = n => { const dt = new Date(y, mo-1+n, 1); S.calMonth = `${dt.getFullYear()}-${String(dt.getMonth()+1).padStart(2,"0")}`; agentCalendar(d); };
-  $("pm").onclick = () => shift(-1); $("nm").onclick = () => shift(1);
-  $("app").querySelectorAll("[data-day]").forEach(c => c.onclick = () => { S.calDay = c.dataset.day; agentCalendar(d); });
-  $("app").querySelectorAll("[data-m]").forEach(c => c.onclick = () => { S.view={type:"mission", id:c.dataset.m}; render(); window.scrollTo(0,0); });
+
+function parseChecklist(list) {
+  const groups = []; let cur = null;
+  (list||[]).forEach(x => {
+    const t = String(x).trim(); if (!t) return;
+    if (t.startsWith("#")) { cur = {room: t.replace(/^#+\s*/, ""), items: []}; groups.push(cur); }
+    else { if (!cur) { cur = {room: "Général", items: []}; groups.push(cur); } cur.items.push(t); }
+  });
+  return groups.filter(g => g.items.length);
 }
-function missionCard(m, today, admin) {
-  const nc = m.next_checkin ? `Prochaine arrivée : ${m.next_checkin===m.date?"<b>le jour même</b>":fshort(m.next_checkin)}` : "Pas d'arrivée prévue";
-  return `<div class="card click ${m.date===today&&m.status!=="validee"&&m.status!=="terminee"?"today":""}" data-m="${m.id}">
-    <div class="row"><div class="sp"><h3>${esc(m.property?.name)}</h3>
-    <div class="sub">${m.start_time?hm(m.start_time)+" – "+hm(m.end_time):"Horaire libre"}${admin?" · "+esc(m.cleaner?.name||"Sans agent"):""}</div>
-    <div class="muted">${nc}${admin&&m.source==="manuel"?" · ajoutée à la main":""}</div></div><div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">${pill(m.status)}${isNew(m)?`<span class="pill new">Nouveau</span>`:""}</div></div></div>`;
+const ckKey = (room, item) => room + "|" + item;
+function ckProgress(m) {
+  const g = parseChecklist(m.property?.checklist), st = m.checklist_state || {};
+  let n = 0, d = 0; g.forEach(x => x.items.forEach(i => { n++; if (st[ckKey(x.room,i)] || st[i]) d++; }));
+  return {n, d, pct: n ? Math.round(d/n*100) : 0};
+}
+function roomsOf(m) { const g = parseChecklist(m.property?.checklist).map(x => x.room).filter(r => r !== "Général"); return g.length ? g : DEFAULT_ROOMS; }
+function thumb(p, cls="a-th") { return p?.photo_url ? `<div class="${cls}" style="background-image:url('${esc(p.photo_url)}')"></div>` : `<div class="${cls} ph0">${I.home}</div>`; }
+function avatarHtml(size=56) {
+  let src = ""; try { src = localStorage.getItem("ml_avatar") || ""; } catch(e) {}
+  return src ? `<div class="a-av" style="width:${size}px;height:${size}px;background-image:url('${src}')"></div>` : `<div class="a-av ini" style="width:${size}px;height:${size}px;font-size:${Math.round(size*.4)}px">${esc(first(S.name).slice(0,1).toUpperCase())}</div>`;
+}
+function hero(title, opts={}) {
+  return `<div class="a-hero">
+    <div class="a-hrow">${opts.back?`<button class="a-ib" data-back aria-label="Retour">${I.back}</button>`:""}
+      <div class="a-ht">${title}${opts.sub?`<div class="a-hs">${opts.sub}</div>`:""}</div>
+      ${opts.right||""}<button class="a-ib" data-thm aria-label="Changer de thème">${I[themeMode()==="dark"?"moon":themeMode()==="light"?"sun":"auto"]}</button></div>
+    ${opts.below||""}</div>`;
+}
+function bindHero(backFn) {
+  document.querySelectorAll("[data-back]").forEach(b => b.onclick = backFn || (() => { S.view = S.view?.back || null; render(); window.scrollTo(0,0); }));
+  document.querySelectorAll("[data-thm]").forEach(b => b.onclick = () => { cycleTheme(); render(); });
+}
+function goView(v) { v.back = S.view || null; S.view = v; render(); window.scrollTo(0,0); }
+function aCard(m, t) {
+  return `<div class="a-mc click" data-m="${m.id}">${thumb(m.property)}<div class="sp"><div class="a-mt">${esc(m.property?.name)}</div>
+    <div class="a-ms">${I.clock}${m.start_time?hm(m.start_time)+" – "+hm(m.end_time):"Horaire libre"}</div>
+    ${m.next_checkin?`<div class="muted" style="font-size:12px">${m.next_checkin===m.date?"Arrivée le jour même":"Arrivée suivante "+fshort(m.next_checkin)}</div>`:""}</div>
+    <div class="a-pills">${pill(m.status)}${isNew(m)?`<span class="pill new">Nouveau</span>`:""}</div></div>`;
+}
+function bindCards(root=document) { root.querySelectorAll("[data-m]").forEach(c => c.onclick = () => goView({type:"mission", id:c.dataset.m})); }
+async function loadMine(force) { if (!S.data || force) S.data = await api("my_missions"); return S.data; }
+function focusMission() {
+  const d = S.data; if (!d) return null; const t = d.today;
+  return d.missions.find(m => m.status==="en_cours") || d.missions.find(m => m.date===t && m.status==="a_faire") || d.missions.find(m => m.date>=t && m.status==="a_faire") || null;
+}
+function weekBounds(iso) { const d = new Date(iso+"T12:00:00"); const w = (d.getDay()+6)%7; const a = new Date(d); a.setDate(d.getDate()-w); const b = new Date(a); b.setDate(a.getDate()+6); const f = x => x.toISOString().slice(0,10); return [f(a), f(b)]; }
+function addDays(iso, n) { const d = new Date(iso+"T12:00:00"); d.setDate(d.getDate()+n); return d.toISOString().slice(0,10); }
+
+async function renderAgent() {
+  document.body.classList.add("agent");
+  tabs([["home","Accueil",I.home],["planning","Planning",I.cal],["missions","Missions",I.check],["reports","Signalements",I.alert,S.data?.open_reports||0],["profil","Profil",I.user]]);
+  const v = S.view;
+  if (v?.type === "mission") return aMission(v.id);
+  if (v?.type === "checklist") return aChecklist(v.id);
+  if (v?.type === "photos") return aPhotos(v.id, v.kind||"avant");
+  if (v?.type === "stock") return aStock(v.tab||"consommable");
+  if (v?.type === "report") return aReport(v);
+  ({home:aHome, planning:aPlanning, missions:aMissions, reports:aReports, profil:aProfil}[S.tab] || aHome)();
 }
 
-async function agentMission(id) {
-  header("Mission", () => { S.view=null; render(); });
-  $("app").innerHTML = `<div class="empty"><span class="spin"></span></div>`;
-  let m;
-  try { m = (await api("mission_get", {id})).mission; } catch(e) { $("app").innerHTML = `<div class="empty">${esc(e.message)}</div>`; return; }
+// ---- Accueil
+async function aHome() {
+  if (!S.data) $("app").innerHTML = hero("…") + `<div class="a-sheet"><div class="empty"><span class="spin"></span></div></div>`;
+  let d; try { d = await loadMine(true); } catch(e) { $("app").innerHTML = `<div class="empty">${esc(e.message)}</div>`; return; }
+  tabs([["home","Accueil",I.home],["planning","Planning",I.cal],["missions","Missions",I.check],["reports","Signalements",I.alert,d.open_reports||0],["profil","Profil",I.user]]);
+  const t = d.today; S.homeDay = S.homeDay || t;
+  const day = d.missions.filter(m => m.date === S.homeDay);
+  const [wa, wb] = weekBounds(t);
+  const week = d.missions.filter(m => m.date>=wa && m.date<=wb).length;
+  const todo = d.missions.filter(m => m.date>=t && m.status==="a_faire").length;
+  const enc = day.filter(m => m.status==="en_cours").length;
+  const dayLbl = S.homeDay===t ? "Aujourd'hui" : S.homeDay===addDays(t,1) ? "Demain" : S.homeDay===addDays(t,-1) ? "Hier" : fdate(S.homeDay,{weekday:"long"});
+  const head = day.length ? `${day.length} mission${day.length>1?"s":""} ${enc?"en cours":S.homeDay<t?"":"prévue"+(day.length>1?"s":"")}` : "Aucune mission";
+  $("app").innerHTML = `<div class="a-hero a-home">
+      <div class="a-hrow">${avatarHtml(56)}<div class="a-ht"><div class="a-hi">Bonjour ${esc(first(S.name))} 👋</div><div class="a-hs">Prête pour relever de nouveaux défis ?</div></div>
+      <button class="a-ib" data-thm aria-label="Changer de thème">${I[themeMode()==="dark"?"moon":themeMode()==="light"?"sun":"auto"]}</button><button class="a-ib" id="bell" aria-label="Notifications">${I.bell}</button></div>
+      <div class="a-day"><button class="a-ib sm" id="dprev" aria-label="Jour précédent">${I.back}</button><div class="sp" style="text-align:center"><b>${dayLbl}</b><div class="a-hs">${fdate(S.homeDay,{weekday:"short",day:"numeric",month:"short"})}</div></div><button class="a-ib sm flip" id="dnext" aria-label="Jour suivant">${I.back}</button></div>
+    </div>
+    <div class="a-sheet">
+      <div id="nud"></div>
+      <div class="a-box"><div class="a-bt">${head}</div>
+        ${day.length ? day.map(m => `<div class="a-today click" data-m="${m.id}"><div class="sp"><div class="a-mt" style="font-size:18px">${esc(m.property?.name)}</div>
+          <div class="a-ms">${I.clock}${m.start_time?hm(m.start_time)+" – "+hm(m.end_time):"Horaire libre"}</div>
+          <button class="a-btn" data-go="${m.id}">${m.status==="a_faire"?"Commencer":m.status==="en_cours"?"Continuer":"Voir"}</button></div>${thumb(m.property,"a-thl")}</div>`).join("")
+          : `<div class="muted" style="padding:6px 0 4px">${S.homeDay===t?"Rien de prévu aujourd'hui. Profite !":"Pas de ménage ce jour-là."}</div>`}</div>
+      <div class="a-stats"><div class="a-stat"><b>${week}</b><span>Missions cette semaine</span></div><div class="a-stat"><b>${todo}</b><span>À faire</span></div><div class="a-stat"><b class="${d.open_reports?"red":""}">${d.open_reports||0}</b><span>Signalements ouverts</span></div></div>
+      <div class="a-sec">Accès rapides</div>
+      <div class="a-quick">
+        <button data-q="checklist">${I.check}<span>Checklists</span></button><button data-q="photos">${I.photo}<span>Photos</span></button>
+        <button data-q="consommable">${I.bottle}<span>Consommables</span></button><button data-q="linge">${I.shirt}<span>Linge</span></button></div>
+    </div>`;
+  bindHero(); pushNudge($("nud")); markSeen(d.missions);
+  $("bell").onclick = () => { S.tab = "profil"; S.view = null; render(); };
+  $("dprev").onclick = () => { S.homeDay = addDays(S.homeDay,-1); aHome(); };
+  $("dnext").onclick = () => { S.homeDay = addDays(S.homeDay,1); aHome(); };
+  $("app").querySelectorAll("[data-m]").forEach(c => c.onclick = () => goView({type:"mission", id:c.dataset.m}));
+  $("app").querySelectorAll("[data-go]").forEach(b => b.onclick = async ev => {
+    ev.stopPropagation(); const m = d.missions.find(x => x.id===b.dataset.go);
+    if (m.status==="a_faire") await run(b, async () => { await api("mission_start",{id:m.id}); S.data=null; });
+    goView({type:"mission", id:m.id});
+  });
+  $("app").querySelectorAll("[data-q]").forEach(b => b.onclick = () => {
+    const q = b.dataset.q;
+    if (q==="consommable"||q==="linge") return goView({type:"stock", tab:q});
+    const m = focusMission(); if (!m) return toast("Aucune mission à venir pour le moment");
+    goView({type: q==="checklist"?"checklist":"photos", id:m.id});
+  });
+}
+
+// ---- Planning
+async function aPlanning() {
+  let d; try { d = await loadMine(!S.data); } catch(e) { $("app").innerHTML = `<div class="empty">${esc(e.message)}</div>`; return; }
+  const t = d.today; S.weekRef = S.weekRef || t;
+  const seg = `<div class="a-seg"><button data-v="week" class="${agentView!=="month"?"on":""}">Semaine</button><button data-v="month" class="${agentView==="month"?"on":""}">Mois</button></div>`;
+  let body = "";
+  if (agentView !== "month") {
+    const [a, b] = weekBounds(S.weekRef);
+    const lbl = (() => { const A = new Date(a+"T12:00:00"), B = new Date(b+"T12:00:00"); return A.getMonth()===B.getMonth() ? `${A.getDate()} – ${B.getDate()} ${B.toLocaleDateString("fr-FR",{month:"long"})}` : `${A.getDate()} ${A.toLocaleDateString("fr-FR",{month:"short"})} – ${B.getDate()} ${B.toLocaleDateString("fr-FR",{month:"short"})}`; })();
+    const list = d.missions.filter(m => m.date>=a && m.date<=b);
+    body = `<div class="a-wk"><button class="a-nb" id="wp" aria-label="Semaine précédente">${I.back}</button><b>${lbl}</b><button class="a-nb flip" id="wn" aria-label="Semaine suivante">${I.back}</button></div>
+      ${list.length ? list.map(m => { const dd = new Date(m.date+"T12:00:00"); return `<div class="a-wrow"><div class="a-wd ${m.date===t?"t":""}"><span>${dd.toLocaleDateString("fr-FR",{weekday:"short"}).replace(".","")}</span><b>${dd.getDate()}</b></div>${aCard(m,t)}</div>`; }).join("")
+        : `<div class="empty" style="padding:28px 10px">Aucune mission cette semaine.</div>`}
+      ${S.weekRef!==t?`<button class="btn block" id="wt" style="margin-top:6px">Revenir à cette semaine</button>`:""}`;
+  } else {
+    S.calMonth = S.calMonth || t.slice(0,7); S.calDay = S.calDay || t;
+    const [y, mo] = S.calMonth.split("-").map(Number);
+    const firstDow = (new Date(y, mo-1, 1).getDay() + 6) % 7, days = new Date(y, mo, 0).getDate();
+    const byDay = {}; d.missions.forEach(m => (byDay[m.date] = byDay[m.date] || []).push(m));
+    let cells = ""; for (let i = 0; i < firstDow; i++) cells += `<div></div>`;
+    for (let dd = 1; dd <= days; dd++) { const k = `${y}-${String(mo).padStart(2,"0")}-${String(dd).padStart(2,"0")}`, ms = byDay[k] || [];
+      cells += `<div class="d ${k===t?"t":""} ${k===S.calDay?"s":""}" data-day="${k}"><span>${dd}</span><span class="dots">${ms.slice(0,3).map(m=>`<i class="${m.status}"></i>`).join("")}</span></div>`; }
+    const sel = byDay[S.calDay] || [];
+    body = `<div class="a-wk"><button class="a-nb" id="mp" aria-label="Mois précédent">${I.back}</button><b style="text-transform:capitalize">${new Date(y, mo-1, 15).toLocaleDateString("fr-FR",{month:"long",year:"numeric"})}</b><button class="a-nb flip" id="mn" aria-label="Mois suivant">${I.back}</button></div>
+      <div class="a-box"><div class="cal">${["L","M","M","J","V","S","D"].map(x=>`<div class="dow">${x}</div>`).join("")}${cells}</div></div>
+      <div class="a-sec" style="text-transform:capitalize">${fdate(S.calDay)}</div>${sel.length ? sel.map(m => aCard(m,t)).join("") : `<div class="muted" style="padding:2px 4px 12px">Pas de ménage ce jour-là.</div>`}`;
+  }
+  $("app").innerHTML = hero("Planning", {below: seg}) + `<div class="a-sheet">${body}</div>`;
+  bindHero(); bindCards($("app")); markSeen(d.missions);
+  $("app").querySelectorAll("[data-v]").forEach(b => b.onclick = () => { agentView = b.dataset.v; try { localStorage.setItem("ml_view", agentView); } catch(e) {} aPlanning(); });
+  const on = (id, f) => { if ($(id)) $(id).onclick = f; };
+  on("wp", () => { S.weekRef = addDays(S.weekRef,-7); aPlanning(); }); on("wn", () => { S.weekRef = addDays(S.weekRef,7); aPlanning(); }); on("wt", () => { S.weekRef = t; aPlanning(); });
+  const shift = n => { const dt = new Date(+S.calMonth.slice(0,4), +S.calMonth.slice(5)-1+n, 1); S.calMonth = `${dt.getFullYear()}-${String(dt.getMonth()+1).padStart(2,"0")}`; aPlanning(); };
+  on("mp", () => shift(-1)); on("mn", () => shift(1));
+  $("app").querySelectorAll("[data-day]").forEach(c => c.onclick = () => { S.calDay = c.dataset.day; aPlanning(); });
+}
+
+// ---- Missions
+async function aMissions() {
+  let d; try { d = await loadMine(true); } catch(e) { $("app").innerHTML = `<div class="empty">${esc(e.message)}</div>`; return; }
+  const t = d.today;
+  const cur = d.missions.filter(m => m.status==="en_cours");
+  const next = d.missions.filter(m => m.status==="a_faire" && m.date>=t);
+  const late = d.missions.filter(m => m.status==="a_faire" && m.date<t);
+  const done = d.missions.filter(m => ["terminee","validee"].includes(m.status)).reverse().slice(0,15);
+  const sec = (l, arr) => arr.length ? `<div class="a-sec">${l}</div>` + arr.map(m => `<div class="a-wrow"><div class="a-wd ${m.date===t?"t":""}"><span>${new Date(m.date+"T12:00:00").toLocaleDateString("fr-FR",{weekday:"short"}).replace(".","")}</span><b>${+m.date.slice(8)}</b></div>${aCard(m,t)}</div>`).join("") : "";
+  $("app").innerHTML = hero("Mes missions", {right:`<button class="a-ib" id="rf" aria-label="Actualiser">${I.sync}</button>`}) + `<div class="a-sheet">
+    ${d.missions.length ? sec("En cours", cur) + sec("En retard", late) + sec("À venir", next) + sec("Terminées", done) : `<div class="empty"><h3>Aucune mission</h3><p>Tes ménages apparaîtront ici dès qu'une réservation sera enregistrée.</p></div>`}</div>`;
+  bindHero(); bindCards($("app")); markSeen(d.missions);
+  $("rf").onclick = () => { S.data = null; aMissions(); };
+}
+
+// ---- Détail mission
+async function getMission(id, force) {
+  S.mc = S.mc || {}; if (!S.mc[id] || force) S.mc[id] = (await api("mission_get",{id})).mission; return S.mc[id];
+}
+async function aMission(id) {
+  if (!S.mc?.[id]) $("app").innerHTML = `<div class="empty" style="padding-top:80px"><span class="spin"></span></div>`;
+  let m; try { m = await getMission(id, true); } catch(e) { $("app").innerHTML = hero("Mission",{back:true}) + `<div class="a-sheet"><div class="empty">${esc(e.message)}</div></div>`; bindHero(); return; }
+  const p = m.property || {}, pr = ckProgress(m), locked = ["terminee","validee"].includes(m.status);
+  const av = m.photos.filter(x=>x.kind==="avant").length, ap = m.photos.filter(x=>x.kind==="apres").length;
+  $("app").innerHTML = `<div class="a-cover" ${p.photo_url?`style="background-image:url('${esc(p.photo_url)}')"`:""}>${p.photo_url?"":`<div class="a-cov0">${I.home}</div>`}
+      <div class="a-covbar"><button class="a-ib glass" data-back aria-label="Retour">${I.back}</button><span class="sp"></span><button class="a-ib glass" data-thm aria-label="Changer de thème">${I[themeMode()==="dark"?"moon":themeMode()==="light"?"sun":"auto"]}</button></div></div>
+    <div class="a-sheet">
+      <div class="row" style="align-items:flex-start"><div class="sp"><div class="a-mt" style="font-size:22px">${esc(p.name)}</div>
+        ${p.address?`<a class="a-ms" style="text-decoration:none;color:var(--tx2)" href="https://maps.google.com/?q=${encodeURIComponent(p.address)}" target="_blank" rel="noopener">${I.pin}${esc(p.address)}</a>`:""}
+        <div class="a-ms">${I.cal}${fdate(m.date,{weekday:"short",day:"numeric",month:"short"})} · ${m.start_time?hm(m.start_time)+" – "+hm(m.end_time):"horaire libre"}</div>
+        <div class="muted" style="font-size:13px;margin-top:2px">${m.next_checkin?(m.next_checkin===m.date?"<b style='color:var(--warn)'>Arrivée de voyageurs le jour même</b>":"Prochaine arrivée : "+fdate(m.next_checkin)):"Pas d'arrivée prévue derrière"}</div></div>${pill(m.status)}</div>
+      <div class="a-box click" id="gck" style="margin-top:14px"><div class="row">${I.check}<div class="sp"><b>Checklist ménage</b><div class="prog"><i style="width:${pr.pct}%"></i></div></div><span class="muted">${pr.d} / ${pr.n}</span></div></div>
+      <div class="a-box click" id="gph"><div class="row">${I.photo}<div class="sp"><b>Photos avant / après</b><div class="muted" style="font-size:13px">${av} avant · ${ap} après${!ap&&!locked?" · au moins 1 « après » pour terminer":""}</div></div><span class="muted">›</span></div></div>
+      ${m.status==="a_faire"?`<button class="a-big" id="start">${I.play} Démarrer la mission</button>`:""}
+      ${m.status==="en_cours"?`<button class="a-big" id="gofin">${I.check} Terminer le ménage</button>`:""}
+      ${locked?`<div class="a-done">${I.check}<div><b>${m.status==="validee"?"Ménage validé par Matthis":"Ménage terminé"}</b>${m.finished_at?`<div class="muted">le ${new Date(m.finished_at).toLocaleString("fr-FR",{dateStyle:"short",timeStyle:"short"})}</div>`:""}${m.comment?`<div class="sub">${esc(m.comment)}</div>`:""}</div></div>`:""}
+      <div class="a-sec">Informations</div>
+      <div class="a-info"><button data-i="notes">${I.note}<span>Consignes spécifiques</span></button><button data-i="access_info">${I.lock}<span>Accès & code</span></button><button data-i="equipment">${I.box}<span>Équipements du logement</span></button></div>
+      <button class="btn block" id="rep" style="margin-top:14px">${I.alert} Signaler un problème</button>
+      ${m.reports.length?`<div class="muted" style="margin:8px 4px">${m.reports.length} signalement(s) envoyé(s) pour cette mission</div>`:""}
+    </div>`;
+  bindHero();
+  $("gck").onclick = () => goView({type:"checklist", id});
+  $("gph").onclick = () => goView({type:"photos", id, kind: m.status==="en_cours"&&av?"apres":"avant"});
+  if ($("start")) $("start").onclick = e => run(e.currentTarget, async () => { await api("mission_start",{id}); S.data = null; goView({type:"photos", id, kind:"avant"}); toast("C'est parti ! Commence par les photos avant."); });
+  if ($("gofin")) $("gofin").onclick = () => goView({type:"checklist", id});
+  $("rep").onclick = () => goView({type:"report", missionId:id});
+  $("app").querySelectorAll("[data-i]").forEach(b => b.onclick = () => {
+    const k = b.dataset.i, lbl = {notes:"Consignes spécifiques", access_info:"Accès & code", equipment:"Équipements du logement"}[k];
+    sheet(lbl, p[k] ? `<div style="white-space:pre-wrap;font-size:16px;line-height:1.55">${esc(p[k])}</div>` : `<div class="muted">Rien de renseigné pour ce logement. Demande à Matthis si besoin.</div>`);
+  });
+}
+function sheet(title, html) {
+  const el = document.createElement("div"); el.className = "a-modal";
+  el.innerHTML = `<div class="a-mbox"><div class="row" style="margin-bottom:12px"><b class="sp" style="font-size:18px">${esc(title)}</b><button class="a-ib dark" aria-label="Fermer">✕</button></div>${html}</div>`;
+  el.onclick = e => { if (e.target === el || e.target.closest("button[aria-label=Fermer]")) el.remove(); };
+  document.body.appendChild(el);
+}
+
+// ---- Checklist
+async function aChecklist(id) {
+  let m; try { m = await getMission(id); } catch(e) { toast(e.message,true); return; }
+  const p = m.property||{}, groups = parseChecklist(p.checklist), st = {...(m.checklist_state||{})};
+  const locked = ["terminee","validee"].includes(m.status);
+  S.open = S.open || {};
   const draw = () => {
-    const p = m.property || {}; const list = p.checklist || []; const st = m.checklist_state || {};
-    const done = list.filter(x => st[x]).length;
-    const locked = ["terminee","validee"].includes(m.status);
-    const av = m.photos.filter(x=>x.kind==="avant"), ap = m.photos.filter(x=>x.kind==="apres");
-    header(p.name || "Mission", () => { S.view=null; render(); });
-    $("app").innerHTML = `
-      <div class="card"><div class="row"><div class="sp"><h3>${esc(p.name)}</h3><div class="sub">${fdate(m.date)} · ${m.start_time?hm(m.start_time)+" – "+hm(m.end_time):"horaire libre"}</div></div>${pill(m.status)}</div>
-      ${p.address?`<div class="muted" style="margin-top:6px">${esc(p.address)}</div>`:""}
-      <div style="margin-top:6px" class="sub">${m.next_checkin?(m.next_checkin===m.date?"<b>Arrivée de voyageurs le jour même</b>":"Prochaine arrivée : "+fdate(m.next_checkin)):"Pas d'arrivée prévue derrière"}</div>
-      ${p.notes?`<div class="card" style="background:var(--warnbg);color:var(--warn);border:0;margin:10px 0 0;font-size:14px;white-space:pre-wrap">${esc(p.notes)}</div>`:""}</div>
-      ${m.status==="a_faire"?`<button class="btn pri block" id="start" style="margin-bottom:10px">Commencer le ménage</button>`:""}
-      <h2>1 · Photos avant</h2><div class="card">${av.length?"":`<div class="muted">Photographiez l'état du logement en arrivant.</div>`}${photoGrid(av,{add:locked?"":"avant",del:!locked})}</div>
-      <h2>2 · Checklist <span class="muted">${done}/${list.length}</span></h2>
-      <div class="card">${list.length?list.map((x,i)=>`<label class="ck"><input type="checkbox" data-ck="${i}" ${st[x]?"checked":""} ${locked?"disabled":""}><span>${esc(x)}</span></label>`).join(""):`<div class="muted">Pas de checklist pour ce logement.</div>`}
-      <div class="prog"><i style="width:${list.length?Math.round(done/list.length*100):0}%"></i></div></div>
-      <h2>3 · Photos après</h2><div class="card">${ap.length?"":`<div class="muted">Au moins une photo obligatoire pour terminer.</div>`}${photoGrid(ap,{add:locked?"":"apres",del:!locked})}</div>
-      <button class="btn block" id="rep" style="margin:10px 0">${I.alert} Signaler linge, consommable ou casse</button>
-      ${m.reports.length?`<div class="muted" style="margin:-4px 2px 10px">${m.reports.length} signalement(s) envoyé(s) pour cette mission</div>`:""}
-      ${locked?`<div class="card" style="text-align:center"><b>${m.status==="validee"?"Mission validée par le gestionnaire":"Mission terminée"}</b>${m.finished_at?`<div class="muted">le ${new Date(m.finished_at).toLocaleString("fr-FR",{dateStyle:"short",timeStyle:"short"})}</div>`:""}${m.comment?`<div class="sub" style="margin-top:6px">${esc(m.comment)}</div>`:""}</div>`:
-      `<label class="f">Commentaire (facultatif)</label><textarea id="cmt" placeholder="Tout s'est bien passé, clé laissée dans la boîte…">${esc(m.comment||"")}</textarea>
-      <button class="btn pri block" id="fin" style="margin-top:12px">Terminer la mission</button>`}`;
-    bindLb();
-    if ($("start")) $("start").onclick = e => run(e.currentTarget, async () => { m = (await api("mission_start",{id})).mission; draw(); });
-    $("app").querySelectorAll("[data-ck]").forEach(c => c.onchange = async () => {
-      st[list[+c.dataset.ck]] = c.checked; m.checklist_state = st;
-      try { await api("checklist_update",{id, state:st}); if (m.status==="a_faire") m.status="en_cours"; draw(); } catch(e) { toast(e.message,true); }
+    const pr = ckProgress({...m, checklist_state: st});
+    $("app").innerHTML = hero("Checklist ménage", {back:true, sub:`${I.pin}${esc(p.name)}`}) + `<div class="a-sheet">
+      <div class="row" style="gap:12px;margin:2px 2px 14px"><div class="prog sp" style="height:10px;margin:0"><i style="width:${pr.pct}%"></i></div><div style="text-align:right"><b>${pr.d} / ${pr.n}</b><div class="muted" style="font-size:12px">${pr.pct}%</div></div></div>
+      ${groups.length ? groups.map((g, gi) => { const dn = g.items.filter(i => st[ckKey(g.room,i)]||st[i]).length; const op = S.open[g.room] ?? (gi===0 || (dn<g.items.length && groups.slice(0,gi).every(x=>x.items.every(i=>st[ckKey(x.room,i)]||st[i])))); return `
+        <div class="a-grp ${op?"op":""}"><button class="a-gh" data-g="${esc(g.room)}">${roomIcon(g.room)}<b class="sp">${esc(g.room)} <span class="muted">(${dn}/${g.items.length})</span></b>${dn===g.items.length?`<span style="color:var(--ok)">${I.check}</span>`:""}<span class="chev">⌄</span></button>
+        ${op?`<div class="a-gb">${g.items.map(i => `<label class="ck"><input type="checkbox" data-k="${esc(ckKey(g.room,i))}" ${(st[ckKey(g.room,i)]||st[i])?"checked":""} ${locked?"disabled":""}><span>${esc(i)}</span></label>`).join("")}</div>`:""}</div>`; }).join("")
+        : `<div class="empty">Pas de checklist pour ce logement.</div>`}
+      ${locked ? `<div class="a-done">${I.check}<b>Ménage ${m.status==="validee"?"validé":"terminé"}</b></div>` : `
+        <label class="f">Commentaire pour Matthis (facultatif)</label><textarea id="cmt" placeholder="Tout s'est bien passé, clé laissée dans la boîte…">${esc(m.comment||"")}</textarea>
+        <button class="a-big ${pr.d===pr.n&&pr.n?"":"soft"}" id="val">${I.send} Valider le ménage</button>`}
+    </div>`;
+    bindHero();
+    $("app").querySelectorAll("[data-g]").forEach(b => b.onclick = () => { const r = b.dataset.g; const cur = $("app").querySelector(`[data-g="${CSS.escape(r)}"]`).parentElement.classList.contains("op"); S.open[r] = !cur; draw(); });
+    $("app").querySelectorAll("[data-k]").forEach(c => c.onchange = async () => {
+      st[c.dataset.k] = c.checked; m.checklist_state = st;
+      try { await api("checklist_update",{id, state:st}); if (m.status==="a_faire") { m.status="en_cours"; S.data=null; } } catch(e) { toast(e.message,true); }
+      draw();
     });
+    if ($("val")) $("val").onclick = e => {
+      const ap = m.photos.filter(x=>x.kind==="apres").length;
+      if (!ap) { toast("Ajoute au moins une photo « après » pour valider"); return goView({type:"photos", id, kind:"apres"}); }
+      const left = pr.n - pr.d;
+      if (left && !confirm(`${left} point(s) non cochés. Valider quand même ?`)) return;
+      run(e.currentTarget, async () => { S.mc[id] = (await api("mission_finish",{id, comment:$("cmt").value})).mission; S.data = null; toast("Ménage validé, merci ! 🎉"); S.view = {type:"mission", id, back:null}; render(); window.scrollTo(0,0); });
+    };
+  };
+  draw();
+}
+function roomIcon(r) { const s = r.toLowerCase(); return s.includes("cuisine") ? I.chef : s.includes("bain")||s.includes("wc") ? I.bath : s.includes("chambre") ? I.bed : s.includes("salon")||s.includes("séjour") ? I.sofa : I.home; }
+
+// ---- Photos
+async function aPhotos(id, kind) {
+  let m; try { m = await getMission(id); } catch(e) { toast(e.message,true); return; }
+  const p = m.property||{}, locked = ["terminee","validee"].includes(m.status), rooms = roomsOf(m);
+  const draw = () => {
+    const ph = m.photos.filter(x => x.kind===kind);
+    const other = ph.filter(x => !x.room || !rooms.includes(x.room));
+    $("app").innerHTML = hero("Photos Avant / Après", {back:true, sub:`${I.pin}${esc(p.name)}`}) + `<div class="a-sheet">
+      <div class="a-seg light"><button data-k="avant" class="${kind==="avant"?"on":""}">Avant intervention</button><button data-k="apres" class="${kind==="apres"?"on":""}">Après intervention</button></div>
+      <div class="a-rooms">${rooms.map(r => { const rp = ph.filter(x => x.room===r); const last = rp[rp.length-1];
+        return `<div class="a-room"><div class="a-rimg ${last?"":"e"}" ${last?`style="background-image:url('${esc(last.url)}')"`:""} data-add="${esc(r)}">${locked&&!last?"":`<span class="a-cam">${I.cam}</span>`}${rp.length>1?`<span class="a-cnt">${rp.length}</span>`:""}</div><div class="a-rl">${esc(r)}</div></div>`; }).join("")}</div>
+      ${ph.length ? `<div class="a-sec">Toutes les photos ${kind==="avant"?"avant":"après"} (${ph.length})</div>${photoGrid(ph,{del:!locked})}` : ""}
+      ${locked ? "" : `<button class="a-big soft" data-add="" style="margin-top:16px">${I.cam} Ajouter des photos</button>`}
+      ${kind==="avant"&&!locked?`<button class="btn block" id="nx" style="margin-top:10px">Passer à la checklist ›</button>`:""}
+      ${kind==="apres"&&!locked&&ph.length?`<button class="btn block" id="nx2" style="margin-top:10px">Aller valider le ménage ›</button>`:""}
+    </div>`;
+    bindHero(); bindLb();
+    $("app").querySelectorAll("[data-k]").forEach(b => b.onclick = () => { kind = b.dataset.k; S.view.kind = kind; draw(); });
+    if ($("nx")) $("nx").onclick = () => goView({type:"checklist", id});
+    if ($("nx2")) $("nx2").onclick = () => goView({type:"checklist", id});
     $("app").querySelectorAll("[data-add]").forEach(a => a.onclick = async () => {
+      const room = a.dataset.add;
+      const has = room && ph.some(x => x.room===room);
+      if (locked) { if (has) lightbox(ph.filter(x=>x.room===room).pop().url); return; }
       const files = await pickPhotos(true); if (!files.length) return;
-      const kind = a.dataset.add; a.innerHTML = `<span class="spin"></span><span>0/${files.length}</span>`;
+      toast(`Envoi de ${files.length} photo${files.length>1?"s":""}…`);
       let n = 0;
-      for (const f of files) {
-        try { const data = await compress(f); m = (await api("photo_add",{id, kind, data})).mission; n++; a.querySelector("span:last-child") && (a.querySelector("span:last-child").textContent = `${n}/${files.length}`); }
-        catch(e) { toast(e.message, true); }
-      }
-      draw(); if (n) toast(n > 1 ? `${n} photos ajoutées` : "Photo ajoutée");
+      for (const f of files) { try { const data = await compress(f); m = (await api("photo_add",{id, kind, data, room: room||null})).mission; S.mc[id] = m; n++; } catch(e) { toast(e.message,true); } }
+      if (m.status !== "a_faire") S.data = null;
+      draw(); if (n) toast(n>1?`${n} photos ajoutées`:"Photo ajoutée");
     });
     $("app").querySelectorAll("[data-del]").forEach(b => b.onclick = async ev => {
       ev.stopPropagation(); if (!confirm("Supprimer cette photo ?")) return;
-      try { m = (await api("photo_delete",{mission_id:id, id:b.dataset.del})).mission; draw(); } catch(e) { toast(e.message,true); }
+      try { m = (await api("photo_delete",{mission_id:id, id:b.dataset.del})).mission; S.mc[id] = m; draw(); } catch(e) { toast(e.message,true); }
     });
-    $("rep").onclick = () => { S.view = {type:"report", mission:m, back:{type:"mission", id}}; reportForm({mission:m}); window.scrollTo(0,0); };
-    if ($("fin")) $("fin").onclick = e => {
-      if (!ap.length) return toast("Ajoutez au moins une photo « après »", true);
-      const left = list.length - done;
-      if (left && !confirm(`${left} point(s) de la checklist non cochés. Terminer quand même ?`)) return;
-      run(e.currentTarget, async () => { m = (await api("mission_finish",{id, comment:$("cmt").value})).mission; toast("Mission terminée, merci !"); draw(); window.scrollTo(0,0); });
+  };
+  draw();
+}
+
+// ---- Consommables & linge
+function unitOf(name) { const s = name.toLowerCase(); return s.includes("papier") ? "rouleaux" : s.includes("sac") ? "" : s.includes("serviette")||s.includes("drap")||s.includes("taie")||s.includes("housse")||s.includes("torchon")||s.includes("tapis") ? "" : ""; }
+function stockIcon(name) { const s = name.toLowerCase(); return s.includes("papier") ? I.roll : s.includes("sac") ? I.bag : s.includes("éponge")||s.includes("eponge") ? I.sponge : s.includes("lessive")||s.includes("savon")||s.includes("gel")||s.includes("liquide")||s.includes("produit") ? I.bottle : s.includes("café")||s.includes("thé") ? I.cup : I.shirt; }
+async function aStock(tab) {
+  let d; try { d = await loadMine(!S.data); } catch(e) { toast(e.message,true); return; }
+  const props = [...new Map(d.missions.filter(m=>m.property).map(m => [m.property.id, m.property])).values()];
+  if (!props.length) { $("app").innerHTML = hero("Consommables & Linge",{back:true}) + `<div class="a-sheet"><div class="empty">Aucun logement ne t'est encore attribué.</div></div>`; bindHero(); return; }
+  S.stockProp = props.find(p => p.id===S.stockProp) ? S.stockProp : (focusMission()?.property_id || props[0].id);
+  const p = props.find(x => x.id===S.stockProp); p.stock = p.stock || {};
+  const items = tab==="linge" ? LINGE.filter(x => !/taché/i.test(x)) : (p.consumables||[]);
+  const low = items.filter(x => (p.stock[x] ?? 0) <= 2);
+  const draw = () => {
+    $("app").innerHTML = hero("Consommables & Linge",{back:true, sub: props.length>1?"":`${I.pin}${esc(p.name)}`}) + `<div class="a-sheet">
+      ${props.length>1?`<select id="sp" style="margin-bottom:12px">${props.map(x=>`<option value="${x.id}" ${x.id===p.id?"selected":""}>${esc(x.name)}</option>`).join("")}</select>`:""}
+      <div class="a-seg light"><button data-t="consommable" class="${tab!=="linge"?"on":""}">Consommables</button><button data-t="linge" class="${tab==="linge"?"on":""}">Linge</button></div>
+      ${items.length ? items.map((x,i) => { const q = p.stock[x] ?? 0, c = q<=1?"r":q<=3?"o":"g", w = Math.max(6, Math.min(100, q*10));
+        return `<div class="a-stk">${stockIcon(x)}<div class="sp"><b>${esc(x)}</b><div class="muted" style="font-size:13px">Stock : ${q}${unitOf(x)?" "+unitOf(x):""}</div><div class="a-bar ${c}"><i style="width:${w}%"></i></div></div>
+          <button class="a-pm" data-i="${i}" data-d="-1" aria-label="Retirer un">−</button><button class="a-pm" data-i="${i}" data-d="1" aria-label="Ajouter un">+</button></div>`; }).join("")
+        : `<div class="empty">Aucun consommable défini pour ce logement.</div>`}
+      <div class="muted" style="margin:6px 4px 0;font-size:13px">Mets à jour le stock en partant. Ce qui est à 2 ou moins part dans la demande de réapprovisionnement.</div>
+      <button class="a-big" id="reap" style="margin-top:14px">${I.cart} Réapprovisionnement${low.length?` (${low.length})`:""}</button>
+    </div>`;
+    bindHero();
+    if ($("sp")) $("sp").onchange = e => { S.stockProp = e.target.value; aStock(tab); };
+    $("app").querySelectorAll("[data-t]").forEach(b => b.onclick = () => { S.view.tab = b.dataset.t; aStock(b.dataset.t); });
+    $("app").querySelectorAll(".a-pm").forEach(b => b.onclick = async () => {
+      const x = items[+b.dataset.i], q = Math.max(0, (p.stock[x] ?? 0) + +b.dataset.d);
+      p.stock[x] = q; draw();
+      try { const r = await api("stock_set",{property_id:p.id, item:x, qty:q}); p.stock = r.stock; } catch(e) { toast(e.message,true); }
+    });
+    $("reap").onclick = e => {
+      const lw = items.filter(x => (p.stock[x] ?? 0) <= 2);
+      if (!lw.length) return toast("Tout est en stock 👍");
+      if (!confirm(`Demander le réapprovisionnement de :\n• ${lw.join("\n• ")}`)) return;
+      run(e.currentTarget, async () => { const fm = focusMission();
+        await api("report_create",{property_id:p.id, mission_id: fm && fm.property_id===p.id ? fm.id : undefined, type: tab==="linge"?"linge":"consommable", title:"Réapprovisionnement", items: lw.map(x => `${x} (${p.stock[x] ?? 0})`)});
+        S.data = null; toast("Demande envoyée à Matthis"); });
     };
   };
   draw();
 }
 
-async function reportForm({mission}) {
-  const backFn = S.view?.back ? () => { S.view = S.view.back; render(); } : null;
-  header("Signaler", backFn);
+// ---- Signaler un problème
+async function aReport(v) {
+  let mission = null;
+  if (v.missionId) { try { mission = await getMission(v.missionId); } catch(e) {} }
   let props = [];
-  if (!mission) {
-    if (!S.data) { try { S.data = await api("my_missions"); } catch(e) {} }
-    const seen = new Map(); (S.data?.missions||[]).forEach(m => m.property && seen.set(m.property.id, m.property));
-    props = [...seen.values()];
-    if (!props.length) { $("app").innerHTML = `<div class="empty">Aucun logement ne vous est encore attribué.</div>`; return; }
-  }
-  const F = { type:"consommable", items:[], prop: mission ? mission.property : props[0], photo:null };
+  if (!mission) { try { const d = await loadMine(!S.data); props = [...new Map(d.missions.filter(m=>m.property).map(m => [m.property.id, m.property])).values()]; } catch(e) {} }
+  if (!mission && !props.length) { $("app").innerHTML = hero("Signaler un problème",{back:true}) + `<div class="a-sheet"><div class="empty">Aucun logement ne t'est encore attribué.</div></div>`; bindHero(); return; }
+  const F = v.F = v.F || { type:"equipement", title:"", comment:"", photos:[], prop: mission ? mission.property_id : (focusMission()?.property_id || props[0]?.id) };
   const draw = () => {
-    const opts = F.type==="linge" ? LINGE : F.type==="consommable" ? (F.prop?.consumables||[]) : [];
-    $("app").innerHTML = `
-      ${mission ? `<div class="card"><h3>${esc(mission.property?.name)}</h3><div class="sub">Mission du ${fdate(mission.date)}</div></div>` :
-        `<label class="f">Logement</label><select id="pp">${props.map(p=>`<option value="${p.id}" ${p.id===F.prop?.id?"selected":""}>${esc(p.name)}</option>`).join("")}</select>`}
-      <label class="f">Type de signalement</label>
-      <div class="types">${Object.entries(TYPES).map(([k,[l,ic]])=>`<button data-t="${k}" class="${F.type===k?"on":""}">${ic}<span>${l}</span></button>`).join("")}</div>
-      ${opts.length ? `<label class="f">${F.type==="linge"?"Linge concerné (manquant, taché, à changer)":"Qu'est-ce qui manque ou est presque fini ?"}</label>
-      <div class="card" style="padding:4px 12px">${opts.map((x,i)=>`<label class="ck"><input type="checkbox" data-i="${i}" ${F.items.includes(x)?"checked":""}><span>${esc(x)}</span></label>`).join("")}</div>`:""}
-      <label class="f">${F.type==="casse"?"Qu'est-ce qui est cassé ou abîmé ?":"Commentaire"}</label>
-      <textarea id="rc" placeholder="${F.type==="casse"?"Verre cassé dans la cuisine, tache sur le canapé…":"Précisions, quantités…"}">${esc(F.comment||"")}</textarea>
-      <label class="f">Photo ${F.type==="casse"?"(conseillée)":"(facultative)"}</label>
-      <div class="photos">${F.photo?`<div class="ph"><img src="${F.photo}" alt=""><button class="x" id="phx" aria-label="Retirer">×</button></div>`:`<div class="addph" id="pha">${I.cam}<span>Photo</span></div>`}</div>
-      <button class="btn pri block" id="send" style="margin-top:16px">Envoyer le signalement</button>`;
-    if ($("pp")) $("pp").onchange = e => { F.prop = props.find(p => p.id === e.target.value); F.items = []; draw(); };
-    $("app").querySelectorAll("[data-t]").forEach(b => b.onclick = () => { F.comment=$("rc").value; F.type=b.dataset.t; F.items=[]; draw(); });
-    $("app").querySelectorAll("[data-i]").forEach(c => c.onchange = () => { const x = opts[+c.dataset.i]; F.items = c.checked ? [...F.items, x] : F.items.filter(y => y!==x); });
-    if ($("pha")) $("pha").onclick = async () => { const [f] = await pickPhotos(false); if (!f) return; F.comment=$("rc").value; try { F.photo = await compress(f); draw(); } catch(e) { toast(e.message,true); } };
-    if ($("phx")) $("phx").onclick = () => { F.comment=$("rc").value; F.photo=null; draw(); };
-    $("send").onclick = e => {
-      const comment = $("rc").value.trim();
-      if (!F.items.length && !comment && !F.photo) return toast("Cochez un élément ou écrivez un commentaire", true);
+    $("app").innerHTML = hero("Signaler un problème",{back:true, sub: mission?`${I.pin}${esc(mission.property?.name)}`:""}) + `<div class="a-sheet">
+      ${!mission&&props.length>1?`<label class="f" style="margin-top:0">Logement</label><select id="pp">${props.map(p=>`<option value="${p.id}" ${p.id===F.prop?"selected":""}>${esc(p.name)}</option>`).join("")}</select>`:""}
+      <div class="a-types">${Object.entries(RTYPES).map(([k,[l,ic]]) => `<button data-t="${k}" class="${F.type===k?"on":""}">${ic}<span>${l}</span></button>`).join("")}</div>
+      <label class="f">Titre <span style="color:var(--bad)">*</span></label><input type="text" id="rt" value="${esc(F.title)}" placeholder="${{equipement:"Ex. : Mitigeur qui fuit",proprete:"Ex. : Tache sur le canapé",degradation:"Ex. : Verre cassé, mur abîmé",autre:"Ex. : Clé introuvable"}[F.type]}">
+      <label class="f">Description</label><textarea id="rc" placeholder="Décris le problème en quelques mots…">${esc(F.comment)}</textarea>
+      <label class="f">Photos <span class="muted">(facultatif)</span></label>
+      <div class="photos">${F.photos.length<6?`<div class="addph" id="pha">${I.cam}<span>Ajouter des photos</span></div>`:""}${F.photos.map((x,i)=>`<div class="ph"><img src="${x}" alt=""><button class="x" data-x="${i}" aria-label="Retirer">×</button></div>`).join("")}</div>
+      <button class="a-big" id="send" style="margin-top:18px">${I.send} Envoyer le signalement</button>
+    </div>`;
+    bindHero();
+    const keep = () => { F.title = $("rt").value; F.comment = $("rc").value; };
+    if ($("pp")) $("pp").onchange = e => { keep(); F.prop = e.target.value; };
+    $("app").querySelectorAll("[data-t]").forEach(b => b.onclick = () => { keep(); F.type = b.dataset.t; draw(); });
+    if ($("pha")) $("pha").onclick = async () => { keep(); const fs = await pickPhotos(true); for (const f of fs.slice(0, 6-F.photos.length)) { try { F.photos.push(await compress(f)); } catch(e) { toast(e.message,true); } } draw(); };
+    $("app").querySelectorAll("[data-x]").forEach(b => b.onclick = () => { keep(); F.photos.splice(+b.dataset.x,1); draw(); });
+    $("send").onclick = e => { keep();
+      if (!F.title.trim()) return toast("Donne un titre au signalement", true);
       run(e.currentTarget, async () => {
-        await api("report_create", {mission_id: mission?.id, property_id: F.prop?.id, type:F.type, items:F.items, comment, photo:F.photo});
-        toast("Signalement envoyé");
-        if (backFn) backFn(); else { F.items=[]; F.comment=""; F.photo=null; draw(); }
+        await api("report_create",{mission_id: mission?.id, property_id: F.prop, type:F.type, title:F.title.trim(), comment:F.comment.trim(), photos:F.photos});
+        S.data = null; if (mission) S.mc[mission.id] = null;
+        toast("Signalement envoyé à Matthis"); S.view = v.back || null; if (!S.view) S.tab = "reports"; render(); window.scrollTo(0,0);
       });
     };
   };
   draw();
+}
+
+// ---- Mes signalements
+async function aReports() {
+  $("app").innerHTML = hero("Signalements") + `<div class="a-sheet"><div class="empty"><span class="spin"></span></div></div>`; bindHero();
+  let r; try { r = await api("my_reports"); } catch(e) { $("app").querySelector(".a-sheet").innerHTML = `<div class="empty">${esc(e.message)}</div>`; return; }
+  const all = {...RTYPES, linge:["Linge",I.shirt], consommable:["Consommables",I.bottle], casse:["Casse",I.hammer]};
+  $("app").innerHTML = hero("Signalements", {right:`<button class="a-ib" id="nr" aria-label="Nouveau signalement">＋</button>`}) + `<div class="a-sheet">
+    <button class="a-big" id="nr2">${I.alert} Signaler un problème</button>
+    <div class="row" style="gap:8px;margin:12px 0 4px"><button class="a-chip" id="gs">${I.bottle} Consommables</button><button class="a-chip" id="gl">${I.shirt} Linge</button></div>
+    ${r.reports.length ? `<div class="a-sec">Mes signalements</div>` + r.reports.map(x => { const [l, ic] = all[x.type] || [x.type, I.dots]; return `<div class="a-box"><div class="row" style="align-items:flex-start"><span class="a-ric">${ic}</span><div class="sp"><b>${esc(x.title || l)}</b>
+      <div class="muted" style="font-size:13px">${l} · ${esc(x.property?.name||"")} · ${new Date(x.created_at).toLocaleDateString("fr-FR",{day:"numeric",month:"short"})}</div>
+      ${x.items?.length?`<div class="sub" style="margin-top:4px">${x.items.map(esc).join(" · ")}</div>`:""}${x.comment?`<div class="sub" style="margin-top:4px">${esc(x.comment)}</div>`:""}</div>
+      <span class="pill ${x.status==="traite"?"p-validee":"p-a_faire"}">${x.status==="traite"?"Traité":"Envoyé"}</span></div>${x.photos?.length?photoGrid(x.photos):""}</div>`; }).join("")
+      : `<div class="empty" style="padding:24px">Aucun signalement envoyé pour l'instant.</div>`}</div>`;
+  bindHero(); bindLb();
+  $("nr").onclick = $("nr2").onclick = () => goView({type:"report"});
+  $("gs").onclick = () => goView({type:"stock", tab:"consommable"}); $("gl").onclick = () => goView({type:"stock", tab:"linge"});
+}
+
+// ---- Profil
+async function aProfil() {
+  $("app").innerHTML = `<div class="a-hero" style="text-align:center;padding-bottom:40px"><div class="a-hrow"><span class="sp"></span><button class="a-ib" data-thm aria-label="Changer de thème">${I[themeMode()==="dark"?"moon":themeMode()==="light"?"sun":"auto"]}</button></div>
+      <div id="avc" class="click" style="display:inline-block;position:relative">${avatarHtml(88)}<span class="a-avedit">${I.cam}</span></div>
+      <div class="a-hi" style="margin-top:10px">${esc(S.name)}</div><div class="a-hs">Agente d'entretien · My Laeti</div></div>
+    <div class="a-sheet"><div id="set"></div>
+      <div class="muted" style="text-align:center;margin:16px 0 4px;font-size:12px">My Laeti · gestion de missions & entretien</div></div>`;
+  bindHero(); settingsCard($("set"));
+  $("avc").onclick = async () => {
+    const [f] = await pickPhotos(false); if (!f) return;
+    try { const img = await compressSize(f, 300); localStorage.setItem("ml_avatar", img); toast("Photo de profil mise à jour"); aProfil(); } catch(e) { toast("Photo impossible à enregistrer", true); }
+  };
+}
+function compressSize(file, max) {
+  return new Promise((res, rej) => { const img = new Image(), url = URL.createObjectURL(file);
+    img.onload = () => { const s = Math.min(img.naturalWidth, img.naturalHeight), c = document.createElement("canvas"); c.width = c.height = max;
+      c.getContext("2d").drawImage(img, (img.naturalWidth-s)/2, (img.naturalHeight-s)/2, s, s, 0, 0, max, max); URL.revokeObjectURL(url); res(c.toDataURL("image/jpeg", .8)); };
+    img.onerror = () => rej(new Error("Image illisible")); img.src = url; });
+}
+
+// shared card (gestionnaire)
+function missionCard(m, today, admin) {
+  const nc = m.next_checkin ? `Prochaine arrivée : ${m.next_checkin===m.date?"<b>le jour même</b>":fshort(m.next_checkin)}` : "Pas d'arrivée prévue";
+  return `<div class="card click ${m.date===today&&m.status!=="validee"&&m.status!=="terminee"?"today":""}" data-m="${m.id}">
+    <div class="row">${admin?thumb(m.property,"a-th sm"):""}<div class="sp"><h3>${esc(m.property?.name)}</h3>
+    <div class="sub">${m.start_time?hm(m.start_time)+" – "+hm(m.end_time):"Horaire libre"}${admin?" · "+esc(m.cleaner?.name||"Sans agent"):""}</div>
+    <div class="muted">${nc}${admin&&m.source==="manuel"?" · ajoutée à la main":""}</div></div><div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">${pill(m.status)}${isNew(m)?`<span class="pill new">Nouveau</span>`:""}</div></div></div>`;
 }
 
 // ================= ADMIN =================
@@ -491,6 +854,7 @@ async function loadAdmin(force) {
   return S.data;
 }
 async function renderAdmin() {
+  document.body.classList.remove("agent");
   let d;
   try { d = await loadAdmin(false); } catch(e) { $("app").innerHTML = `<div class="empty">${esc(e.message)}</div>`; return; }
   const nNew = d.reports.filter(r => r.status==="nouveau").length;
@@ -603,7 +967,7 @@ function missionForm(v) {
 
 function reportCard(r) {
   const [l, ic] = TYPES[r.type] || [r.type, ""];
-  return `<div class="card"><div class="row"><span style="width:24px;color:var(--tx2)">${ic}</span><div class="sp"><h3 style="font-size:15px">${l}${r.property?" · "+esc(r.property.name):""}</h3>
+  return `<div class="card"><div class="row"><span style="width:24px;color:var(--tx2)">${ic}</span><div class="sp"><h3 style="font-size:15px">${r.title?esc(r.title)+" · ":""}${l}${r.property?" · "+esc(r.property.name):""}</h3>
     <div class="muted">${new Date(r.created_at).toLocaleString("fr-FR",{dateStyle:"short",timeStyle:"short"})}${r.cleaner?" · "+esc(r.cleaner.name):""}</div></div>${pill(r.status)}</div>
     ${r.items?.length?`<div style="margin-top:8px;font-size:14px">${r.items.map(esc).join(" · ")}</div>`:""}
     ${r.comment?`<div class="sub" style="margin-top:6px;white-space:pre-wrap">${esc(r.comment)}</div>`:""}
@@ -627,7 +991,7 @@ function adminReports(d) {
 function adminProps(d) {
   header("Logements", null, `<button class="btn sm pri" id="np">+ Logement</button>`);
   $("np").onclick = () => go({type:"prop"});
-  $("app").innerHTML = d.properties.length ? d.properties.map(p => `<div class="card click" data-p="${p.id}"><div class="row"><div class="sp"><h3>${esc(p.name)}</h3>
+  $("app").innerHTML = d.properties.length ? d.properties.map(p => `<div class="card click" data-p="${p.id}"><div class="row">${thumb(p,"a-th")}<div class="sp"><h3>${esc(p.name)}</h3>
     <div class="sub">${hm(p.default_start)} – ${hm(p.default_end)} · ${esc(d.cleaners.find(c=>c.id===p.cleaner_id)?.name||"Pas d'agent attitré")}</div>
     <div class="muted">${p.ical_urls.length?`${p.ical_urls.length} calendrier(s) · ${p.last_sync_at?"synchro "+new Date(p.last_sync_at).toLocaleString("fr-FR",{dateStyle:"short",timeStyle:"short"}):"jamais synchronisé"}`:"Aucun calendrier : missions manuelles uniquement"}</div>
     ${p.last_sync_error?`<div style="color:var(--bad);font-size:13px">${esc(p.last_sync_error)}</div>`:""}</div></div></div>`).join("")
@@ -636,10 +1000,12 @@ function adminProps(d) {
 }
 function propForm(id) {
   const d = S.data, p = d.properties.find(x=>x.id===id) || {name:"",address:"",ical_urls:[],default_start:"10:00",default_end:"16:00",cleaner_id:d.cleaners[0]?.id||null,
-    checklist:["Draps et serviettes changés","Salle de bain","Cuisine et vaisselle","Poubelles vidées","Sols aspirés et lavés","Vérifier qu'il ne reste rien des voyageurs"],
-    consumables:["Papier toilette","Savon / gel douche","Liquide vaisselle","Éponges","Sacs poubelle","Café / thé","Sel / poivre / huile"], notes:""};
+    checklist:["# Salon & Séjour","Dépoussiérer les surfaces","Nettoyer la TV et les meubles","Aspirer et laver le sol","Vérifier l'état du canapé","# Cuisine","Vaisselle propre et rangée","Plan de travail et plaques","Frigo vidé et nettoyé","Poubelles vidées","# Chambre","Draps et housses changés","Lit fait","Aspirer et laver le sol","# Salle de bain","Douche et lavabo","WC désinfectés","Serviettes propres"],
+    consumables:["Papier toilette","Produits ménagers","Sacs poubelle","Éponges","Lessive","Savon / gel douche","Liquide vaisselle","Café / thé"], notes:"", access_info:"", equipment:"", stock:{}};
   header(id ? "Modifier le logement" : "Nouveau logement", () => go(null));
-  $("app").innerHTML = `<div class="card">
+  $("app").innerHTML = `${id?`<div class="card"><label class="f" style="margin-top:0">Photo du logement (vue par l'agent)</label>
+    <div class="row" style="gap:12px">${thumb(p,"a-thl")}<button class="btn" id="pph">${I.cam} ${p.photo_url?"Changer la photo":"Ajouter une photo"}</button></div></div>`:""}
+    <div class="card">
     <label class="f" style="margin-top:0">Nom du logement</label><input type="text" id="pn" value="${esc(p.name)}" placeholder="Elbeuf · T2 rue du 1er Mai">
     <label class="f">Adresse (visible par l'agent)</label><input type="text" id="pa" value="${esc(p.address||"")}" placeholder="12 rue du 1er Mai, 76500 Elbeuf">
     <label class="f">Liens de calendrier iCal (un par ligne)</label><textarea id="pi" placeholder="https://www.airbnb.fr/calendar/ical/123456.ics?s=…">${esc(p.ical_urls.join("\n"))}</textarea>
@@ -647,20 +1013,25 @@ function propForm(id) {
     <div class="grid2"><div><label class="f">Ménage de</label><input type="time" id="ps" value="${p.default_start.slice(0,5)}"></div><div><label class="f">à</label><input type="time" id="pe" value="${p.default_end.slice(0,5)}"></div></div>
     <label class="f">Agent attitré</label><select id="pc"><option value="">— Aucun —</option>${d.cleaners.map(c=>`<option value="${c.id}" ${p.cleaner_id===c.id?"selected":""}>${esc(c.name)}</option>`).join("")}</select>
     ${id?`<label class="ck" style="border:0"><input type="checkbox" id="pac" checked><span class="sub">Appliquer aussi aux missions à venir déjà créées</span></label>`:""}
-    <label class="f">Checklist ménage (une tâche par ligne)</label><textarea id="pk" style="min-height:150px">${esc(p.checklist.join("\n"))}</textarea>
+    <label class="f">Checklist ménage (une tâche par ligne)</label><textarea id="pk" style="min-height:220px">${esc(p.checklist.join("\n"))}</textarea>
+    <div class="muted">Commence une ligne par <b>#</b> pour créer une pièce (ex. « # Cuisine ») : l'agent verra la checklist et les photos rangées par pièce.</div>
     <label class="f">Consommables à surveiller (un par ligne)</label><textarea id="pco" style="min-height:130px">${esc(p.consumables.join("\n"))}</textarea>
-    <label class="f">Consignes pour l'agent</label><textarea id="pno" placeholder="Code boîte à clés, local poubelles, où ranger le linge sale…">${esc(p.notes||"")}</textarea>
+    <label class="f">Consignes spécifiques</label><textarea id="pno" placeholder="Local poubelles, où ranger le linge sale, points d'attention…">${esc(p.notes||"")}</textarea>
+    <label class="f">Accès & code</label><textarea id="pac2" placeholder="Code boîte à clés 1234, digicode, étage, place de parking…">${esc(p.access_info||"")}</textarea>
+    <label class="f">Équipements du logement</label><textarea id="peq" placeholder="Aspirateur dans le placard de l'entrée, lave-linge, produits sous l'évier…">${esc(p.equipment||"")}</textarea>
+    ${id&&Object.keys(p.stock||{}).length?`<label class="f">Stock déclaré par l'agent</label><div class="sub">${Object.entries(p.stock).map(([k,v])=>`<span style="${v<=2?"color:var(--bad);font-weight:600":""}">${esc(k)} : ${v}</span>`).join(" · ")}</div>`:""}
     <button class="btn pri block" id="psave" style="margin-top:16px">Enregistrer${p.ical_urls.length||!id?" et synchroniser":""}</button>
     ${id?`<button class="btn bad block" id="pdel" style="margin-top:8px">Retirer ce logement</button>`:""}</div>`;
   const lines = v => v.split("\n").map(x=>x.trim()).filter(Boolean);
   $("psave").onclick = e => run(e.currentTarget, async () => {
     const r = await api("property_save", {id, name:$("pn").value.trim(), address:$("pa").value.trim(), ical_urls:lines($("pi").value), default_start:$("ps").value, default_end:$("pe").value,
-      cleaner_id:$("pc").value, apply_cleaner: $("pac")?.checked, checklist:lines($("pk").value), consumables:lines($("pco").value), notes:$("pno").value.trim()});
+      cleaner_id:$("pc").value, apply_cleaner: $("pac")?.checked, checklist:lines($("pk").value), consumables:lines($("pco").value), notes:$("pno").value.trim(), access_info:$("pac2").value.trim(), equipment:$("peq").value.trim()});
     if (r.sync?.error) toast("Logement enregistré, mais le calendrier n'a pas pu être lu : " + r.sync.error, true);
     else toast(r.sync ? `Enregistré · ${r.sync.created} mission(s) créée(s)` : "Logement enregistré");
     await refresh(); go(null);
   });
   if ($("pdel")) $("pdel").onclick = e => { if (confirm("Retirer ce logement ? Ses missions passées restent dans le récap.")) run(e.currentTarget, async () => { await api("property_delete",{id}); await refresh(); go(null); }); };
+  if ($("pph")) $("pph").onclick = async e => { const [f] = await pickPhotos(false); if (!f) return; run(e.currentTarget, async () => { await api("property_photo",{id, data: await compress(f)}); toast("Photo enregistrée"); await refresh(); go({type:"prop", id}); }); };
 }
 
 function agentLink(c) { return location.origin + location.pathname + "?t=" + c.token; }
