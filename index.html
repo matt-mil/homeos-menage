@@ -7,15 +7,20 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="Ménage">
+<meta name="apple-mobile-web-app-title" content="My Laeti">
 <meta name="theme-color" content="#0F6E56">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="icon-180.png">
 <link rel="manifest" href="manifest.json">
-<title>Ménage · HOME OS</title>
+<title>My Laeti</title>
+<script>
+(function(){var m="auto";try{m=localStorage.getItem("ml_theme")||"auto"}catch(e){}
+var d=m==="dark"||(m==="auto"&&matchMedia("(prefers-color-scheme: dark)").matches);
+document.documentElement.dataset.theme=d?"dark":"light";})();
+</script>
 <style>
 :root{--bg:#F6F5F1;--card:#fff;--tx:#1d1d1b;--tx2:#6b6a65;--tx3:#9a9993;--bd:#e4e2da;--ac:#0F6E56;--acbg:#E1F5EE;--warn:#854F0B;--warnbg:#FAEEDA;--bad:#A32D2D;--badbg:#FCEBEB;--ok:#3B6D11;--okbg:#EAF3DE;--info:#185FA5;--infobg:#E6F1FB;--r:12px}
-@media (prefers-color-scheme:dark){:root{--bg:#141413;--card:#1f1f1e;--tx:#f0efe9;--tx2:#a9a8a2;--tx3:#77766f;--bd:#33332f;--ac:#5DCAA5;--acbg:#0b3a2f;--warn:#FAC775;--warnbg:#3d2a08;--bad:#F09595;--badbg:#3f1414;--ok:#97C459;--okbg:#1f330b;--info:#85B7EB;--infobg:#0c2a4a}}
+[data-theme=dark]{--bg:#141413;--card:#1f1f1e;--tx:#f0efe9;--tx2:#a9a8a2;--tx3:#77766f;--bd:#33332f;--ac:#5DCAA5;--acbg:#0b3a2f;--warn:#FAC775;--warnbg:#3d2a08;--bad:#F09595;--badbg:#3f1414;--ok:#97C459;--okbg:#1f330b;--info:#85B7EB;--infobg:#0c2a4a}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
 button,input,select,textarea{font:inherit;color:inherit}
@@ -39,7 +44,8 @@ h3{font-size:16px;margin:0 0 4px;font-weight:600}
 .p-nouveau{background:var(--badbg);color:var(--bad)}.p-traite{background:var(--okbg);color:var(--ok)}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:1px solid var(--bd);background:var(--card);border-radius:10px;padding:10px 14px;cursor:pointer;font-weight:500;text-decoration:none;color:var(--tx)}
 .btn.pri{background:var(--ac);border-color:var(--ac);color:#fff}
-@media (prefers-color-scheme:dark){.btn.pri{color:#04342C}}
+[data-theme=dark] .btn.pri{color:#04342C}
+html{color-scheme:light}[data-theme=dark]{color-scheme:dark}
 .btn.bad{color:var(--bad)}
 .btn.block{display:flex;width:100%;padding:14px;font-size:16px}
 .btn.sm{padding:6px 10px;font-size:14px}
@@ -87,10 +93,34 @@ table.t th{color:var(--tx2);font-weight:500;font-size:13px}
 .prog i{display:block;height:100%;background:var(--ac)}
 .code{font-family:ui-monospace,Menlo,monospace;font-size:12px;word-break:break-all;background:var(--bg);padding:8px;border-radius:8px;border:1px solid var(--bd)}
 .today{border-left:4px solid var(--ac)}
+.icb{border:1px solid var(--bd);background:var(--card);border-radius:10px;width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;color:var(--tx2);flex:none}
+.icb svg{width:20px;height:20px}
+#splash{position:fixed;inset:0;z-index:100;background:var(--ac);color:#fff;display:flex;flex-direction:column;justify-content:center;padding:32px 28px calc(32px + env(safe-area-inset-bottom));transition:opacity .45s ease,transform .45s ease;cursor:pointer}
+[data-theme=dark] #splash{background:#0b3a2f;color:#E1F5EE}
+#splash.out{opacity:0;transform:scale(1.03);pointer-events:none}
+#splash .logo{width:64px;height:64px;border-radius:18px;background:rgba(255,255,255,.16);display:flex;align-items:center;justify-content:center;margin-bottom:28px}
+#splash .logo svg{width:36px;height:36px}
+#splash .hi{font-size:34px;line-height:1.15;font-weight:700;margin:0 0 10px;letter-spacing:-.01em}
+#splash .q{font-size:21px;line-height:1.35;opacity:.92;margin:0 0 28px}
+#splash .sum{font-size:15px;opacity:.85;min-height:22px}
+#splash .go{margin-top:34px;align-self:flex-start;background:#fff;color:#0F6E56;border:0;border-radius:14px;padding:14px 22px;font-weight:600;font-size:16px;cursor:pointer}
+[data-theme=dark] #splash .go{background:#E1F5EE;color:#04342C}
+@media (prefers-reduced-motion:reduce){#splash{transition:none}}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center}
+.cal .dow{font-size:11px;color:var(--tx3);padding:4px 0;text-transform:uppercase}
+.cal .d{aspect-ratio:1;border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:14px;cursor:pointer;border:1px solid transparent;gap:3px}
+.cal .d.o{color:var(--tx3)}.cal .d.t{border-color:var(--ac);font-weight:700;color:var(--ac)}
+.cal .d.s{background:var(--ac);color:#fff}[data-theme=dark] .cal .d.s{color:#04342C}
+.cal .dots{display:flex;gap:2px;height:6px}.cal .dots i{width:6px;height:6px;border-radius:50%;background:var(--warn)}
+.cal .dots i.en_cours{background:var(--info)}.cal .dots i.terminee,.cal .dots i.validee{background:var(--ok)}
+.cal .d.s .dots i{background:#fff}
+.new{background:var(--infobg);color:var(--info)}
+.banner{display:flex;gap:12px;align-items:center;background:var(--acbg);color:var(--ac);border-radius:var(--r);padding:12px 14px;margin-bottom:10px;font-size:14px}
+.banner svg{width:22px;height:22px;flex:none}
 </style>
 </head>
 <body>
-<header class="top"><div class="in" id="hdr"><h1>Ménage</h1></div></header>
+<header class="top"><div class="in" id="hdr"><h1>My Laeti</h1></div></header>
 <main class="wrap" id="app"><div class="empty"><span class="spin"></span></div></main>
 <nav class="tabs" id="tabs" style="display:none"></nav>
 <input type="file" id="filein" accept="image/*" multiple style="display:none">
@@ -108,6 +138,12 @@ const I = {
   bottle:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 5h4V3h-4zM14 5v1.7a2 2 0 0 0 .7 1.5l.6.5A2 2 0 0 1 16 10.2V19a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2v-8.8a2 2 0 0 1 .7-1.5l.6-.5a2 2 0 0 0 .7-1.5V5"/><path d="M8 14h8"/></svg>',
   hammer:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11.4 12.6 3 21M14 4l6 6-3 3-6-6zM9 7l3-3"/></svg>',
   dots:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></svg>',
+  bell:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 5a2 2 0 1 1 4 0 7 7 0 0 1 4 6v3a4 4 0 0 0 2 3H4a4 4 0 0 0 2-3v-3a7 7 0 0 1 4-6M9 17v1a3 3 0 0 0 6 0v-1"/></svg>',
+  sun:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M3 12h1M20 12h1M12 3v1M12 20v1M5.6 5.6l.7.7M17.7 17.7l.7.7M5.6 18.4l.7-.7M17.7 6.3l.7-.7"/></svg>',
+  moon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9"/></svg>',
+  auto:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 3v18"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/></svg>',
+  gear:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 4.3c.4-1.8 3-1.8 3.4 0a1.7 1.7 0 0 0 2.6 1.1c1.5-.9 3.3.8 2.4 2.4a1.7 1.7 0 0 0 1 2.5c1.8.4 1.8 3 0 3.4a1.7 1.7 0 0 0-1 2.6c.9 1.5-.9 3.3-2.4 2.4a1.7 1.7 0 0 0-2.6 1c-.4 1.8-3 1.8-3.4 0a1.7 1.7 0 0 0-2.5-1c-1.6.9-3.3-.9-2.4-2.4a1.7 1.7 0 0 0-1.1-2.6c-1.8-.4-1.8-3 0-3.4a1.7 1.7 0 0 0 1.1-2.5c-.9-1.6.8-3.3 2.4-2.4 1 .6 2.3.1 2.5-1.1z"/><circle cx="12" cy="12" r="3"/></svg>',
+  list:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M9 6h11M9 12h11M9 18h11M5 6h.01M5 12h.01M5 18h.01"/></svg>',
   sync:'<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11A8.1 8.1 0 0 0 4.5 9M4 5v4h4M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"/></svg>',
 };
 const TYPES = {linge:["Linge",I.shirt],consommable:["Consommables",I.bottle],casse:["Casse",I.hammer],autre:["Autre",I.dots]};
@@ -138,9 +174,23 @@ async function run(btn, fn) {
   if (btn) { btn.disabled = true; btn.innerHTML = '<span class="spin"></span>'; }
   try { return await fn(); } catch(e) { toast(e.message, true); } finally { if (btn && btn.isConnected) { btn.disabled=false; btn.innerHTML=old; } }
 }
+function themeMode() { try { return localStorage.getItem("ml_theme") || "auto"; } catch(e) { return "auto"; } }
+function applyTheme() {
+  const m = themeMode(); const d = m==="dark" || (m==="auto" && matchMedia("(prefers-color-scheme: dark)").matches);
+  document.documentElement.dataset.theme = d ? "dark" : "light";
+  document.querySelector('meta[name=theme-color]').content = d ? "#141413" : "#0F6E56";
+  const b = $("thm"); if (b) { b.innerHTML = I[m==="auto"?"auto":m==="dark"?"moon":"sun"]; b.title = {auto:"Thème : automatique",light:"Thème : clair",dark:"Thème : sombre"}[m]; }
+}
+matchMedia("(prefers-color-scheme: dark)").addEventListener?.("change", applyTheme);
+function cycleTheme() {
+  const n = {auto:"light", light:"dark", dark:"auto"}[themeMode()];
+  try { localStorage.setItem("ml_theme", n); } catch(e) {}
+  applyTheme(); toast({auto:"Thème automatique (suit le téléphone)",light:"Mode clair",dark:"Mode sombre"}[n]);
+}
 function header(title, backFn, right="") {
-  $("hdr").innerHTML = (backFn ? `<button class="back" id="bk" aria-label="Retour">${I.back}</button>` : "") + `<h1>${esc(title)}</h1>${right}`;
+  $("hdr").innerHTML = (backFn ? `<button class="back" id="bk" aria-label="Retour">${I.back}</button>` : "") + `<h1>${esc(title)}</h1>${right}<button class="icb" id="thm" aria-label="Changer de thème"></button>`;
   if (backFn) $("bk").onclick = backFn;
+  $("thm").onclick = cycleTheme; applyTheme();
 }
 function tabs(list) {
   $("tabs").style.display = "flex";
@@ -170,48 +220,168 @@ function photoGrid(photos, opts={}) {
 }
 function bindLb(root=document) { root.querySelectorAll("[data-lb]").forEach(i => i.onclick = () => lightbox(i.dataset.lb)); }
 
+// ================= PUSH & AGENDA =================
+const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform==="MacIntel" && navigator.maxTouchPoints>1);
+const isStandalone = matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
+const pushSupported = "serviceWorker" in navigator && "PushManager" in window && "Notification" in window;
+let swReg = null;
+if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").then(r => swReg = r).catch(() => {});
+navigator.serviceWorker?.addEventListener("message", e => { if (e.data?.type === "refresh" && S.role) { S.data = null; render(); } });
+function b64u(s) { const p = "=".repeat((4 - s.length % 4) % 4); const r = atob((s + p).replace(/-/g, "+").replace(/_/g, "/")); return Uint8Array.from([...r].map(c => c.charCodeAt(0))); }
+async function pushState() {
+  if (!pushSupported) return isIOS && !isStandalone ? "install" : "unsupported";
+  if (Notification.permission === "denied") return "denied";
+  const reg = swReg || await navigator.serviceWorker.ready;
+  const sub = await reg.pushManager.getSubscription();
+  return sub && Notification.permission === "granted" ? "on" : "off";
+}
+async function enablePush() {
+  if (!pushSupported) throw new Error(isIOS ? "Ajoute d'abord My Laeti à l'écran d'accueil, puis ouvre-la depuis l'icône." : "Ce navigateur ne gère pas les notifications.");
+  const perm = await Notification.requestPermission();
+  if (perm !== "granted") throw new Error("Notifications refusées. Autorise-les dans les réglages du téléphone.");
+  const reg = swReg || await navigator.serviceWorker.ready;
+  const { key } = await api("push_key");
+  let sub = await reg.pushManager.getSubscription();
+  if (!sub) sub = await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: b64u(key) });
+  await api("push_subscribe", { subscription: sub.toJSON() });
+  await api("push_test");
+}
+async function disablePush() {
+  const reg = swReg || await navigator.serviceWorker.ready; const sub = await reg.pushManager.getSubscription();
+  if (sub) { await api("push_unsubscribe", { endpoint: sub.endpoint }); await sub.unsubscribe(); }
+}
+const feedUrl = () => API.replace(/^https:/, "") + "?ical=" + TOKEN;
+async function settingsCard(el) {
+  const st = await pushState().catch(() => "unsupported");
+  const label = {on:"Activées sur ce téléphone", off:"Désactivées", denied:"Bloquées dans les réglages du téléphone", install:"Disponibles une fois l'appli ajoutée à l'écran d'accueil", unsupported:"Non disponibles sur ce navigateur"}[st];
+  el.innerHTML = `
+    <div class="card"><div class="row"><span style="color:var(--ac)">${I.bell}</span><div class="sp"><h3 style="font-size:15px">Notifications</h3><div class="sub">${label}</div></div></div>
+    <div class="muted" style="margin-top:8px">${S.role==="admin"?"Nouvelle réservation, modification, annulation, ménage terminé, signalement.":"Nouvelle réservation, modification ou annulation d'un ménage."}</div>
+    ${st==="install"?`<div class="muted" style="margin-top:8px">Sur iPhone : bouton Partager <b>⬆︎</b> › <b>Sur l'écran d'accueil</b>, puis ouvre My Laeti depuis l'icône.</div>`:""}
+    ${st==="off"?`<button class="btn pri block" id="pon" style="margin-top:12px">Activer les notifications</button>`:""}
+    ${st==="on"?`<div class="row" style="gap:8px;margin-top:12px"><button class="btn sm" id="ptest">Tester</button><button class="btn sm bad" id="poff">Désactiver</button></div>`:""}</div>
+    <div class="card"><div class="row"><span style="color:var(--ac)">${I.cal}</span><div class="sp"><h3 style="font-size:15px">Synchroniser avec mon agenda</h3><div class="sub">${S.role==="admin"?"Tous les ménages":"Tes ménages"} apparaissent dans ton agenda et se mettent à jour tout seuls.</div></div></div>
+    <div style="display:grid;gap:8px;margin-top:12px">
+      <a class="btn block" href="webcal:${feedUrl()}">iPhone · Calendrier Apple</a>
+      <a class="btn block" href="https://calendar.google.com/calendar/r?cid=${encodeURIComponent("webcal:" + feedUrl())}" target="_blank" rel="noopener">Android · Google Agenda</a>
+      <button class="btn sm" id="cpf" style="justify-self:start">Copier le lien d'abonnement</button></div></div>
+    <div class="card click" id="thm2"><div class="row"><span style="color:var(--ac)">${I[themeMode()==="dark"?"moon":themeMode()==="light"?"sun":"auto"]}</span><div class="sp"><h3 style="font-size:15px">Apparence</h3><div class="sub">${{auto:"Automatique (suit le téléphone)",light:"Mode clair",dark:"Mode sombre"}[themeMode()]}</div></div><span class="muted">Changer</span></div></div>`;
+  const again = () => settingsCard(el);
+  if ($("pon")) $("pon").onclick = e => run(e.currentTarget, async () => { await enablePush(); toast("Notifications activées"); again(); });
+  if ($("ptest")) $("ptest").onclick = e => run(e.currentTarget, async () => { await api("push_test"); toast("Notification de test envoyée"); });
+  if ($("poff")) $("poff").onclick = e => run(e.currentTarget, async () => { await disablePush(); toast("Notifications désactivées"); again(); });
+  $("cpf").onclick = async () => { const u = "https:" + feedUrl(); try { await navigator.clipboard.writeText(u); toast("Lien copié"); } catch(e) { prompt("Lien d'abonnement :", u); } };
+  $("thm2").onclick = () => { cycleTheme(); again(); };
+}
+async function pushNudge(el) {
+  if (!el) return; const st = await pushState().catch(() => "unsupported");
+  if (st !== "off" && st !== "install") return;
+  el.innerHTML = `<div class="banner click" id="nudge">${I.bell}<div class="sp">${st==="install"?"Ajoute My Laeti à ton écran d'accueil pour recevoir les notifications.":"Active les notifications pour être prévenue des nouvelles réservations."}</div><b>›</b></div>`;
+  $("nudge").onclick = () => { S.tab = "reglages"; S.view = null; render(); };
+}
+
+// ================= SPLASH =================
+function first(n) { return String(n||"").trim().split(/\s+/)[0] || ""; }
+function splash() {
+  let shown = false; try { shown = sessionStorage.getItem("ml_splash") === "1"; sessionStorage.setItem("ml_splash", "1"); } catch(e) {}
+  if (shown) return;
+  const el = document.createElement("div"); el.id = "splash";
+  const admin = S.role === "admin";
+  el.innerHTML = `<div class="logo">${I.home}</div>
+    <p class="hi">Bonjour ${esc(first(S.name))},</p>
+    <p class="q">${admin ? "prêt à piloter tes ménages ?" : "prête pour relever de nouveaux défis ?"}</p>
+    <div class="sum" id="ssum"></div>
+    <button class="go">${admin ? "Ouvrir le tableau de bord" : "C'est parti"}</button>`;
+  document.body.appendChild(el);
+  const close = () => { el.classList.add("out"); setTimeout(() => el.remove(), 500); };
+  el.onclick = close; setTimeout(close, 4200);
+  const sumFill = () => {
+    const d = S.data; if (!d || !d.missions || !$("ssum")) return false;
+    const t = d.today, today = d.missions.filter(m => m.date===t && !["annulee","terminee","validee"].includes(m.status)).length;
+    const next = d.missions.filter(m => m.date>t && m.status==="a_faire" && (!admin || true)).length;
+    $("ssum").textContent = today ? `${today} ménage${today>1?"s":""} aujourd'hui${next?` · ${next} à venir`:""}` : next ? `Rien aujourd'hui · ${next} ménage${next>1?"s":""} à venir` : "Aucun ménage prévu pour le moment";
+    return true;
+  };
+  let tries = 0; const iv = setInterval(() => { if (sumFill() || ++tries > 20) clearInterval(iv); }, 200);
+}
+
 // ================= BOOT =================
 async function boot() {
-  if (!TOKEN) { header("Ménage"); $("app").innerHTML = `<div class="empty"><h3>Lien d'accès manquant</h3><p>Ouvrez l'application avec le lien personnel qui vous a été envoyé.</p></div>`; return; }
+  if (!TOKEN) { header("My Laeti"); $("app").innerHTML = `<div class="empty"><h3>Lien d'accès manquant</h3><p>Ouvrez l'application avec le lien personnel qui vous a été envoyé.</p></div>`; return; }
   try {
     const w = await api("whoami"); S.role = w.role; S.name = w.name;
-    S.tab = S.role === "admin" ? "planning" : "planning";
+    S.tab = "planning";
+    splash();
     render();
   } catch(e) {
-    header("Ménage"); $("app").innerHTML = `<div class="empty"><h3>Accès impossible</h3><p>${esc(e.message)}</p><p class="muted">Demandez un nouveau lien à votre gestionnaire.</p></div>`;
+    header("My Laeti"); $("app").innerHTML = `<div class="empty"><h3>Accès impossible</h3><p>${esc(e.message)}</p><p class="muted">Demandez un nouveau lien à votre gestionnaire.</p></div>`;
   }
 }
 function render() { (S.role === "admin" ? renderAdmin : renderAgent)(); }
 
 // ================= AGENT =================
 async function renderAgent() {
-  tabs([["planning","Planning",I.cal],["signaler","Signaler",I.alert]]);
+  tabs([["planning","Planning",I.cal],["signaler","Signaler",I.alert],["reglages","Réglages",I.gear]]);
   if (S.view?.type === "mission") return agentMission(S.view.id);
   if (S.tab === "signaler") return reportForm({});
-  header("Bonjour " + S.name.split(" ")[0], null, `<button class="btn sm" id="rf" aria-label="Actualiser">${I.sync}</button>`);
+  if (S.tab === "reglages") { header("Réglages"); $("app").innerHTML = `<div class="empty"><span class="spin"></span></div>`; return settingsCard($("app")); }
+  header("Bonjour " + first(S.name), null, `<button class="icb" id="vw" aria-label="Changer de vue">${agentView==="cal"?I.list:I.cal}</button><button class="icb" id="rf" aria-label="Actualiser">${I.sync}</button>`);
   $("rf").onclick = () => renderAgent();
-  $("app").innerHTML = `<div class="empty"><span class="spin"></span></div>`;
+  $("vw").onclick = () => { agentView = agentView==="cal" ? "list" : "cal"; try { localStorage.setItem("ml_view", agentView); } catch(e) {} renderAgent(); };
+  if (!S.data) $("app").innerHTML = `<div class="empty"><span class="spin"></span></div>`;
   try {
     const d = await api("my_missions"); S.data = d;
+    if (agentView === "cal") return agentCalendar(d);
     const upcoming = d.missions.filter(m => m.date >= d.today || ["a_faire","en_cours"].includes(m.status));
     const past = d.missions.filter(m => !upcoming.includes(m)).reverse();
-    if (!d.missions.length) { $("app").innerHTML = `<div class="empty"><h3>Aucune mission prévue</h3><p>Vos ménages apparaîtront ici dès qu'une réservation sera enregistrée.</p></div>`; return; }
+    if (!d.missions.length) { $("app").innerHTML = `<div id="nud"></div><div class="empty"><h3>Aucun ménage prévu</h3><p>Tes ménages apparaîtront ici dès qu'une réservation sera enregistrée.</p></div>`; pushNudge($("nud")); return; }
     let html = "", last = "";
     for (const m of upcoming) {
       if (m.date !== last) { last = m.date; html += `<h2>${m.date===d.today?"Aujourd'hui · ":""}${fdate(m.date)}</h2>`; }
       html += missionCard(m, d.today);
     }
     if (past.length) html += `<h2>Déjà faits</h2>` + past.slice(0,10).map(m => missionCard(m, d.today)).join("");
-    $("app").innerHTML = html;
+    $("app").innerHTML = `<div id="nud"></div>` + html; pushNudge($("nud")); markSeen(d.missions);
     $("app").querySelectorAll("[data-m]").forEach(c => c.onclick = () => { S.view={type:"mission", id:c.dataset.m}; render(); window.scrollTo(0,0); });
   } catch(e) { $("app").innerHTML = `<div class="empty">${esc(e.message)}</div>`; }
+}
+let agentView = (() => { try { return localStorage.getItem("ml_view") || "list"; } catch(e) { return "list"; } })();
+let seenSet = null;
+function seenKey(m) { return m.id + "|" + m.date + "|" + (m.start_time||"") + "|" + (m.end_time||""); }
+function loadSeen() { if (!seenSet) { try { seenSet = new Set(JSON.parse(localStorage.getItem("ml_seen_"+S.role) || "null") || []); seenSet.init = !localStorage.getItem("ml_seen_"+S.role); } catch(e) { seenSet = new Set(); seenSet.init = true; } } return seenSet; }
+function isNew(m) { const s = loadSeen(); return !s.init && !s.has(seenKey(m)) && ["a_faire","en_cours"].includes(m.status); }
+function markSeen(list) { const s = loadSeen(); const keys = list.map(seenKey); setTimeout(() => { try { localStorage.setItem("ml_seen_"+S.role, JSON.stringify([...new Set([...keys, ...[...s].slice(-300)])])); } catch(e) {} }, 4000); }
+function agentCalendar(d) {
+  const t = d.today; S.calMonth = S.calMonth || t.slice(0,7); S.calDay = S.calDay || t;
+  const [y, mo] = S.calMonth.split("-").map(Number);
+  const firstDow = (new Date(y, mo-1, 1).getDay() + 6) % 7, days = new Date(y, mo, 0).getDate();
+  const byDay = {}; d.missions.forEach(m => (byDay[m.date] = byDay[m.date] || []).push(m));
+  const iso = (yy, mm, dd) => `${yy}-${String(mm).padStart(2,"0")}-${String(dd).padStart(2,"0")}`;
+  let cells = "";
+  for (let i = 0; i < firstDow; i++) cells += `<div></div>`;
+  for (let dd = 1; dd <= days; dd++) {
+    const k = iso(y, mo, dd), ms = byDay[k] || [];
+    cells += `<div class="d ${k===t?"t":""} ${k===S.calDay?"s":""}" data-day="${k}"><span>${dd}</span><span class="dots">${ms.slice(0,3).map(m=>`<i class="${m.status}"></i>`).join("")}</span></div>`;
+  }
+  const sel = byDay[S.calDay] || [];
+  const monthLabel = new Date(y, mo-1, 15).toLocaleDateString("fr-FR", {month:"long", year:"numeric"});
+  $("app").innerHTML = `<div id="nud"></div><div class="card"><div class="row" style="margin-bottom:8px"><button class="icb" id="pm" aria-label="Mois précédent">${I.back}</button>
+    <div class="sp" style="text-align:center;font-weight:600;text-transform:capitalize">${monthLabel}</div>
+    <button class="icb" id="nm" aria-label="Mois suivant" style="transform:scaleX(-1)">${I.back}</button></div>
+    <div class="cal">${["L","M","M","J","V","S","D"].map(x=>`<div class="dow">${x}</div>`).join("")}${cells}</div></div>
+    <h2>${fdate(S.calDay)}</h2>${sel.length ? sel.map(m => missionCard(m, t)).join("") : `<div class="muted" style="padding:4px 2px 12px">Pas de ménage ce jour-là.</div>`}`;
+  pushNudge($("nud")); markSeen(d.missions);
+  const shift = n => { const dt = new Date(y, mo-1+n, 1); S.calMonth = `${dt.getFullYear()}-${String(dt.getMonth()+1).padStart(2,"0")}`; agentCalendar(d); };
+  $("pm").onclick = () => shift(-1); $("nm").onclick = () => shift(1);
+  $("app").querySelectorAll("[data-day]").forEach(c => c.onclick = () => { S.calDay = c.dataset.day; agentCalendar(d); });
+  $("app").querySelectorAll("[data-m]").forEach(c => c.onclick = () => { S.view={type:"mission", id:c.dataset.m}; render(); window.scrollTo(0,0); });
 }
 function missionCard(m, today, admin) {
   const nc = m.next_checkin ? `Prochaine arrivée : ${m.next_checkin===m.date?"<b>le jour même</b>":fshort(m.next_checkin)}` : "Pas d'arrivée prévue";
   return `<div class="card click ${m.date===today&&m.status!=="validee"&&m.status!=="terminee"?"today":""}" data-m="${m.id}">
     <div class="row"><div class="sp"><h3>${esc(m.property?.name)}</h3>
     <div class="sub">${m.start_time?hm(m.start_time)+" – "+hm(m.end_time):"Horaire libre"}${admin?" · "+esc(m.cleaner?.name||"Sans agent"):""}</div>
-    <div class="muted">${nc}${admin&&m.source==="manuel"?" · ajoutée à la main":""}</div></div>${pill(m.status)}</div></div>`;
+    <div class="muted">${nc}${admin&&m.source==="manuel"?" · ajoutée à la main":""}</div></div><div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">${pill(m.status)}${isNew(m)?`<span class="pill new">Nouveau</span>`:""}</div></div></div>`;
 }
 
 async function agentMission(id) {
@@ -324,7 +494,8 @@ async function renderAdmin() {
   let d;
   try { d = await loadAdmin(false); } catch(e) { $("app").innerHTML = `<div class="empty">${esc(e.message)}</div>`; return; }
   const nNew = d.reports.filter(r => r.status==="nouveau").length;
-  tabs([["planning","Planning",I.cal],["reports","Signalements",I.alert,nNew],["props","Logements",I.home],["agents","Agents",I.users],["recap","Récap",I.chart]]);
+  tabs([["planning","Planning",I.cal],["reports","Signalements",I.alert,nNew],["props","Logements",I.home],["agents","Agents",I.users],["recap","Récap",I.chart],["reglages","Réglages",I.gear]]);
+  if (S.tab === "reglages" && !S.view) { header("Réglages"); $("app").innerHTML = ""; return settingsCard($("app")); }
   const v = S.view;
   if (v?.type==="mission") return adminMission(v.id);
   if (v?.type==="prop") return propForm(v.id);
@@ -336,7 +507,7 @@ async function refresh() { S.data = null; await loadAdmin(true); renderAdmin(); 
 
 let planFilter = "avenir";
 function adminPlanning(d) {
-  header("Planning ménage", null, `<button class="btn sm" id="sy" title="Synchroniser les calendriers">${I.sync}</button><button class="btn sm pri" id="nm">+ Mission</button>`);
+  header("Planning", null, `<button class="icb" id="sy" title="Synchroniser les calendriers">${I.sync}</button><button class="btn sm pri" id="nm">+ Mission</button>`);
   $("sy").onclick = e => run(e.currentTarget, async () => {
     const r = await api("sync_now"); const errs = r.results.filter(x => x.error);
     toast(errs.length ? "Erreur : " + errs.map(x=>x.property+" ("+x.error+")").join(", ") : `Calendriers synchronisés (${r.results.reduce((a,x)=>a+(x.created||0),0)} nouvelle(s) mission(s))`, !!errs.length);
@@ -370,7 +541,7 @@ function adminPlanning(d) {
   }
   const errs = d.properties.filter(p => p.last_sync_error);
   if (errs.length) html = `<div class="card" style="background:var(--badbg);color:var(--bad);border:0;font-size:14px">Calendrier en erreur : ${errs.map(p=>esc(p.name)).join(", ")}. Vérifiez le lien iCal dans Logements.</div>` + html;
-  $("app").innerHTML = html;
+  $("app").innerHTML = `<div id="nud"></div>` + html; pushNudge($("nud")); markSeen(d.missions);
   $("app").querySelectorAll("[data-f]").forEach(b => b.onclick = () => { planFilter = b.dataset.f; adminPlanning(d); });
   $("app").querySelectorAll("[data-m]").forEach(c => c.onclick = () => go({type:"mission", id:c.dataset.m}));
 }
@@ -417,8 +588,8 @@ function missionForm(v) {
   $("app").innerHTML = `<div class="card">
     <label class="f" style="margin-top:0">Logement</label><select id="mp" ${m?"disabled":""}>${d.properties.map(p=>`<option value="${p.id}" ${p.id===p0?.id?"selected":""}>${esc(p.name)}</option>`).join("")}</select>
     <label class="f">Date</label><input type="date" id="md" value="${m?.date||d.today}">
-    <div class="grid2"><div><label class="f">Début</label><input type="time" id="ms" value="${(m?.start_time||p0?.default_start||"11:00").slice(0,5)}"></div>
-    <div><label class="f">Fin</label><input type="time" id="me" value="${(m?.end_time||p0?.default_end||"13:00").slice(0,5)}"></div></div>
+    <div class="grid2"><div><label class="f">Début</label><input type="time" id="ms" value="${(m?.start_time||p0?.default_start||"10:00").slice(0,5)}"></div>
+    <div><label class="f">Fin</label><input type="time" id="me" value="${(m?.end_time||p0?.default_end||"16:00").slice(0,5)}"></div></div>
     <label class="f">Agent</label><select id="mc"><option value="">— Aucun —</option>${d.cleaners.map(c=>`<option value="${c.id}" ${(m?m.cleaner_id:p0?.cleaner_id)===c.id?"selected":""}>${esc(c.name)}</option>`).join("")}</select>
     ${m?`<label class="f">Statut</label><select id="mst">${Object.entries(ST).map(([k,l])=>`<option value="${k}" ${m.status===k?"selected":""}>${l}</option>`).join("")}</select>`:""}
     <button class="btn pri block" id="ms_save" style="margin-top:16px">Enregistrer</button></div>
@@ -464,7 +635,7 @@ function adminProps(d) {
   $("app").querySelectorAll("[data-p]").forEach(c => c.onclick = () => go({type:"prop", id:c.dataset.p}));
 }
 function propForm(id) {
-  const d = S.data, p = d.properties.find(x=>x.id===id) || {name:"",address:"",ical_urls:[],default_start:"11:00",default_end:"13:00",cleaner_id:d.cleaners[0]?.id||null,
+  const d = S.data, p = d.properties.find(x=>x.id===id) || {name:"",address:"",ical_urls:[],default_start:"10:00",default_end:"16:00",cleaner_id:d.cleaners[0]?.id||null,
     checklist:["Draps et serviettes changés","Salle de bain","Cuisine et vaisselle","Poubelles vidées","Sols aspirés et lavés","Vérifier qu'il ne reste rien des voyageurs"],
     consumables:["Papier toilette","Savon / gel douche","Liquide vaisselle","Éponges","Sacs poubelle","Café / thé","Sel / poivre / huile"], notes:""};
   header(id ? "Modifier le logement" : "Nouveau logement", () => go(null));
@@ -498,7 +669,7 @@ function adminAgents(d) {
   $("na").onclick = () => editAgent(null);
   $("app").innerHTML = (d.cleaners.length ? d.cleaners.map(c => {
     const link = agentLink(c);
-    const msg = encodeURIComponent(`Bonjour ${c.name.split(" ")[0]}, voici ton accès à l'appli ménage : ${link}\nOuvre-le sur ton téléphone puis « Ajouter à l'écran d'accueil ».`);
+    const msg = encodeURIComponent(`Bonjour ${c.name.split(" ")[0]}, voici ton accès à My Laeti : ${link}\nOuvre-le sur ton téléphone, ajoute-le à l'écran d'accueil, puis active les notifications dans Réglages.`);
     const nb = d.missions.filter(m=>m.cleaner_id===c.id && m.date>=d.today && m.status==="a_faire").length;
     return `<div class="card"><div class="row"><div class="sp"><h3>${esc(c.name)}</h3><div class="sub">${esc(c.phone||"")}${c.phone?" · ":""}${nb} mission(s) à venir</div></div>
       <button class="btn sm" data-e="${c.id}">Modifier</button></div>
