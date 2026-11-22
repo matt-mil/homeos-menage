@@ -9,9 +9,9 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="My Laeti">
 <meta name="theme-color" content="#0F6E56">
-<link rel="icon" href="icon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="icon-180.png">
-<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png" type="image/png">
+<link rel="apple-touch-icon" id="ati" href="icon-180.png">
+<link rel="manifest" id="mfst" href="manifest.json">
 <title>My Laeti</title>
 <script>
 (function(){var m="auto";try{m=localStorage.getItem("ml_theme")||"auto"}catch(e){}
@@ -100,6 +100,7 @@ table.t th{color:var(--tx2);font-weight:500;font-size:13px}
 .sp-in{width:100%;max-width:380px;display:flex;flex-direction:column;align-items:center;text-align:center}
 .sp-logo{position:relative;width:96px;height:96px;color:#fff}.sp-logo svg{width:96px;height:96px;stroke-width:1.4}
 .sp-spark{position:absolute;right:-6px;top:-4px;width:26px;height:26px}.sp-spark svg{width:26px;height:26px;fill:#fff}
+.sp-img{width:124px;height:124px;border-radius:28px;box-shadow:0 12px 34px rgba(0,0,0,.35);margin-bottom:8px}
 .sp-name{font-size:44px;font-weight:700;letter-spacing:-.02em;margin-top:6px;line-height:1}
 .sp-tag{font-size:16px;opacity:.85;margin:10px 0 30px}
 .sp-feat{display:grid;gap:12px;width:100%;text-align:left}
@@ -204,6 +205,12 @@ body.agent .tabs{max-width:none}
 .a-ric{width:40px;height:40px;border-radius:12px;background:var(--acbg);color:var(--ac);display:flex;align-items:center;justify-content:center;flex:none}.a-ric svg{width:22px;height:22px}
 .a-modal{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:70;display:flex;align-items:flex-end;justify-content:center}
 .a-mbox{background:var(--card);width:100%;max-width:560px;border-radius:24px 24px 0 0;padding:20px 18px calc(24px + env(safe-area-inset-bottom));max-height:80vh;overflow:auto}
+.a-tag{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;color:#9A5B00;background:#FFF1D6;border-radius:8px;padding:2px 8px;margin-bottom:3px}.a-tag svg{width:12px;height:12px;fill:currentColor}
+[data-theme=dark] .a-tag{background:#3d2a08;color:#FAC775}
+.a-sos{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;background:#D94848;color:#fff;border:0;border-radius:16px;padding:15px;font-size:17px;font-weight:700;cursor:pointer;margin:0 0 10px}.a-sos svg{width:22px;height:22px}
+.a-call{display:flex;align-items:center;gap:12px;background:var(--bg);border:1px solid var(--bd);border-radius:14px;padding:14px;text-decoration:none;color:var(--tx)}.a-call svg{width:24px;height:24px;color:var(--ac)}
+.a-call.red{background:#D94848;color:#fff;border-color:#D94848}.a-call.red svg,.a-call.red .muted{color:#fff}
+.spec{display:inline-block;font-size:11px;font-weight:600;color:#9A5B00;background:#FFF1D6;border-radius:8px;padding:1px 7px;margin-right:4px}
 body.agent .tabs button.on{color:var(--hero)}[data-theme=dark] body.agent .tabs button.on{color:var(--ac)}
 </style>
 </head>
@@ -254,6 +261,8 @@ const I = {
   wrench:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0 5 5L21 13l-8 8-3-3 8-8-1.3-1.3a4 4 0 0 0-5-5L13 5z"/><path d="M3 21l6-6"/></svg>',
   broom:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 3l-7 7"/><path d="M12 10c-3 0-6 2-7 6l-1 5h9l1-5c1-3 0-5-2-6z"/><path d="M8 21l1-4M12 21v-4"/></svg>',
   sparkle:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg>',
+  phone:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>',
+  archive:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="4" rx="1"/><path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8M10 12h4"/></svg>',
   sync:'<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11A8.1 8.1 0 0 0 4.5 9M4 5v4h4M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"/></svg>',
 };
 const TYPES = {linge:["Linge",I.shirt],consommable:["Consommables",I.bottle],casse:["Casse",I.hammer],autre:["Autre",I.dots],equipement:["Équipement",I.wrench],proprete:["Propreté",I.broom],degradation:["Dégradation",I.alert]};
@@ -344,7 +353,8 @@ async function pushState() {
   const reg = swReg || await Promise.race([navigator.serviceWorker.ready, new Promise(r => setTimeout(() => r(null), 2500))]);
   if (!reg) return "unsupported";
   const sub = await reg.pushManager.getSubscription();
-  return sub && Notification.permission === "granted" ? "on" : "off";
+  if (!sub || Notification.permission !== "granted") return "off";
+  try { const r = await api("push_status", { endpoint: sub.endpoint }); return r.registered ? "on" : "off"; } catch(e) { return "off"; }
 }
 async function enablePush() {
   if (!pushSupported) throw new Error(isIOS ? "Ajoute d'abord My Laeti à l'écran d'accueil, puis ouvre-la depuis l'icône." : "Ce navigateur ne gère pas les notifications.");
@@ -359,7 +369,7 @@ async function enablePush() {
 }
 async function disablePush() {
   const reg = swReg || await navigator.serviceWorker.ready; const sub = await reg.pushManager.getSubscription();
-  if (sub) { await api("push_unsubscribe", { endpoint: sub.endpoint }); await sub.unsubscribe(); }
+  if (sub) { const r = await api("push_unsubscribe", { endpoint: sub.endpoint }); if (!r.others) await sub.unsubscribe(); }
 }
 const feedUrl = () => API.replace(/^https:/, "") + "?ical=" + TOKEN;
 async function settingsCard(el) {
@@ -399,7 +409,7 @@ function splash() {
   const el = document.createElement("div"); el.id = "splash";
   const admin = S.role === "admin";
   el.innerHTML = `<div class="sp-in">
-    <div class="sp-logo">${I.home}<span class="sp-spark">${I.sparkle}</span></div>
+    ${admin ? `<div class="sp-logo">${I.home}<span class="sp-spark">${I.sparkle}</span></div>` : `<img class="sp-img" src="icon-512.png" alt="My Laeti">`}
     <div class="sp-name">My Laeti</div><div class="sp-tag">Gestion de missions & entretien</div>
     <div class="sp-feat"><div><span>${I.cal}</span>Planning des interventions</div><div><span>${I.check}</span>Checklists de ménage</div><div><span>${I.photo}</span>Photos avant / après</div></div>
     <div class="sp-hi">Bonjour ${esc(first(S.name))} 👋<br><small>${admin ? "Prêt à piloter tes ménages ?" : "Prête pour relever de nouveaux défis ?"}</small></div>
@@ -422,7 +432,8 @@ function splash() {
 async function boot() {
   if (!TOKEN) { header("My Laeti"); $("app").innerHTML = `<div class="empty"><h3>Lien d'accès manquant</h3><p>Ouvrez l'application avec le lien personnel qui vous a été envoyé.</p></div>`; return; }
   try {
-    const w = await api("whoami"); S.role = w.role; S.name = w.name;
+    const w = await api("whoami"); S.role = w.role; S.name = w.name; S.emergency = w.emergency || {};
+    if (S.role === "admin") { $("ati").href = "admin-180.png"; $("mfst").href = "manifest-admin.json"; document.querySelector('link[rel=icon]').href = "icon.svg"; }
     S.tab = S.role === "admin" ? "planning" : "home";
     splash();
     render();
@@ -452,12 +463,14 @@ function parseChecklist(list) {
   return groups.filter(g => g.items.length);
 }
 const ckKey = (room, item) => room + "|" + item;
+const mChecklist = m => (Array.isArray(m.checklist) && m.checklist.length) ? m.checklist : (m.property?.checklist || []);
+const mName = m => m.kind === "speciale" && m.title ? m.title : (m.property?.name || "");
 function ckProgress(m) {
-  const g = parseChecklist(m.property?.checklist), st = m.checklist_state || {};
+  const g = parseChecklist(mChecklist(m)), st = m.checklist_state || {};
   let n = 0, d = 0; g.forEach(x => x.items.forEach(i => { n++; if (st[ckKey(x.room,i)] || st[i]) d++; }));
   return {n, d, pct: n ? Math.round(d/n*100) : 0};
 }
-function roomsOf(m) { const g = parseChecklist(m.property?.checklist).map(x => x.room).filter(r => r !== "Général"); return g.length ? g : DEFAULT_ROOMS; }
+function roomsOf(m) { const g = parseChecklist(mChecklist(m)).map(x => x.room).filter(r => r !== "Général"); return g.length ? g : DEFAULT_ROOMS; }
 function thumb(p, cls="a-th") { return p?.photo_url ? `<div class="${cls}" style="background-image:url('${esc(p.photo_url)}')"></div>` : `<div class="${cls} ph0">${I.home}</div>`; }
 function avatarHtml(size=56) {
   let src = ""; try { src = localStorage.getItem("ml_avatar") || ""; } catch(e) {}
@@ -476,13 +489,13 @@ function bindHero(backFn) {
 }
 function goView(v) { v.back = S.view || null; S.view = v; render(); window.scrollTo(0,0); }
 function aCard(m, t) {
-  return `<div class="a-mc click" data-m="${m.id}">${thumb(m.property)}<div class="sp"><div class="a-mt">${esc(m.property?.name)}</div>
+  return `<div class="a-mc click" data-m="${m.id}">${thumb(m.property)}<div class="sp">${m.kind==="speciale"?`<span class="a-tag">${I.sparkle}Mission particulière</span>`:""}<div class="a-mt">${esc(mName(m))}</div>${m.kind==="speciale"?`<div class="muted" style="font-size:12px">${esc(m.property?.name||"")}</div>`:""}
     <div class="a-ms">${I.clock}${m.start_time?hm(m.start_time)+" – "+hm(m.end_time):"Horaire libre"}</div>
     ${m.next_checkin?`<div class="muted" style="font-size:12px">${m.next_checkin===m.date?"Arrivée le jour même":"Arrivée suivante "+fshort(m.next_checkin)}</div>`:""}</div>
     <div class="a-pills">${pill(m.status)}${isNew(m)?`<span class="pill new">Nouveau</span>`:""}</div></div>`;
 }
 function bindCards(root=document) { root.querySelectorAll("[data-m]").forEach(c => c.onclick = () => goView({type:"mission", id:c.dataset.m})); }
-async function loadMine(force) { if (!S.data || force) S.data = await api("my_missions"); return S.data; }
+async function loadMine(force) { if (!S.data || force) { S.data = await api("my_missions"); S.data.missions.sort((x, y) => (x.date + (x.start_time||"")).localeCompare(y.date + (y.start_time||""))); } return S.data; }
 function focusMission() {
   const d = S.data; if (!d) return null; const t = d.today;
   return d.missions.find(m => m.status==="en_cours") || d.missions.find(m => m.date===t && m.status==="a_faire") || d.missions.find(m => m.date>=t && m.status==="a_faire") || null;
@@ -523,7 +536,7 @@ async function aHome() {
     <div class="a-sheet">
       <div id="nud"></div>
       <div class="a-box"><div class="a-bt">${head}</div>
-        ${day.length ? day.map(m => `<div class="a-today click" data-m="${m.id}"><div class="sp"><div class="a-mt" style="font-size:18px">${esc(m.property?.name)}</div>
+        ${day.length ? day.map(m => `<div class="a-today click" data-m="${m.id}"><div class="sp">${m.kind==="speciale"?`<span class="a-tag">${I.sparkle}Mission particulière</span>`:""}<div class="a-mt" style="font-size:18px">${esc(mName(m))}</div>${m.kind==="speciale"?`<div class="muted" style="font-size:13px">${esc(m.property?.name||"")}</div>`:""}
           <div class="a-ms">${I.clock}${m.start_time?hm(m.start_time)+" – "+hm(m.end_time):"Horaire libre"}</div>
           <button class="a-btn" data-go="${m.id}">${m.status==="a_faire"?"Commencer":m.status==="en_cours"?"Continuer":"Voir"}</button></div>${thumb(m.property,"a-thl")}</div>`).join("")
           : `<div class="muted" style="padding:6px 0 4px">${S.homeDay===t?"Rien de prévu aujourd'hui. Profite !":"Pas de ménage ce jour-là."}</div>`}</div>
@@ -615,15 +628,16 @@ async function aMission(id) {
   $("app").innerHTML = `<div class="a-cover" ${p.photo_url?`style="background-image:url('${esc(p.photo_url)}')"`:""}>${p.photo_url?"":`<div class="a-cov0">${I.home}</div>`}
       <div class="a-covbar"><button class="a-ib glass" data-back aria-label="Retour">${I.back}</button><span class="sp"></span><button class="a-ib glass" data-thm aria-label="Changer de thème">${I[themeMode()==="dark"?"moon":themeMode()==="light"?"sun":"auto"]}</button></div></div>
     <div class="a-sheet">
-      <div class="row" style="align-items:flex-start"><div class="sp"><div class="a-mt" style="font-size:22px">${esc(p.name)}</div>
+      <div class="row" style="align-items:flex-start"><div class="sp">${m.kind==="speciale"?`<span class="a-tag">${I.sparkle}Mission particulière</span>`:""}<div class="a-mt" style="font-size:22px">${esc(mName(m))}</div>${m.kind==="speciale"?`<div style="font-weight:600;margin-top:2px">${esc(p.name)}</div>`:""}
         ${p.address?`<a class="a-ms" style="text-decoration:none;color:var(--tx2)" href="https://maps.google.com/?q=${encodeURIComponent(p.address)}" target="_blank" rel="noopener">${I.pin}${esc(p.address)}</a>`:""}
         <div class="a-ms">${I.cal}${fdate(m.date,{weekday:"short",day:"numeric",month:"short"})} · ${m.start_time?hm(m.start_time)+" – "+hm(m.end_time):"horaire libre"}</div>
         <div class="muted" style="font-size:13px;margin-top:2px">${m.next_checkin?(m.next_checkin===m.date?"<b style='color:var(--warn)'>Arrivée de voyageurs le jour même</b>":"Prochaine arrivée : "+fdate(m.next_checkin)):"Pas d'arrivée prévue derrière"}</div></div>${pill(m.status)}</div>
-      <div class="a-box click" id="gck" style="margin-top:14px"><div class="row">${I.check}<div class="sp"><b>Checklist ménage</b><div class="prog"><i style="width:${pr.pct}%"></i></div></div><span class="muted">${pr.d} / ${pr.n}</span></div></div>
-      <div class="a-box click" id="gph"><div class="row">${I.photo}<div class="sp"><b>Photos avant / après</b><div class="muted" style="font-size:13px">${av} avant · ${ap} après${!ap&&!locked?" · au moins 1 « après » pour terminer":""}</div></div><span class="muted">›</span></div></div>
+      ${m.description?`<div class="a-box" style="margin-top:14px;border-color:var(--ac)"><div class="row" style="align-items:flex-start">${I.note}<div class="sp"><b>Consignes de la mission</b><div style="white-space:pre-wrap;margin-top:4px">${esc(m.description)}</div></div></div></div>`:""}
+      <div class="a-box click" id="gck" style="margin-top:14px"><div class="row">${I.check}<div class="sp"><b>${m.kind==="speciale"?"Checklist de la mission":"Checklist ménage"}</b><div class="prog"><i style="width:${pr.pct}%"></i></div></div><span class="muted">${pr.d} / ${pr.n}</span></div></div>
+      <div class="a-box click" id="gph"><div class="row">${I.photo}<div class="sp"><b>Photos avant / après</b><div class="muted" style="font-size:13px">${av} avant · ${ap} après${!ap&&!locked&&m.require_photo!==false?" · au moins 1 « après » pour terminer":""}${m.require_photo===false?" · facultatives":""}</div></div><span class="muted">›</span></div></div>
       ${m.status==="a_faire"?`<button class="a-big" id="start">${I.play} Démarrer la mission</button>`:""}
-      ${m.status==="en_cours"?`<button class="a-big" id="gofin">${I.check} Terminer le ménage</button>`:""}
-      ${locked?`<div class="a-done">${I.check}<div><b>${m.status==="validee"?"Ménage validé par Matthis":"Ménage terminé"}</b>${m.finished_at?`<div class="muted">le ${new Date(m.finished_at).toLocaleString("fr-FR",{dateStyle:"short",timeStyle:"short"})}</div>`:""}${m.comment?`<div class="sub">${esc(m.comment)}</div>`:""}</div></div>`:""}
+      ${m.status==="en_cours"?`<button class="a-big" id="gofin">${I.check} ${m.kind==="speciale"?"Terminer la mission":"Terminer le ménage"}</button>`:""}
+      ${locked?`<div class="a-done">${I.check}<div><b>${m.kind==="speciale"?(m.status==="validee"?"Mission validée par Matthis":"Mission terminée"):(m.status==="validee"?"Ménage validé par Matthis":"Ménage terminé")}</b>${m.finished_at?`<div class="muted">le ${new Date(m.finished_at).toLocaleString("fr-FR",{dateStyle:"short",timeStyle:"short"})}</div>`:""}${m.comment?`<div class="sub">${esc(m.comment)}</div>`:""}</div></div>`:""}
       <div class="a-sec">Informations</div>
       <div class="a-info"><button data-i="notes">${I.note}<span>Consignes spécifiques</span></button><button data-i="access_info">${I.lock}<span>Accès & code</span></button><button data-i="equipment">${I.box}<span>Équipements du logement</span></button></div>
       <button class="btn block" id="rep" style="margin-top:14px">${I.alert} Signaler un problème</button>
@@ -650,20 +664,21 @@ function sheet(title, html) {
 // ---- Checklist
 async function aChecklist(id) {
   let m; try { m = await getMission(id); } catch(e) { toast(e.message,true); return; }
-  const p = m.property||{}, groups = parseChecklist(p.checklist), st = {...(m.checklist_state||{})};
+  const p = m.property||{}, groups = parseChecklist(mChecklist(m)), st = {...(m.checklist_state||{})};
+  const spec = m.kind === "speciale";
   const locked = ["terminee","validee"].includes(m.status);
   S.open = S.open || {};
   const draw = () => {
     const pr = ckProgress({...m, checklist_state: st});
-    $("app").innerHTML = hero("Checklist ménage", {back:true, sub:`${I.pin}${esc(p.name)}`}) + `<div class="a-sheet">
+    $("app").innerHTML = hero(spec ? "Checklist mission" : "Checklist ménage", {back:true, sub:`${I.pin}${esc(spec ? m.title + " · " + p.name : p.name)}`}) + `<div class="a-sheet">
       <div class="row" style="gap:12px;margin:2px 2px 14px"><div class="prog sp" style="height:10px;margin:0"><i style="width:${pr.pct}%"></i></div><div style="text-align:right"><b>${pr.d} / ${pr.n}</b><div class="muted" style="font-size:12px">${pr.pct}%</div></div></div>
       ${groups.length ? groups.map((g, gi) => { const dn = g.items.filter(i => st[ckKey(g.room,i)]||st[i]).length; const op = S.open[g.room] ?? (gi===0 || (dn<g.items.length && groups.slice(0,gi).every(x=>x.items.every(i=>st[ckKey(x.room,i)]||st[i])))); return `
         <div class="a-grp ${op?"op":""}"><button class="a-gh" data-g="${esc(g.room)}">${roomIcon(g.room)}<b class="sp">${esc(g.room)} <span class="muted">(${dn}/${g.items.length})</span></b>${dn===g.items.length?`<span style="color:var(--ok)">${I.check}</span>`:""}<span class="chev">⌄</span></button>
         ${op?`<div class="a-gb">${g.items.map(i => `<label class="ck"><input type="checkbox" data-k="${esc(ckKey(g.room,i))}" ${(st[ckKey(g.room,i)]||st[i])?"checked":""} ${locked?"disabled":""}><span>${esc(i)}</span></label>`).join("")}</div>`:""}</div>`; }).join("")
-        : `<div class="empty">Pas de checklist pour ce logement.</div>`}
-      ${locked ? `<div class="a-done">${I.check}<b>Ménage ${m.status==="validee"?"validé":"terminé"}</b></div>` : `
+        : `<div class="empty" style="padding:20px">${spec ? "Pas de checklist pour cette mission : suis les consignes, puis valide." : "Pas de checklist pour ce logement."}</div>`}
+      ${locked ? `<div class="a-done">${I.check}<b>${spec?"Mission":"Ménage"} ${m.status==="validee"?"validé":"terminé"}${spec?"e":""}</b></div>` : `
         <label class="f">Commentaire pour Matthis (facultatif)</label><textarea id="cmt" placeholder="Tout s'est bien passé, clé laissée dans la boîte…">${esc(m.comment||"")}</textarea>
-        <button class="a-big ${pr.d===pr.n&&pr.n?"":"soft"}" id="val">${I.send} Valider le ménage</button>`}
+        <button class="a-big ${pr.d===pr.n?"":"soft"}" id="val">${I.send} ${spec?"Valider la mission":"Valider le ménage"}</button>`}
     </div>`;
     bindHero();
     $("app").querySelectorAll("[data-g]").forEach(b => b.onclick = () => { const r = b.dataset.g; const cur = $("app").querySelector(`[data-g="${CSS.escape(r)}"]`).parentElement.classList.contains("op"); S.open[r] = !cur; draw(); });
@@ -674,10 +689,10 @@ async function aChecklist(id) {
     });
     if ($("val")) $("val").onclick = e => {
       const ap = m.photos.filter(x=>x.kind==="apres").length;
-      if (!ap) { toast("Ajoute au moins une photo « après » pour valider"); return goView({type:"photos", id, kind:"apres"}); }
+      if (!ap && m.require_photo !== false) { toast("Ajoute au moins une photo « après » pour valider"); return goView({type:"photos", id, kind:"apres"}); }
       const left = pr.n - pr.d;
       if (left && !confirm(`${left} point(s) non cochés. Valider quand même ?`)) return;
-      run(e.currentTarget, async () => { S.mc[id] = (await api("mission_finish",{id, comment:$("cmt").value})).mission; S.data = null; toast("Ménage validé, merci ! 🎉"); S.view = {type:"mission", id, back:null}; render(); window.scrollTo(0,0); });
+      run(e.currentTarget, async () => { S.mc[id] = (await api("mission_finish",{id, comment:$("cmt").value})).mission; S.data = null; toast(spec ? "Mission validée, merci ! 🎉" : "Ménage validé, merci ! 🎉"); S.view = {type:"mission", id, back:null}; render(); window.scrollTo(0,0); });
     };
   };
   draw();
@@ -774,7 +789,7 @@ async function aReport(v) {
   if (!mission && !props.length) { $("app").innerHTML = hero("Signaler un problème",{back:true}) + `<div class="a-sheet"><div class="empty">Aucun logement ne t'est encore attribué.</div></div>`; bindHero(); return; }
   const F = v.F = v.F || { type:"equipement", title:"", comment:"", photos:[], prop: mission ? mission.property_id : (focusMission()?.property_id || props[0]?.id) };
   const draw = () => {
-    $("app").innerHTML = hero("Signaler un problème",{back:true, sub: mission?`${I.pin}${esc(mission.property?.name)}`:""}) + `<div class="a-sheet">
+    $("app").innerHTML = hero("Signaler un problème",{back:true, sub: mission?`${I.pin}${esc(mission.property?.name)}`:"", right:`<button class="a-ib" id="sos2" aria-label="Appel d'urgence" style="background:#D94848">${I.phone}</button>`}) + `<div class="a-sheet">
       ${!mission&&props.length>1?`<label class="f" style="margin-top:0">Logement</label><select id="pp">${props.map(p=>`<option value="${p.id}" ${p.id===F.prop?"selected":""}>${esc(p.name)}</option>`).join("")}</select>`:""}
       <div class="a-types">${Object.entries(RTYPES).map(([k,[l,ic]]) => `<button data-t="${k}" class="${F.type===k?"on":""}">${ic}<span>${l}</span></button>`).join("")}</div>
       <label class="f">Titre <span style="color:var(--bad)">*</span></label><input type="text" id="rt" value="${esc(F.title)}" placeholder="${{equipement:"Ex. : Mitigeur qui fuit",proprete:"Ex. : Tache sur le canapé",degradation:"Ex. : Verre cassé, mur abîmé",autre:"Ex. : Clé introuvable"}[F.type]}">
@@ -785,6 +800,7 @@ async function aReport(v) {
     </div>`;
     bindHero();
     const keep = () => { F.title = $("rt").value; F.comment = $("rc").value; };
+    $("sos2").onclick = emergencySheet;
     if ($("pp")) $("pp").onchange = e => { keep(); F.prop = e.target.value; };
     $("app").querySelectorAll("[data-t]").forEach(b => b.onclick = () => { keep(); F.type = b.dataset.t; draw(); });
     if ($("pha")) $("pha").onclick = async () => { keep(); const fs = await pickPhotos(true); for (const f of fs.slice(0, 6-F.photos.length)) { try { F.photos.push(await compress(f)); } catch(e) { toast(e.message,true); } } draw(); };
@@ -801,12 +817,22 @@ async function aReport(v) {
   draw();
 }
 
+function emergencySheet() {
+  const e = S.emergency || {}, tel = (e.phone||"").replace(/[^\d+]/g, "");
+  sheet("Appel d'urgence", `<div style="display:grid;gap:10px">
+    ${tel ? `<a class="a-call" href="tel:${tel}">${I.phone}<div class="sp"><b>Appeler ${esc(e.name || "Matthis")}</b><div class="muted">${esc(e.phone)}</div></div></a>` : `<div class="muted">Le numéro de ${esc(e.name||"Matthis")} n'est pas encore renseigné.</div>`}
+    <a class="a-call red" href="tel:112">${I.alert}<div class="sp"><b>Urgences · 112</b><div class="muted">Numéro d'urgence européen</div></div></a>
+    <div class="grid2"><a class="a-call" href="tel:18"><div class="sp"><b>Pompiers · 18</b></div></a><a class="a-call" href="tel:15"><div class="sp"><b>SAMU · 15</b></div></a></div>
+    <div class="muted" style="font-size:13px">Fuite d'eau, odeur de gaz, porte bloquée, blessure… En cas de danger, mets-toi d'abord en sécurité.</div></div>`);
+}
+
 // ---- Mes signalements
 async function aReports() {
   $("app").innerHTML = hero("Signalements") + `<div class="a-sheet"><div class="empty"><span class="spin"></span></div></div>`; bindHero();
   let r; try { r = await api("my_reports"); } catch(e) { $("app").querySelector(".a-sheet").innerHTML = `<div class="empty">${esc(e.message)}</div>`; return; }
   const all = {...RTYPES, linge:["Linge",I.shirt], consommable:["Consommables",I.bottle], casse:["Casse",I.hammer]};
   $("app").innerHTML = hero("Signalements", {right:`<button class="a-ib" id="nr" aria-label="Nouveau signalement">＋</button>`}) + `<div class="a-sheet">
+    <button class="a-sos" id="sos">${I.phone} Appel d'urgence</button>
     <button class="a-big" id="nr2">${I.alert} Signaler un problème</button>
     <div class="row" style="gap:8px;margin:12px 0 4px"><button class="a-chip" id="gs">${I.bottle} Consommables</button><button class="a-chip" id="gl">${I.shirt} Linge</button></div>
     ${r.reports.length ? `<div class="a-sec">Mes signalements</div>` + r.reports.map(x => { const [l, ic] = all[x.type] || [x.type, I.dots]; return `<div class="a-box"><div class="row" style="align-items:flex-start"><span class="a-ric">${ic}</span><div class="sp"><b>${esc(x.title || l)}</b>
@@ -816,6 +842,7 @@ async function aReports() {
       : `<div class="empty" style="padding:24px">Aucun signalement envoyé pour l'instant.</div>`}</div>`;
   bindHero(); bindLb();
   $("nr").onclick = $("nr2").onclick = () => goView({type:"report"});
+  $("sos").onclick = emergencySheet;
   $("gs").onclick = () => goView({type:"stock", tab:"consommable"}); $("gl").onclick = () => goView({type:"stock", tab:"linge"});
 }
 
@@ -843,7 +870,7 @@ function compressSize(file, max) {
 function missionCard(m, today, admin) {
   const nc = m.next_checkin ? `Prochaine arrivée : ${m.next_checkin===m.date?"<b>le jour même</b>":fshort(m.next_checkin)}` : "Pas d'arrivée prévue";
   return `<div class="card click ${m.date===today&&m.status!=="validee"&&m.status!=="terminee"?"today":""}" data-m="${m.id}">
-    <div class="row">${admin?thumb(m.property,"a-th sm"):""}<div class="sp"><h3>${esc(m.property?.name)}</h3>
+    <div class="row">${admin?thumb(m.property,"a-th sm"):""}<div class="sp"><h3>${m.kind==="speciale"?`<span class="spec">Particulière</span>${esc(m.title||"")} · `:""}${esc(m.property?.name)}</h3>
     <div class="sub">${m.start_time?hm(m.start_time)+" – "+hm(m.end_time):"Horaire libre"}${admin?" · "+esc(m.cleaner?.name||"Sans agent"):""}</div>
     <div class="muted">${nc}${admin&&m.source==="manuel"?" · ajoutée à la main":""}</div></div><div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">${pill(m.status)}${isNew(m)?`<span class="pill new">Nouveau</span>`:""}</div></div></div>`;
 }
@@ -859,7 +886,7 @@ async function renderAdmin() {
   try { d = await loadAdmin(false); } catch(e) { $("app").innerHTML = `<div class="empty">${esc(e.message)}</div>`; return; }
   const nNew = d.reports.filter(r => r.status==="nouveau").length;
   tabs([["planning","Planning",I.cal],["reports","Signalements",I.alert,nNew],["props","Logements",I.home],["agents","Agents",I.users],["recap","Récap",I.chart],["reglages","Réglages",I.gear]]);
-  if (S.tab === "reglages" && !S.view) { header("Réglages"); $("app").innerHTML = ""; return settingsCard($("app")); }
+  if (S.tab === "reglages" && !S.view) { header("Réglages"); $("app").innerHTML = `<div id="emg"></div><div id="setc"></div>`; emergencyForm($("emg")); return settingsCard($("setc")); }
   const v = S.view;
   if (v?.type==="mission") return adminMission(v.id);
   if (v?.type==="prop") return propForm(v.id);
@@ -896,7 +923,8 @@ function adminPlanning(d) {
   if (planFilter==="annulee") list = list.filter(m => m.status==="annulee");
   let html = `<div class="grid2" style="grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:6px">
     ${[["Aujourd'hui",counts.today],["À faire",counts.todo],["À valider",counts.check],["Sans agent",counts.noag]].map(([l,n])=>`<div class="card" style="padding:10px;text-align:center;margin:0"><div style="font-size:22px;font-weight:600">${n}</div><div class="muted" style="font-size:12px">${l}</div></div>`).join("")}</div>
-    <div class="seg">${[["avenir","À venir"],["valider","À valider"],["passe","Passées"],["annulee","Annulées"]].map(([k,l])=>`<button data-f="${k}" class="${planFilter===k?"on":""}">${l}</button>`).join("")}</div>`;
+    <div class="seg">${[["avenir","À venir"],["valider","À valider"],["passe","Passées"],["annulee","Annulées"],["archive","Archives photos"]].map(([k,l])=>`<button data-f="${k}" class="${planFilter===k?"on":""}">${l}</button>`).join("")}</div>`;
+  if (planFilter === "archive") { $("app").innerHTML = html + `<div id="arch"><div class="empty"><span class="spin"></span></div></div>`; bindPlanFilters(d); return loadArchive(); }
   if (!list.length) html += `<div class="empty">Rien à afficher ici.</div>`;
   let last = "";
   for (const m of list) {
@@ -906,20 +934,32 @@ function adminPlanning(d) {
   const errs = d.properties.filter(p => p.last_sync_error);
   if (errs.length) html = `<div class="card" style="background:var(--badbg);color:var(--bad);border:0;font-size:14px">Calendrier en erreur : ${errs.map(p=>esc(p.name)).join(", ")}. Vérifiez le lien iCal dans Logements.</div>` + html;
   $("app").innerHTML = `<div id="nud"></div>` + html; pushNudge($("nud")); markSeen(d.missions);
-  $("app").querySelectorAll("[data-f]").forEach(b => b.onclick = () => { planFilter = b.dataset.f; adminPlanning(d); });
+  bindPlanFilters(d);
   $("app").querySelectorAll("[data-m]").forEach(c => c.onclick = () => go({type:"mission", id:c.dataset.m}));
 }
 
+function bindPlanFilters(d) { $("app").querySelectorAll("[data-f]").forEach(b => b.onclick = () => { planFilter = b.dataset.f; adminPlanning(d); }); }
+async function loadArchive() {
+  try {
+    const r = await api("archive");
+    $("arch").innerHTML = `<div class="banner">${I.archive}<div class="sp">Les photos avant / après sont gardées <b>30 jours</b>, puis supprimées automatiquement chaque nuit. Pense à télécharger celles qui te servent (litige, état des lieux).</div></div>` +
+      (r.missions.length ? r.missions.map(m => `<div class="card click" data-m="${m.id}"><div class="row"><div class="sp"><h3>${m.kind==="speciale"?`<span class="spec">Particulière</span>${esc(m.title||"")} · `:""}${esc(m.property?.name||"")}</h3>
+        <div class="sub">${fdate(m.date)} · ${esc(m.cleaner?.name||"—")}</div><div class="muted">${m.n_avant} photo(s) avant · ${m.n_apres} après · supprimées vers le ${fshort(addDays(m.date, 31))}</div></div>${pill(m.status)}</div></div>`).join("")
+       : `<div class="empty">Aucune mission terminée ces 30 derniers jours.</div>`);
+    $("arch").querySelectorAll("[data-m]").forEach(c => c.onclick = () => go({type:"mission", id:c.dataset.m}));
+  } catch(e) { $("arch").innerHTML = `<div class="empty">${esc(e.message)}</div>`; }
+}
 async function adminMission(id) {
   header("Mission", () => go(null));
   $("app").innerHTML = `<div class="empty"><span class="spin"></span></div>`;
   let m; try { m = (await api("mission_get",{id})).mission; } catch(e) { $("app").innerHTML = `<div class="empty">${esc(e.message)}</div>`; return; }
-  const p = m.property||{}; const list = p.checklist||[]; const st = m.checklist_state||{};
+  const p = m.property||{}; const groups = parseChecklist(mChecklist(m)); const st = m.checklist_state||{}; const prg = ckProgress(m);
   const av = m.photos.filter(x=>x.kind==="avant"), ap = m.photos.filter(x=>x.kind==="apres");
   const dur = m.started_at && m.finished_at ? Math.round((new Date(m.finished_at)-new Date(m.started_at))/60000) : null;
   header(p.name||"Mission", () => go(null));
   $("app").innerHTML = `
-    <div class="card"><div class="row"><div class="sp"><h3>${esc(p.name)}</h3><div class="sub">${fdate(m.date)}</div></div>${pill(m.status)}</div>
+    <div class="card"><div class="row"><div class="sp">${m.kind==="speciale"?`<span class="spec">Mission particulière</span>`:""}<h3>${esc(mName(m))}</h3>${m.kind==="speciale"?`<div style="font-weight:600">${esc(p.name)}</div>`:""}<div class="sub">${fdate(m.date)}</div></div>${pill(m.status)}</div>
+    ${m.description?`<div class="card" style="margin:10px 0 0;background:var(--bg);white-space:pre-wrap"><div class="muted">Consignes</div>${esc(m.description)}</div>`:""}
     <div class="kv" style="margin-top:10px"><b>Agent</b><span>${esc(m.cleaner?.name||"Aucun")}</span>
     <b>Créneau</b><span>${m.start_time?hm(m.start_time)+" – "+hm(m.end_time):"libre"}</span>
     <b>Arrivée suivante</b><span>${m.next_checkin?fdate(m.next_checkin):"—"}</span>
@@ -928,13 +968,14 @@ async function adminMission(id) {
     ${m.finished_at?`<b>Terminée</b><span>${new Date(m.finished_at).toLocaleString("fr-FR",{dateStyle:"short",timeStyle:"short"})}${dur!==null?` · ${Math.floor(dur/60)}h${String(dur%60).padStart(2,"0")}`:""}</span>`:""}</div>
     ${m.comment?`<div class="card" style="margin:10px 0 0;background:var(--bg)"><div class="muted">Commentaire de l'agent</div>${esc(m.comment)}</div>`:""}</div>
     <div class="row" style="gap:8px;margin-bottom:6px;flex-wrap:wrap">
-      ${m.status==="terminee"?`<button class="btn pri" id="val">Valider le ménage</button>`:""}
+      ${m.status==="terminee"?`<button class="btn pri" id="val">${m.kind==="speciale"?"Valider la mission":"Valider le ménage"}</button>`:""}
       ${["terminee","validee"].includes(m.status)?`<button class="btn" id="reo">Rouvrir</button>`:""}
       <button class="btn" id="edt">Modifier</button>
       ${m.source==="manuel"?`<button class="btn bad" id="del">Supprimer</button>`:""}
+      ${m.source==="ical"&&m.kind!=="speciale"?`<button class="btn" id="cust">Personnaliser la checklist</button>`:""}
     </div>
     <h2>Photos avant (${av.length})</h2><div class="card">${av.length?photoGrid(av):`<div class="muted">Aucune</div>`}</div>
-    <h2>Checklist ${list.filter(x=>st[x]).length}/${list.length}</h2><div class="card" style="padding:4px 14px">${list.map(x=>`<div class="ck" style="cursor:default"><span style="width:22px;text-align:center;color:${st[x]?"var(--ac)":"var(--tx3)"}">${st[x]?"✓":"○"}</span><span>${esc(x)}</span></div>`).join("")||`<div class="muted" style="padding:10px 0">Pas de checklist</div>`}</div>
+    <h2>Checklist ${prg.d}/${prg.n}${Array.isArray(m.checklist)&&m.checklist.length?" · propre à cette mission":""}</h2><div class="card" style="padding:4px 14px">${groups.map(g=>`<div class="muted" style="padding:10px 0 2px;font-weight:600">${esc(g.room)}</div>`+g.items.map(x=>{const ok=st[ckKey(g.room,x)]||st[x];return `<div class="ck" style="cursor:default"><span style="width:22px;text-align:center;color:${ok?"var(--ac)":"var(--tx3)"}">${ok?"✓":"○"}</span><span>${esc(x)}</span></div>`;}).join("")).join("")||`<div class="muted" style="padding:10px 0">Pas de checklist</div>`}</div>
     <h2>Photos après (${ap.length})</h2><div class="card">${ap.length?photoGrid(ap):`<div class="muted">Aucune</div>`}</div>
     ${m.reports.length?`<h2>Signalements</h2>${m.reports.map(reportCard).join("")}`:""}`;
   bindLb();
@@ -942,27 +983,53 @@ async function adminMission(id) {
   if ($("val")) $("val").onclick = act("mission_validate");
   if ($("reo")) $("reo").onclick = act("mission_reopen");
   $("edt").onclick = () => go({type:"newmission", mission:m});
+  if ($("cust")) $("cust").onclick = () => go({type:"newmission", mission:m});
   if ($("del")) $("del").onclick = e => { if (confirm("Supprimer cette mission ?")) run(e.currentTarget, async () => { await api("mission_delete",{id}); await refresh(); go(null); }); };
 }
 
+const SPECIAL_IDEAS = ["Installer les décorations de Noël","Retirer les décorations de Noël","Vérification du logement","Grand ménage de printemps","Nettoyage des vitres","Remise des clés","Accueil d'un artisan","Réception d'une livraison","Inventaire du linge","Relevé des compteurs"];
 function missionForm(v) {
   const d = S.data, m = v.mission;
   header(m ? "Modifier la mission" : "Nouvelle mission", () => go(m ? {type:"mission", id:m.id} : null));
   const p0 = m ? d.properties.find(p=>p.id===m.property_id) : d.properties[0];
-  $("app").innerHTML = `<div class="card">
-    <label class="f" style="margin-top:0">Logement</label><select id="mp" ${m?"disabled":""}>${d.properties.map(p=>`<option value="${p.id}" ${p.id===p0?.id?"selected":""}>${esc(p.name)}</option>`).join("")}</select>
+  let kind = m ? (m.kind||"menage") : (v.kind || "speciale");
+  const ownCk = Array.isArray(m?.checklist) && m.checklist.length;
+  const draw = () => {
+    const keep = $("mt") ? { t:$("mt").value, ds:$("mdsc").value, ck:$("mck").value, own:$("mown")?.checked, rp:$("mrp").checked } : null;
+    $("app").innerHTML = `<div class="seg" style="margin-bottom:10px"><button data-kind="menage" class="${kind==="menage"?"on":""}">Ménage</button><button data-kind="speciale" class="${kind==="speciale"?"on":""}">Mission particulière</button></div>
+    <div class="card">
+    ${kind==="speciale"?`<label class="f" style="margin-top:0">Intitulé de la mission</label><input type="text" id="mt" list="ideas" value="${esc(keep?keep.t:(m?.title||""))}" placeholder="Ex. : Installer les décorations de Noël">
+      <datalist id="ideas">${SPECIAL_IDEAS.map(x=>`<option value="${esc(x)}">`).join("")}</datalist>`:`<input type="hidden" id="mt" value="">`}
+    <label class="f" ${kind==="menage"?'style="margin-top:0"':""}>Logement</label><select id="mp" ${m?"disabled":""}>${d.properties.map(p=>`<option value="${p.id}" ${p.id===p0?.id?"selected":""}>${esc(p.name)}</option>`).join("")}</select>
     <label class="f">Date</label><input type="date" id="md" value="${m?.date||d.today}">
     <div class="grid2"><div><label class="f">Début</label><input type="time" id="ms" value="${(m?.start_time||p0?.default_start||"10:00").slice(0,5)}"></div>
     <div><label class="f">Fin</label><input type="time" id="me" value="${(m?.end_time||p0?.default_end||"16:00").slice(0,5)}"></div></div>
     <label class="f">Agent</label><select id="mc"><option value="">— Aucun —</option>${d.cleaners.map(c=>`<option value="${c.id}" ${(m?m.cleaner_id:p0?.cleaner_id)===c.id?"selected":""}>${esc(c.name)}</option>`).join("")}</select>
     ${m?`<label class="f">Statut</label><select id="mst">${Object.entries(ST).map(([k,l])=>`<option value="${k}" ${m.status===k?"selected":""}>${l}</option>`).join("")}</select>`:""}
-    <button class="btn pri block" id="ms_save" style="margin-top:16px">Enregistrer</button></div>
-    ${!m?`<p class="muted">Pour un ménage ponctuel (grand nettoyage, réservation directe…). Les ménages liés aux réservations Airbnb sont créés automatiquement.</p>`:""}`;
-  if (!m) $("mp").onchange = e => { const p = d.properties.find(x=>x.id===e.target.value); $("ms").value=p.default_start.slice(0,5); $("me").value=p.default_end.slice(0,5); $("mc").value=p.cleaner_id||""; };
-  $("ms_save").onclick = e => run(e.currentTarget, async () => {
-    await api("mission_save", {id:m?.id, property_id:$("mp").value, date:$("md").value, start_time:$("ms").value, end_time:$("me").value, cleaner_id:$("mc").value, status:m?$("mst").value:undefined});
-    toast("Mission enregistrée"); await refresh(); go(m ? {type:"mission", id:m.id} : null);
-  });
+    <label class="f">Consignes ${kind==="speciale"?"de la mission":"particulières pour ce ménage"}</label><textarea id="mdsc" placeholder="${kind==="speciale"?"Ex. : Les décos sont dans le carton rouge du placard. Sapin dans le salon, guirlande sur le balcon.":"Facultatif : ex. arrivée anticipée à 14h, lit bébé à installer…"}">${esc(keep?keep.ds:(m?.description||""))}</textarea>
+    ${kind==="menage"?`<label class="ck" style="border:0;margin-top:6px"><input type="checkbox" id="mown" ${(keep?keep.own:ownCk)?"checked":""}><span class="sub">Checklist spéciale pour ce ménage (sinon celle du logement)</span></label>`:""}
+    <div id="ckw" style="${kind==="menage"&&!(keep?keep.own:ownCk)?"display:none":""}"><label class="f">Checklist ${kind==="speciale"?"de la mission (facultatif)":"de ce ménage"}</label>
+    <textarea id="mck" style="min-height:160px" placeholder="# Salon&#10;Installer le sapin&#10;Brancher la guirlande&#10;# Extérieur&#10;Guirlande sur le balcon">${esc(keep?keep.ck:(ownCk?m.checklist.join("\n"):(kind==="menage"?(p0?.checklist||[]).join("\n"):"")))}</textarea>
+    <div class="muted">Une tâche par ligne. « # Nom » crée une rubrique.</div></div>
+    <label class="ck" style="border:0;margin-top:6px"><input type="checkbox" id="mrp" ${(keep?keep.rp:(m?m.require_photo!==false:kind==="menage"))?"checked":""}><span class="sub">Photo « après » obligatoire pour terminer</span></label>
+    <button class="btn pri block" id="ms_save" style="margin-top:12px">Enregistrer${m?"":" et prévenir l'agent"}</button></div>
+    ${!m?`<p class="muted">Les ménages liés aux réservations Airbnb sont créés automatiquement. Ici, tu ajoutes un ménage ponctuel ou une mission particulière (décos, vérification, livraison…). L'agent reçoit une notification.</p>`:""}`;
+    $("app").querySelectorAll("[data-kind]").forEach(b => b.onclick = () => { kind = b.dataset.kind; draw(); });
+    if ($("mown")) $("mown").onchange = () => { $("ckw").style.display = $("mown").checked ? "" : "none"; };
+    if (!m) $("mp").onchange = e => { const p = d.properties.find(x=>x.id===e.target.value); $("ms").value=p.default_start.slice(0,5); $("me").value=p.default_end.slice(0,5); $("mc").value=p.cleaner_id||""; };
+    $("ms_save").onclick = e => {
+      const title = $("mt").value.trim();
+      if (kind==="speciale" && !title) return toast("Donne un intitulé à la mission", true);
+      const useCk = kind==="speciale" || $("mown")?.checked;
+      const ck = useCk ? $("mck").value.split("\n").map(x=>x.trim()).filter(Boolean) : [];
+      run(e.currentTarget, async () => {
+        await api("mission_save", {id:m?.id, property_id:$("mp").value, date:$("md").value, start_time:$("ms").value, end_time:$("me").value, cleaner_id:$("mc").value, status:m?$("mst").value:undefined,
+          kind, title: kind==="speciale"?title:null, description:$("mdsc").value.trim(), checklist: ck, require_photo:$("mrp").checked});
+        toast("Mission enregistrée"); await refresh(); go(m ? {type:"mission", id:m.id} : null);
+      });
+    };
+  };
+  draw();
 }
 
 function reportCard(r) {
@@ -1000,7 +1067,7 @@ function adminProps(d) {
 }
 function propForm(id) {
   const d = S.data, p = d.properties.find(x=>x.id===id) || {name:"",address:"",ical_urls:[],default_start:"10:00",default_end:"16:00",cleaner_id:d.cleaners[0]?.id||null,
-    checklist:["# Salon & Séjour","Dépoussiérer les surfaces","Nettoyer la TV et les meubles","Aspirer et laver le sol","Vérifier l'état du canapé","# Cuisine","Vaisselle propre et rangée","Plan de travail et plaques","Frigo vidé et nettoyé","Poubelles vidées","# Chambre","Draps et housses changés","Lit fait","Aspirer et laver le sol","# Salle de bain","Douche et lavabo","WC désinfectés","Serviettes propres"],
+    checklist:["# Salon & Séjour","Dépoussiérer les surfaces","Nettoyer la TV et les meubles","Aspirer et laver le sol","Vérifier l'état du canapé","# Cuisine","Vaisselle propre et rangée","Plan de travail et plaques","Frigo vidé et nettoyé","Poubelles vidées","# Chambre","Draps et housses changés","Lit fait","Aspirer et laver le sol","# Salle de bain","Douche et lavabo","WC désinfectés","Serviettes propres","# Avant de partir","Toutes les fenêtres sont fermées","Toutes les lumières sont éteintes"],
     consumables:["Papier toilette","Produits ménagers","Sacs poubelle","Éponges","Lessive","Savon / gel douche","Liquide vaisselle","Café / thé"], notes:"", access_info:"", equipment:"", stock:{}};
   header(id ? "Modifier le logement" : "Nouveau logement", () => go(null));
   $("app").innerHTML = `${id?`<div class="card"><label class="f" style="margin-top:0">Photo du logement (vue par l'agent)</label>
@@ -1034,6 +1101,13 @@ function propForm(id) {
   if ($("pph")) $("pph").onclick = async e => { const [f] = await pickPhotos(false); if (!f) return; run(e.currentTarget, async () => { await api("property_photo",{id, data: await compress(f)}); toast("Photo enregistrée"); await refresh(); go({type:"prop", id}); }); };
 }
 
+function emergencyForm(el) {
+  const e = S.emergency || {};
+  el.innerHTML = `<div class="card"><div class="row"><span style="color:#D94848">${I.phone}</span><div class="sp"><h3 style="font-size:15px">Appel d'urgence</h3><div class="sub">Le numéro que l'agent appelle depuis le bouton rouge des signalements (le 112 est toujours proposé en plus).</div></div></div>
+    <div class="grid2"><div><label class="f">Nom affiché</label><input type="text" id="en" value="${esc(e.name||"Matthis")}"></div><div><label class="f">Téléphone</label><input type="tel" id="ep" value="${esc(e.phone||"")}" placeholder="06 12 34 56 78"></div></div>
+    <button class="btn pri block" id="esv" style="margin-top:12px">Enregistrer</button></div>`;
+  $("esv").onclick = ev => run(ev.currentTarget, async () => { await api("settings_save",{emergency_name:$("en").value.trim(), emergency_phone:$("ep").value.trim()}); S.emergency = {name:$("en").value.trim(), phone:$("ep").value.trim()}; toast("Numéro d'urgence enregistré"); });
+}
 function agentLink(c) { return location.origin + location.pathname + "?t=" + c.token; }
 function adminAgents(d) {
   header("Agents de ménage", null, `<button class="btn sm pri" id="na">+ Agent</button>`);
