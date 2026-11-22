@@ -221,6 +221,18 @@ body.agent .tabs button.on{color:var(--hero)}[data-theme=dark] body.agent .tabs 
 <input type="file" id="filein" accept="image/*" multiple style="display:none">
 <script>
 const API = "https://yrbdbhpkpqyxpwjhbhbu.supabase.co/functions/v1/menage-api";
+const APP_V = "2026-11-22-2155";
+async function checkUpdate() {
+  try {
+    const r = await fetch("version.json?" + Date.now(), { cache: "no-store" });
+    const { v } = await r.json();
+    if (v && v !== APP_V) {
+      let done = ""; try { done = sessionStorage.getItem("ml_upd") || ""; } catch(e) {}
+      if (done !== v) { try { sessionStorage.setItem("ml_upd", v); sessionStorage.removeItem("ml_splash"); } catch(e) {} location.reload(); return true; }
+    }
+  } catch(e) {}
+  return false;
+}
 const I = {
   cal:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M16 3v4M8 3v4M4 11h16"/></svg>',
   alert:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01"/><path d="M10.4 3.9 2.6 17.4A1.8 1.8 0 0 0 4.2 20h15.6a1.8 1.8 0 0 0 1.6-2.6L13.6 3.9a1.8 1.8 0 0 0-3.2 0z"/></svg>',
@@ -852,7 +864,7 @@ async function aProfil() {
       <div id="avc" class="click" style="display:inline-block;position:relative">${avatarHtml(88)}<span class="a-avedit">${I.cam}</span></div>
       <div class="a-hi" style="margin-top:10px">${esc(S.name)}</div><div class="a-hs">Agente d'entretien · My Laeti</div></div>
     <div class="a-sheet"><div id="set"></div>
-      <div class="muted" style="text-align:center;margin:16px 0 4px;font-size:12px">My Laeti · gestion de missions & entretien</div></div>`;
+      <div class="muted" style="text-align:center;margin:16px 0 4px;font-size:12px">My Laeti · version du ${APP_V.slice(8,10)}/${APP_V.slice(5,7)} à ${APP_V.slice(11,13)}h${APP_V.slice(13,15)}</div></div>`;
   bindHero(); settingsCard($("set"));
   $("avc").onclick = async () => {
     const [f] = await pickPhotos(false); if (!f) return;
@@ -1167,8 +1179,8 @@ async function adminRecap(d) {
   } catch(e) { $("rr").innerHTML = `<div class="empty">${esc(e.message)}</div>`; }
 }
 
-document.addEventListener("visibilitychange", () => { if (document.visibilityState==="visible" && S.role && !S.view) { if (S.role==="admin") refresh(); else renderAgent(); } });
-boot();
+document.addEventListener("visibilitychange", async () => { if (document.visibilityState==="visible") { swReg?.update?.().catch(() => {}); if (await checkUpdate()) return; } if (document.visibilityState==="visible" && S.role && !S.view) { if (S.role==="admin") refresh(); else renderAgent(); } });
+checkUpdate().then(u => { if (!u) boot(); });
 </script>
 </body>
 </html>
