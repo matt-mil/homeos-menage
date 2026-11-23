@@ -221,7 +221,7 @@ body.agent .tabs button.on{color:var(--hero)}[data-theme=dark] body.agent .tabs 
 <input type="file" id="filein" accept="image/*" multiple style="display:none">
 <script>
 const API = "https://yrbdbhpkpqyxpwjhbhbu.supabase.co/functions/v1/menage-api";
-const APP_V = "2026-11-22-2200";
+const APP_V = "2026-11-23-1330";
 async function checkUpdate() {
   try {
     const r = await fetch("version.json?" + Date.now(), { cache: "no-store" });
@@ -456,7 +456,7 @@ function splash() {
 async function boot() {
   if (!TOKEN) { header("My Laeti"); $("app").innerHTML = `<div class="empty"><h3>Lien d'accès manquant</h3><p>Ouvrez l'application avec le lien personnel qui vous a été envoyé.</p></div>`; return; }
   try {
-    const w = await api("whoami"); S.role = w.role; S.name = w.name; S.emergency = w.emergency || {};
+    const w = await api("whoami"); S.role = w.role; S.name = w.name; S.emergency = w.emergency || {}; S.account = w.account || {};
     if (S.role === "admin") { $("ati").href = "admin-180.png"; $("mfst").href = "manifest-admin.json"; document.querySelector('link[rel=icon]').href = "icon.svg"; }
     S.tab = S.role === "admin" ? "planning" : "home";
     splash();
@@ -910,11 +910,13 @@ async function renderAdmin() {
   try { d = await loadAdmin(false); } catch(e) { $("app").innerHTML = `<div class="empty">${esc(e.message)}</div>`; return; }
   const nNew = d.reports.filter(r => r.status==="nouveau").length;
   tabs([["planning","Planning",I.cal],["reports","Signalements",I.alert,nNew],["props","Logements",I.home],["agents","Agents",I.users],["recap","Récap",I.chart],["reglages","Réglages",I.gear]]);
-  if (S.tab === "reglages" && !S.view) { header("Réglages"); $("app").innerHTML = `<div id="emg"></div><div id="setc"></div>`; emergencyForm($("emg")); return settingsCard($("setc")); }
+  if (S.tab === "reglages" && !S.view) { header("Réglages"); $("app").innerHTML = `<div id="own"></div><div id="biz"></div><div id="emg"></div><div id="setc"></div>`; ownerCard($("own")); businessForm($("biz")); emergencyForm($("emg")); return settingsCard($("setc")); }
   const v = S.view;
   if (v?.type==="mission") return adminMission(v.id);
   if (v?.type==="prop") return propForm(v.id);
   if (v?.type==="newmission") return missionForm(v);
+  if (v?.type==="accounts") return accountsView();
+  if (v?.type==="account") return accountForm(v.id);
   ({planning:adminPlanning, reports:adminReports, props:adminProps, agents:adminAgents, recap:adminRecap}[S.tab] || adminPlanning)(d);
 }
 function go(view) { S.view = view; renderAdmin(); window.scrollTo(0,0); }
@@ -922,7 +924,7 @@ async function refresh() { S.data = null; await loadAdmin(true); renderAdmin(); 
 
 let planFilter = "avenir";
 function adminPlanning(d) {
-  header("Planning", null, `<button class="icb" id="sy" title="Synchroniser les calendriers">${I.sync}</button><button class="btn sm pri" id="nm">+ Mission</button>`);
+  header(S.account?.name && !S.account.is_owner ? S.account.name : "Planning", null, `<button class="icb" id="sy" title="Synchroniser les calendriers">${I.sync}</button><button class="btn sm pri" id="nm">+ Mission</button>`);
   $("sy").onclick = e => run(e.currentTarget, async () => {
     const r = await api("sync_now"); const errs = r.results.filter(x => x.error);
     toast(errs.length ? "Erreur : " + errs.map(x=>x.property+" ("+x.error+")").join(", ") : `Calendriers synchronisés (${r.results.reduce((a,x)=>a+(x.created||0),0)} nouvelle(s) mission(s))`, !!errs.length);
@@ -1125,6 +1127,66 @@ function propForm(id) {
   if ($("pph")) $("pph").onclick = async e => { const [f] = await pickPhotos(false); if (!f) return; run(e.currentTarget, async () => { await api("property_photo",{id, data: await compress(f)}); toast("Photo enregistrée"); await refresh(); go({type:"prop", id}); }); };
 }
 
+function businessForm(el) {
+  const a = S.account || {};
+  el.innerHTML = `<div class="card"><div class="row"><span style="color:var(--ac)">${I.home}</span><div class="sp"><h3 style="font-size:15px">Mon entreprise</h3><div class="sub">Ces noms apparaissent dans ton espace et dans l'agenda partagé.</div></div></div>
+    <div class="grid2"><div><label class="f">Nom de l'entreprise</label><input type="text" id="bn" value="${esc(a.name||"")}"></div><div><label class="f">Ton prénom</label><input type="text" id="bo" value="${esc(a.owner_name||"")}"></div></div>
+    <button class="btn block" id="bsv" style="margin-top:12px">Enregistrer</button></div>`;
+  $("bsv").onclick = e => run(e.currentTarget, async () => { const name = $("bn").value.trim(), owner_name = $("bo").value.trim(); if (!name) throw new Error("Le nom de l'entreprise est obligatoire");
+    await api("settings_save",{name, owner_name}); S.account = {...S.account, name, owner_name}; S.name = owner_name || name; toast("Enregistré"); });
+}
+function ownerCard(el) {
+  if (!S.account?.is_owner) { el.innerHTML = ""; return; }
+  el.innerHTML = `<div class="card click" id="gacc" style="border:2px solid var(--ac)"><div class="row"><span style="color:var(--ac)">${I.users}</span><div class="sp"><h3 style="font-size:15px">Comptes clients</h3><div class="sub">Crée un espace pour chaque client : ses logements, ses agents, ses missions. Il ne voit rien des autres.</div></div><span class="muted">›</span></div></div>`;
+  $("gacc").onclick = () => go({type:"accounts"});
+}
+const adminLink = a => location.origin + location.pathname + "?t=" + a.admin_token;
+async function accountsView() {
+  header("Comptes clients", () => go(null), `<button class="btn sm pri" id="nacc">+ Compte</button>`);
+  $("nacc").onclick = () => go({type:"account"});
+  $("app").innerHTML = `<div class="empty"><span class="spin"></span></div>`;
+  let r; try { r = await api("accounts_list"); } catch(e) { $("app").innerHTML = `<div class="empty">${esc(e.message)}</div>`; return; }
+  S.accounts = r.accounts;
+  const act = r.accounts.filter(a => a.active && !a.is_owner).length;
+  $("app").innerHTML = `<div class="grid2" style="grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:6px">
+      ${[["Clients actifs",act],["Agents",r.accounts.reduce((s,a)=>s+a.n_agents,0)],["Logements",r.accounts.reduce((s,a)=>s+a.n_props,0)]].map(([l,n])=>`<div class="card" style="padding:10px;text-align:center;margin:0"><div style="font-size:22px;font-weight:600">${n}</div><div class="muted" style="font-size:12px">${l}</div></div>`).join("")}</div>` +
+    r.accounts.map(a => {
+      const link = adminLink(a);
+      const msg = encodeURIComponent(`Bonjour${a.owner_name?" "+a.owner_name:""}, voici ton accès gestionnaire My Laeti pour ${a.name} : ${link}\nOuvre-le sur ton téléphone et ajoute-le à l'écran d'accueil. Dans « Agents », tu pourras ajouter tes agents et leur envoyer leur propre lien.`);
+      const ph = (a.contact||"").replace(/[^\d+]/g,"").replace(/^0/,"33"), mail = /@/.test(a.contact||"") ? a.contact : "";
+      return `<div class="card" style="${a.active?"":"opacity:.6"}"><div class="row"><div class="sp"><h3>${esc(a.name)} ${a.is_owner?`<span class="pill p-validee">Toi</span>`:a.active?"":`<span class="pill p-annulee">Suspendu</span>`}</h3>
+        <div class="sub">${esc(a.owner_name||"")}${a.contact?" · "+esc(a.contact):""}</div>
+        <div class="muted">${a.n_props} logement(s) · ${a.n_agents} agent(s) · ${a.n_missions_30j} mission(s) sur 30 j · créé le ${new Date(a.created_at).toLocaleDateString("fr-FR")}</div>
+        ${a.notes?`<div class="muted" style="margin-top:4px">${esc(a.notes)}</div>`:""}</div>${a.is_owner?"":`<button class="btn sm" data-ed="${a.id}">Modifier</button>`}</div>
+        ${a.is_owner?"":`<label class="f">Lien gestionnaire du client</label><div class="code">${esc(link)}</div>
+        <div class="row" style="gap:6px;margin-top:8px;flex-wrap:wrap">
+          <button class="btn sm" data-cp="${esc(link)}">Copier</button>
+          ${ph.length>6?`<a class="btn sm" href="https://wa.me/${ph}?text=${msg}" target="_blank" rel="noopener">WhatsApp</a><a class="btn sm" href="sms:${esc(a.contact)}?&body=${msg}">SMS</a>`:""}
+          ${mail?`<a class="btn sm" href="mailto:${esc(mail)}?subject=${encodeURIComponent("Ton accès My Laeti")}&body=${msg}">E-mail</a>`:""}
+          <button class="btn sm" data-nl="${a.id}">Nouveau lien</button>
+          <button class="btn sm ${a.active?"bad":""}" data-act="${a.id}" data-to="${a.active?0:1}">${a.active?"Suspendre":"Réactiver"}</button></div>`}</div>`;
+    }).join("") + `<p class="muted">Chaque client gère ses propres logements, agents et missions avec son lien. Si tu suspends un compte, son lien et ceux de ses agents cessent de fonctionner (rien n'est supprimé).</p>`;
+  $("app").querySelectorAll("[data-ed]").forEach(b => b.onclick = () => go({type:"account", id:b.dataset.ed}));
+  $("app").querySelectorAll("[data-cp]").forEach(b => b.onclick = async () => { try { await navigator.clipboard.writeText(b.dataset.cp); toast("Lien copié"); } catch(e) { prompt("Copie le lien :", b.dataset.cp); } });
+  $("app").querySelectorAll("[data-nl]").forEach(b => b.onclick = e => { if (confirm("Créer un nouveau lien pour ce client ? L'ancien ne fonctionnera plus.")) run(e.currentTarget, async () => { await api("account_new_link",{id:b.dataset.nl}); toast("Nouveau lien créé"); accountsView(); }); });
+  $("app").querySelectorAll("[data-act]").forEach(b => b.onclick = e => { const on = b.dataset.to === "1"; if (on || confirm("Suspendre ce compte ? Le client et ses agents n'auront plus accès.")) run(e.currentTarget, async () => { await api("account_save",{id:b.dataset.act, active:on}); toast(on?"Compte réactivé":"Compte suspendu"); accountsView(); }); });
+}
+function accountForm(id) {
+  const a = (S.accounts||[]).find(x => x.id===id) || {};
+  header(id ? "Modifier le compte" : "Nouveau compte client", () => go({type:"accounts"}));
+  $("app").innerHTML = `<div class="card">
+    <label class="f" style="margin-top:0">Nom de l'entreprise / conciergerie</label><input type="text" id="an" value="${esc(a.name||"")}" placeholder="Conciergerie du Port">
+    <label class="f">Prénom du gérant</label><input type="text" id="ao" value="${esc(a.owner_name||"")}" placeholder="Julie">
+    <label class="f">Téléphone ou e-mail</label><input type="text" id="ac" value="${esc(a.contact||"")}" placeholder="06 12 34 56 78 ou julie@exemple.fr">
+    <label class="f">Notes (visibles par toi seul)</label><textarea id="ano" placeholder="Formule, tarif, date de fin d'essai…">${esc(a.notes||"")}</textarea>
+    <button class="btn pri block" id="asv" style="margin-top:14px">${id?"Enregistrer":"Créer le compte"}</button></div>
+    ${id?"":`<p class="muted">Le compte est créé vide. Tu obtiens un lien gestionnaire à envoyer au client : avec, il ajoute ses logements et ses agents.</p>`}`;
+  $("asv").onclick = e => run(e.currentTarget, async () => {
+    const name = $("an").value.trim(); if (!name) throw new Error("Donne un nom au compte");
+    await api("account_save",{id, name, owner_name:$("ao").value.trim(), contact:$("ac").value.trim(), notes:$("ano").value.trim()});
+    toast(id ? "Compte mis à jour" : "Compte créé : envoie-lui son lien"); go({type:"accounts"});
+  });
+}
 function emergencyForm(el) {
   const e = S.emergency || {};
   el.innerHTML = `<div class="card"><div class="row"><span style="color:#D94848">${I.phone}</span><div class="sp"><h3 style="font-size:15px">Appel d'urgence</h3><div class="sub">Le numéro que l'agent appelle depuis le bouton rouge des signalements (le 112 est toujours proposé en plus).</div></div></div>
